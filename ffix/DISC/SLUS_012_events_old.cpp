@@ -99,18 +99,14 @@ int func39c38()
     {
         case 0x07:
         {
-            A2 = 0014;
-            A3 = 0010;
             T0 = w[0x8007b70c];
-            80039CE4	lui    v1, $8008
-            V0 = w[T0 + 0000];
-            A0 = w[V1 + b6f4];
-            A1 = bu[V0 + 0000];
-            V0 = V0 + 0001;
-            80039CF8	jal    func367d0 [$800367d0]
-            [T0 + 0000] = w(V0);
-            V1 = 0002;
-            [V0 + 0005] = b(V1);
+            V0 = w[T0];
+            A1 = bu[V0];
+            [T0] = w(V0 + 0x1);
+
+            V0 = func367d0(w[0x8007b6f4], A1, 0x14, 0x10);
+
+            [V0 + 0x5] = b(0x2);
             [0x8007b6f8] = w(0x1);
 
             return 0;
@@ -118,16 +114,12 @@ int func39c38()
 
         case 0x08:
         {
-            A2 = 0038;
-            A3 = 0010;
             T0 = w[0x8007b70c];
-            80039D20	lui    v1, $8008
-            V0 = w[T0 + 0000];
-            A0 = w[V1 + b6f4];
-            A1 = bu[V0 + 0000];
-            [T0 + 0000] = w(V0 + 0x1);
+            V0 = w[T0];
+            A1 = bu[V0];
+            [T0] = w(V0 + 0x1);
 
-            A0 = func367d0();
+            A0 = func367d0(w[0x8007b6f4], A1, 0x38, 0x10);
 
             [A0 + 0x5] = b(0x3);
             [A0 + 0xf] = b(0x1);
@@ -205,7 +197,6 @@ int func39c38()
             if (w[0x8007b6f4] & 0x1)
             {
                 func52da0();
-
                 priority = system_read_from_stack_command_not_from_script();
             }
             else
@@ -216,8 +207,8 @@ int func39c38()
                 [V1] = w(V0 + 0x1);
             }
 
-            [0x8007b6f8] = w(0x1);
             [0x8007b6f4] = w(w[0x8007b6f4] >> 0x1);
+            [0x8007b6f8] = w(0x1);
 
             entity_struct = func38150();
 
@@ -234,108 +225,82 @@ int func39c38()
 
         case 0x12:
         {
-            V0 = w[0x8007b6f4];
-            80039F30	nop
-            V0 = V0 & 0001;
-            80039F38	beq    v0, zero, L39f58 [$80039f58]
-            80039F3C	lui    v0, $8008
-            80039F40	jal    func52da0 [$80052da0]
-            80039F44	nop
-            80039F48	jal    system_read_from_stack_command_not_from_script [$80052d40]
-            80039F4C	nop
-            80039F50	j      L39f74 [$80039f74]
-            A0 = V0;
+            if (w[0x8007b6f4] & 0x1)
+            {
+                func52da0();
+                priority = system_read_from_stack_command_not_from_script();
+            }
+            else
+            {
+                V1 = w[0x8007b70c];
+                V0 = w[V1];
+                priority = bu[V0];
+                [V1] = w(V0 + 0x1);
+            }
 
-            L39f58:	; 80039F58
-            V1 = w[V0 + b70c];
-            80039F5C	nop
-            V0 = w[V1 + 0000];
-            80039F64	nop
-            A0 = bu[V0 + 0000];
-            V0 = V0 + 0001;
-            [V1 + 0000] = w(V0);
+            [0x8007b6f4] = w(w[0x8007b6f4] >> 0x1);
+            [0x8007b6f8] = w(0x1);
 
-            L39f74:	; 80039F74
-            S2 = A0;
-            80039F78	lui    a1, $8008
-            80039F7C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
-            V1 = 0001;
-            [A0 + b6f8] = w(V1);
-            V0 = V0 >> V1;
-            80039F90	jal    func38150 [$80038150]
-            [A1 + b6f4] = w(V0);
+            entity_struct = func38150();
+
             A0 = w[0x8007b70c];
-            80039FA0	nop
-            V1 = w[A0 + 0000];
-            S1 = V0;
-            S5 = bu[V1 + 0000];
-            V1 = V1 + 0001;
-            80039FB4	beq    s1, zero, L3f730 [$8003f730]
-            [A0 + 0000] = w(V1);
-            V0 = bu[S1 + 0004];
-            80039FC0	nop
-            V0 = S2 < V0;
-            80039FC8	beq    v0, zero, L3f730 [$8003f730]
-            A0 = S1;
-            A1 = S2;
-            A2 = S5;
-            A3 = 0;
-            system_event_script_run();
+            V1 = w[A0];
+            script_id = bu[V1];
+            [A0] = w(V1 + 0x1);
 
-            return 0;
+            if (entity_struct != 0)
+            {
+                if (priority < bu[entity_struct + 0x4])
+                {
+                    system_event_script_run(entity_struct, priority, script_id, 0);
+
+                    return 0;
+                }
+            }
+
+            A2 = w[0x8007b70c];
+            [0x8007b6f8] = w(0x1);
+            [A2] = w(w[0x8007aea0]);
+
+            return 0x1;
         }
 
         case 0x14:
         {
-            V0 = w[0x8007b6f4];
-            80039FE8	nop
-            V0 = V0 & 0001;
-            80039FF0	beq    v0, zero, L3a010 [$8003a010]
-            80039FF4	lui    v0, $8008
-            80039FF8	jal    func52da0 [$80052da0]
-            80039FFC	nop
-            8003A000	jal    system_read_from_stack_command_not_from_script [$80052d40]
-            8003A004	nop
-            8003A008	j      L3a02c [$8003a02c]
-            A0 = V0;
+            if (w[0x8007b6f4] & 0x1)
+            {
+                func52da0();
+                priority = system_read_from_stack_command_not_from_script();
+            }
+            else
+            {
+                V1 = w[0x8007b70c];
+                V0 = w[V1];
+                priority = bu[V0];
+                [V1] = w(V0 + 0x1);
+            }
 
-            L3a010:	; 8003A010
-            V1 = w[V0 + b70c];
-            8003A014	nop
-            V0 = w[V1 + 0000];
-            8003A01C	nop
-            A0 = bu[V0 + 0000];
-            V0 = V0 + 0001;
-            [V1 + 0000] = w(V0);
+            [0x8007b6f4] = w(w[0x8007b6f4] >> 0x1);
+            [0x8007b6f8] = w(0x1);
 
-            L3a02c:	; 8003A02C
-            S2 = A0;
-            8003A030	lui    a1, $8008
-            8003A034	lui    a0, $8008
-            V0 = w[A1 + b6f4];
-            V1 = 0001;
-            [A0 + b6f8] = w(V1);
-            V0 = V0 >> V1;
-            8003A048	jal    func38150 [$80038150]
-            [A1 + b6f4] = w(V0);
+            entity_struct = func38150();
+
             A0 = w[0x8007b70c];
-            8003A058	nop
-            V1 = w[A0 + 0000];
-            S1 = V0;
-            S5 = bu[V1 + 0000];
-            V1 = V1 + 0001;
-            8003A06C	beq    s1, zero, L3c6f8 [$8003c6f8]
-            [A0 + 0000] = w(V1);
-            V0 = bu[S1 + 0004];
-            8003A078	nop
-            V0 = S2 < V0;
-            8003A080	beq    v0, zero, L3c6f8 [$8003c6f8]
-            A0 = S1;
-            A1 = S2;
-            A2 = S5;
-            A3 = 0x1;
-            system_event_script_run();
+            V1 = w[A0];
+            script_id = bu[V1];
+            [A0] = w(V1 + 0x1);
+
+            if ((entity_struct != 0) && (S2 < bu[entity_struct + 0x4]))
+            {
+                system_event_script_run(entity_struct, priority, script_id, 0x1);
+
+                return 0x1;
+            }
+
+            A1 = w[0x8007b70c];
+            V1 = w[0x8007aea0];
+            [0x8007b6f8] = w(0x1);
+            [A1] = w(V1);
 
             return 0x1;
         }
@@ -346,7 +311,6 @@ int func39c38()
             8003A0A8	nop
             V0 = V0 & 0001;
             8003A0B0	beq    v0, zero, L3a0d0 [$8003a0d0]
-            8003A0B4	lui    v0, $8008
             8003A0B8	jal    func52da0 [$80052da0]
             8003A0BC	nop
             8003A0C0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -355,7 +319,7 @@ int func39c38()
             A0 = V0;
 
             L3a0d0:	; 8003A0D0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003A0D4	nop
             V0 = w[V1 + 0000];
             8003A0DC	nop
@@ -365,16 +329,14 @@ int func39c38()
 
             L3a0ec:	; 8003A0EC
             S2 = A0;
-            8003A0F0	lui    a0, $8008
             V1 = w[0x8007aecc];
             V0 = 0001;
-            8003A100	lui    a1, $8008
-            [A0 + b6f8] = w(V0);
-            V0 = w[A1 + b6f4];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
             A2 = w[V1 + 16d8];
             A0 = w[0x8007b70c];
             V0 = V0 >> 01;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V1 = bu[A0 + 000a];
             V0 = bu[A0 + 0009];
             V1 = V1 << 02;
@@ -402,7 +364,6 @@ int func39c38()
             A0 = 0;
             A0 = w[A2 + 0004];
             8003A178	j      L3a350 [$8003a350]
-            8003A17C	lui    v0, $8008
         }
 
         case 0x18:
@@ -411,7 +372,6 @@ int func39c38()
             8003A188	nop
             V0 = V0 & 0001;
             8003A190	beq    v0, zero, L3a1b0 [$8003a1b0]
-            8003A194	lui    v0, $8008
             8003A198	jal    func52da0 [$80052da0]
             8003A19C	nop
             8003A1A0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -420,7 +380,7 @@ int func39c38()
             A0 = V0;
 
             L3a1b0:	; 8003A1B0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003A1B4	nop
             V0 = w[V1 + 0000];
             8003A1BC	nop
@@ -430,16 +390,14 @@ int func39c38()
 
             L3a1cc:	; 8003A1CC
             S2 = A0;
-            8003A1D0	lui    a0, $8008
             V1 = w[0x8007aecc];
             V0 = 0001;
-            8003A1E0	lui    a1, $8008
-            [A0 + b6f8] = w(V0);
-            V0 = w[A1 + b6f4];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
             A2 = w[V1 + 16d8];
             A0 = w[0x8007b70c];
             V0 = V0 >> 01;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V1 = bu[A0 + 000a];
             V0 = bu[A0 + 0009];
             V1 = V1 << 02;
@@ -470,9 +428,8 @@ int func39c38()
             L3a258:	; 8003A258
             8003A258	nop
             8003A25C	beq    v0, zero, L3f730 [$8003f730]
-            8003A260	lui    v1, $8008
             V0 = w[0x8007aecc];
-            A0 = w[V1 + b70c];
+            A0 = w[0x8007b70c];
             A1 = w[V0 + 16d8];
             V1 = bu[A0 + 000a];
             V0 = bu[A0 + 0009];
@@ -507,9 +464,8 @@ int func39c38()
             8003A2D4	nop
             V0 = S2 < V0;
             8003A2DC	beq    v0, zero, L3f730 [$8003f730]
-            8003A2E0	lui    v1, $8008
             V0 = w[0x8007aecc];
-            A0 = w[V1 + b70c];
+            A0 = w[0x8007b70c];
             A1 = w[V0 + 16d8];
             V1 = bu[A0 + 000a];
             V0 = bu[A0 + 0009];
@@ -560,7 +516,6 @@ int func39c38()
             8003A384	nop
             V0 = V0 & 0001;
             8003A38C	beq    v0, zero, L3a3ac [$8003a3ac]
-            8003A390	lui    v0, $8008
             8003A394	jal    func52da0 [$80052da0]
             8003A398	nop
             8003A39C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -569,7 +524,7 @@ int func39c38()
             A0 = V0;
 
             L3a3ac:	; 8003A3AC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003A3B0	nop
             V0 = w[V1 + 0000];
             8003A3B8	nop
@@ -579,16 +534,14 @@ int func39c38()
 
             L3a3c8:	; 8003A3C8
             S2 = A0;
-            8003A3CC	lui    a0, $8008
             V1 = w[0x8007aecc];
             V0 = 0001;
-            8003A3DC	lui    a1, $8008
-            [A0 + b6f8] = w(V0);
-            V0 = w[A1 + b6f4];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
             A2 = w[V1 + 16d8];
             A0 = w[0x8007b70c];
             V0 = V0 >> 01;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V1 = bu[A0 + 000a];
             V0 = bu[A0 + 0009];
             V1 = V1 << 02;
@@ -619,9 +572,8 @@ int func39c38()
             L3a454:	; 8003A454
             8003A454	nop
             8003A458	beq    v0, zero, L3c6f8 [$8003c6f8]
-            8003A45C	lui    v1, $8008
             V0 = w[0x8007aecc];
-            A0 = w[V1 + b70c];
+            A0 = w[0x8007b70c];
             A1 = w[V0 + 16d8];
             V1 = bu[A0 + 000a];
             V0 = bu[A0 + 0009];
@@ -656,9 +608,8 @@ int func39c38()
             8003A4D0	nop
             V0 = S2 < V0;
             8003A4D8	beq    v0, zero, L3c6f8 [$8003c6f8]
-            8003A4DC	lui    v1, $8008
             V0 = w[0x8007aecc];
-            A0 = w[V1 + b70c];
+            A0 = w[0x8007b70c];
             A1 = w[V0 + 16d8];
             V1 = bu[A0 + 000a];
             V0 = bu[A0 + 0009];
@@ -732,7 +683,6 @@ int func39c38()
             8003A5D4	nop
             V0 = V0 & 0001;
             8003A5DC	beq    v0, zero, L3a5fc [$8003a5fc]
-            8003A5E0	lui    v0, $8008
             8003A5E4	jal    func52da0 [$80052da0]
             8003A5E8	nop
             8003A5EC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -741,7 +691,7 @@ int func39c38()
             A3 = V0;
 
             L3a5fc:	; 8003A5FC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003A600	nop
             V0 = w[V1 + 0000];
             8003A608	nop
@@ -751,15 +701,12 @@ int func39c38()
 
             L3a618:	; 8003A618
             V0 = 0;
-            8003A61C	lui    a0, $8008
             V1 = 0001;
-            8003A624	lui    a1, $8008
-            [A0 + b6f8] = w(V1);
-            8003A62C	lui    a0, $8008
-            V1 = w[A1 + b6f4];
-            A2 = w[A0 + b704];
+            [0x8007b6f8] = w(V1);
+            V1 = w[0x8007b6f4];
+            A2 = w[0x8007b704];
             V1 = V1 >> 01;
-            [A1 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             V1 = bu[A2 + 000f];
             A0 = A3 & 003f;
             V1 = V1 | A0;
@@ -858,7 +805,6 @@ int func39c38()
             8003A774	nop
             V0 = V0 & 0001;
             8003A77C	beq    v0, zero, L3a79c [$8003a79c]
-            8003A780	lui    v0, $8008
             8003A784	jal    func52da0 [$80052da0]
             8003A788	nop
             8003A78C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -867,7 +813,7 @@ int func39c38()
             A0 = V0;
 
             L3a79c:	; 8003A79C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003A7A0	nop
             V0 = w[V1 + 0000];
             8003A7A8	nop
@@ -877,16 +823,13 @@ int func39c38()
 
             L3a7b8:	; 8003A7B8
             S2 = A0;
-            8003A7BC	lui    v0, $8008
             A1 = 0001;
-            8003A7C4	lui    a0, $8008
-            8003A7C8	lui    v1, $8008
-            [V0 + b6f8] = w(A1);
-            V0 = w[A0 + b6f4];
-            V1 = w[V1 + b708];
+            [0x8007b6f8] = w(A1);
+            V0 = w[0x8007b6f4];
+            V1 = w[0x8007b708];
             V0 = V0 >> A1;
             8003A7DC	bne    v1, a1, L3a800 [$8003a800]
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V1 = hu[S4 + 0034];
             V0 = ffff;
             8003A7EC	beq    v1, v0, L3a800 [$8003a800]
@@ -900,7 +843,6 @@ int func39c38()
             8003A808	nop
             V0 = V0 & 0001;
             8003A810	beq    v0, zero, L3a830 [$8003a830]
-            8003A814	lui    v0, $8008
             8003A818	jal    func52da0 [$80052da0]
             8003A81C	nop
             8003A820	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -909,7 +851,7 @@ int func39c38()
             A2 = V0;
 
             L3a830:	; 8003A830
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003A834	nop
             V0 = w[V1 + 0000];
             8003A83C	nop
@@ -918,19 +860,16 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3a84c:	; 8003A84C
-            8003A84C	lui    a0, $8008
-            8003A850	lui    a1, $8008
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             [S4 + 003c] = b(A2);
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003A870	nop
             V0 = V0 & V1;
             8003A878	beq    v0, zero, L3a898 [$8003a898]
-            8003A87C	lui    v0, $8008
             8003A880	jal    func52da0 [$80052da0]
             8003A884	nop
             8003A888	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -939,7 +878,7 @@ int func39c38()
             A2 = V0;
 
             L3a898:	; 8003A898
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003A89C	nop
             V0 = w[V1 + 0000];
             8003A8A4	nop
@@ -948,97 +887,83 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3a8b4:	; 8003A8B4
-            8003A8B4	lui    a1, $8008
-            8003A8B8	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             [S4 + 003d] = b(A2);
             return 0;
 
             L3a8d8:	; 8003A8D8
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003A8DC	nop
             V0 = V0 & 0001;
             8003A8E4	beq    v0, zero, L3a904 [$8003a904]
-            8003A8E8	lui    v0, $8008
             8003A8EC	jal    func52da0 [$80052da0]
             8003A8F0	nop
             8003A8F4	jal    system_read_from_stack_command_not_from_script [$80052d40]
             8003A8F8	nop
             8003A8FC	j      L3a920 [$8003a920]
-            8003A900	lui    a1, $8008
 
             L3a904:	; 8003A904
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003A908	nop
             V0 = w[V1 + 0000];
             8003A910	nop
             V0 = V0 + 0001;
             [V1 + 0000] = w(V0);
-            8003A91C	lui    a1, $8008
 
             L3a920:	; 8003A920
-            8003A920	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003A93C	beq    v0, zero, L3a95c [$8003a95c]
-            8003A940	lui    v0, $8008
             8003A944	jal    func52da0 [$80052da0]
             8003A948	nop
             8003A94C	jal    system_read_from_stack_command_not_from_script [$80052d40]
             8003A950	nop
             8003A954	j      L3a978 [$8003a978]
-            8003A958	lui    a1, $8008
 
             L3a95c:	; 8003A95C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003A960	nop
             V0 = w[V1 + 0000];
             8003A968	nop
             V0 = V0 + 0001;
             [V1 + 0000] = w(V0);
-            8003A974	lui    a1, $8008
 
             L3a978:	; 8003A978
-            8003A978	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003A994	beq    v0, zero, L3a9b4 [$8003a9b4]
-            8003A998	lui    v0, $8008
             8003A99C	jal    func52da0 [$80052da0]
             8003A9A0	nop
             8003A9A4	jal    system_read_from_stack_command_not_from_script [$80052d40]
             8003A9A8	nop
             8003A9AC	j      L3a9d0 [$8003a9d0]
-            8003A9B0	lui    a1, $8008
 
             L3a9b4:	; 8003A9B4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003A9B8	nop
             V0 = w[V1 + 0000];
             8003A9C0	nop
             V0 = V0 + 0001;
             [V1 + 0000] = w(V0);
-            8003A9CC	lui    a1, $8008
 
             L3a9d0:	; 8003A9D0
-            8003A9D0	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;
         }
 
@@ -1048,85 +973,72 @@ int func39c38()
             8003A9F4	nop
             V0 = V0 & 0001;
             8003A9FC	beq    v0, zero, L3aa1c [$8003aa1c]
-            8003AA00	lui    v0, $8008
             8003AA04	jal    func52da0 [$80052da0]
             8003AA08	nop
             8003AA0C	jal    system_read_from_stack_command_not_from_script [$80052d40]
             8003AA10	nop
             8003AA14	j      L3aa38 [$8003aa38]
-            8003AA18	lui    a1, $8008
 
             L3aa1c:	; 8003AA1C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003AA20	nop
             V0 = w[V1 + 0000];
             8003AA28	nop
             V0 = V0 + 0001;
             [V1 + 0000] = w(V0);
-            8003AA34	lui    a1, $8008
 
             L3aa38:	; 8003AA38
-            8003AA38	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003AA54	beq    v0, zero, L3aa74 [$8003aa74]
-            8003AA58	lui    v0, $8008
             8003AA5C	jal    func52da0 [$80052da0]
             8003AA60	nop
             8003AA64	jal    system_read_from_stack_command_not_from_script [$80052d40]
             8003AA68	nop
             8003AA6C	j      L3aa90 [$8003aa90]
-            8003AA70	lui    a1, $8008
 
             L3aa74:	; 8003AA74
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003AA78	nop
             V0 = w[V1 + 0000];
             8003AA80	nop
             V0 = V0 + 0001;
             [V1 + 0000] = w(V0);
-            8003AA8C	lui    a1, $8008
 
             L3aa90:	; 8003AA90
-            8003AA90	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003AAAC	beq    v0, zero, L3aacc [$8003aacc]
-            8003AAB0	lui    v0, $8008
             8003AAB4	jal    func52da0 [$80052da0]
             8003AAB8	nop
             8003AABC	jal    system_read_from_stack_command_not_from_script [$80052d40]
             8003AAC0	nop
             8003AAC4	j      L3aae8 [$8003aae8]
-            8003AAC8	lui    a1, $8008
 
             L3aacc:	; 8003AACC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003AAD0	nop
             V0 = w[V1 + 0000];
             8003AAD8	nop
             V0 = V0 + 0001;
             [V1 + 0000] = w(V0);
-            8003AAE4	lui    a1, $8008
 
             L3aae8:	; 8003AAE8
-            8003AAE8	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003AB04	beq    v0, zero, L3ab24 [$8003ab24]
-            8003AB08	lui    v0, $8008
             8003AB0C	jal    func52da0 [$80052da0]
             8003AB10	nop
             8003AB14	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1135,7 +1047,7 @@ int func39c38()
             V0 = 0;
 
             L3ab24:	; 8003AB24
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003AB28	nop
             V0 = w[V1 + 0000];
             8003AB30	nop
@@ -1144,13 +1056,11 @@ int func39c38()
             V0 = 0;
 
             L3ab40:	; 8003AB40
-            8003AB40	lui    a2, $8008
-            8003AB44	lui    a1, $8008
-            V1 = w[A2 + b6f4];
+            V1 = w[0x8007b6f4];
             A0 = 0001;
-            [A1 + b6f8] = w(A0);
+            [0x8007b6f8] = w(A0);
             V1 = V1 >> A0;
-            [A2 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             return V0;
         }
 
@@ -1160,7 +1070,6 @@ int func39c38()
             8003AB68	nop
             V0 = V0 & 0001;
             8003AB70	beq    v0, zero, L3ab90 [$8003ab90]
-            8003AB74	lui    v0, $8008
             8003AB78	jal    func52da0 [$80052da0]
             8003AB7C	nop
             8003AB80	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1169,7 +1078,7 @@ int func39c38()
             A3 = V0;
 
             L3ab90:	; 8003AB90
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003AB94	nop
             V0 = w[V1 + 0000];
             8003AB9C	nop
@@ -1179,13 +1088,11 @@ int func39c38()
 
             L3abac:	; 8003ABAC
             V0 = 0;
-            8003ABB0	lui    a2, $8008
-            8003ABB4	lui    a1, $8008
-            V1 = w[A2 + b6f4];
+            V1 = w[0x8007b6f4];
             A0 = 0001;
-            [A1 + b6f8] = w(A0);
+            [0x8007b6f8] = w(A0);
             V1 = V1 >> A0;
-            [A2 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             [S4 + 002d] = b(A3);
             return V0;
         }
@@ -1196,7 +1103,6 @@ int func39c38()
             8003ABDC	nop
             V0 = V0 & 0001;
             8003ABE4	beq    v0, zero, L3ac04 [$8003ac04]
-            8003ABE8	lui    v0, $8008
             8003ABEC	jal    func52da0 [$80052da0]
             8003ABF0	nop
             8003ABF4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1205,7 +1111,7 @@ int func39c38()
             A2 = V0;
 
             L3ac04:	; 8003AC04
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003AC08	nop
             V0 = w[V1 + 0000];
             8003AC10	nop
@@ -1215,15 +1121,12 @@ int func39c38()
 
             L3ac20:	; 8003AC20
             V0 = 0;
-            8003AC24	lui    a0, $8008
             V1 = 0001;
-            8003AC2C	lui    a1, $8008
-            [A0 + b6f8] = w(V1);
-            8003AC34	lui    a0, $8008
-            V1 = w[A1 + b6f4];
-            A0 = w[A0 + b70c];
+            [0x8007b6f8] = w(V1);
+            V1 = w[0x8007b6f4];
+            A0 = w[0x8007b70c];
             V1 = V1 >> 01;
-            [A1 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             [A0 + 0011] = b(A2);
             return V0;
         }
@@ -1241,7 +1144,6 @@ int func39c38()
             8003AC64	nop
             V0 = V0 & 0001;
             8003AC6C	beq    v0, zero, L3ac8c [$8003ac8c]
-            8003AC70	lui    v0, $8008
             8003AC74	jal    func52da0 [$80052da0]
             8003AC78	nop
             8003AC7C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1250,7 +1152,7 @@ int func39c38()
             A1 = V0;
 
             L3ac8c:	; 8003AC8C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003AC90	nop
             V0 = w[A0 + 0000];
             8003AC98	nop
@@ -1267,16 +1169,13 @@ int func39c38()
 
             L3acc4:	; 8003ACC4
             S2 = A1;
-            8003ACC8	lui    a1, $8008
-            8003ACCC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003ACE8	beq    v0, zero, L3ad08 [$8003ad08]
-            8003ACEC	lui    v0, $8008
             8003ACF0	jal    func52da0 [$80052da0]
             8003ACF4	nop
             8003ACF8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1285,7 +1184,7 @@ int func39c38()
             A1 = V0;
 
             L3ad08:	; 8003AD08
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003AD0C	nop
             V0 = w[A0 + 0000];
             8003AD14	nop
@@ -1303,16 +1202,13 @@ int func39c38()
             L3ad40:	; 8003AD40
             S3 = A1;
             S5 = 0;
-            8003AD48	lui    v0, $8008
             S0 = 0001;
-            8003AD50	lui    a0, $8008
-            8003AD54	lui    v1, $8008
-            [V0 + b6f8] = w(S0);
-            V0 = w[A0 + b6f4];
-            V1 = w[V1 + b708];
+            [0x8007b6f8] = w(S0);
+            V0 = w[0x8007b6f4];
+            V1 = w[0x8007b708];
             V0 = V0 >> S0;
             8003AD68	bne    v1, s0, L3ad80 [$8003ad80]
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = hu[S4 + 0034];
             8003AD74	nop
             V0 = V0 ^ ffff;
@@ -1342,7 +1238,6 @@ int func39c38()
             V1 = bu[S4 + 0005];
             V0 = 0004;
             8003ADC8	bne    v1, v0, L3adf0 [$8003adf0]
-            8003ADCC	lui    v0, $8008
             8003ADD0	lui    v1, $7fff
             V0 = hu[S4 + 0050];
             V1 = V1 | ffff;
@@ -1350,10 +1245,9 @@ int func39c38()
             [S4 + 0030] = h(0);
             V0 = V0 & ffcf;
             [S4 + 0050] = h(V0);
-            8003ADEC	lui    v0, $8008
 
             L3adf0:	; 8003ADF0
-            [V0 + aea4] = w(S0);
+            [0x8007aea4] = w(S0);
             return 0;
         }
 
@@ -1370,7 +1264,6 @@ int func39c38()
             8003AE0C	nop
             V0 = V0 & 0001;
             8003AE14	beq    v0, zero, L3ae34 [$8003ae34]
-            8003AE18	lui    v0, $8008
             8003AE1C	jal    func52da0 [$80052da0]
             8003AE20	nop
             8003AE24	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1379,7 +1272,7 @@ int func39c38()
             A1 = V0;
 
             L3ae34:	; 8003AE34
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003AE38	nop
             V0 = w[A0 + 0000];
             8003AE40	nop
@@ -1396,16 +1289,13 @@ int func39c38()
 
             L3ae6c:	; 8003AE6C
             S2 = A1;
-            8003AE70	lui    a1, $8008
-            8003AE74	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003AE90	beq    v0, zero, L3aeb0 [$8003aeb0]
-            8003AE94	lui    v0, $8008
             8003AE98	jal    func52da0 [$80052da0]
             8003AE9C	nop
             8003AEA0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1414,7 +1304,7 @@ int func39c38()
             A1 = V0;
 
             L3aeb0:	; 8003AEB0
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003AEB4	nop
             V0 = w[A0 + 0000];
             8003AEBC	nop
@@ -1431,16 +1321,13 @@ int func39c38()
 
             L3aee8:	; 8003AEE8
             S3 = A1;
-            8003AEEC	lui    a1, $8008
-            8003AEF0	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003AF0C	beq    v0, zero, L3af2c [$8003af2c]
-            8003AF10	lui    v0, $8008
             8003AF14	jal    func52da0 [$80052da0]
             8003AF18	nop
             8003AF1C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1449,7 +1336,7 @@ int func39c38()
             A2 = V0;
 
             L3af2c:	; 8003AF2C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003AF30	nop
             V0 = w[A0 + 0000];
             8003AF38	nop
@@ -1467,16 +1354,13 @@ int func39c38()
             L3af64:	; 8003AF64
             S5 = A2;
             S1 = 0;
-            8003AF6C	lui    v0, $8008
             A1 = 0001;
-            8003AF74	lui    a0, $8008
-            8003AF78	lui    v1, $8008
-            [V0 + b6f8] = w(A1);
-            V0 = w[A0 + b6f4];
-            V1 = w[V1 + b708];
+            [0x8007b6f8] = w(A1);
+            V0 = w[0x8007b6f4];
+            V1 = w[0x8007b708];
             V0 = V0 >> A1;
             8003AF8C	bne    v1, a1, L3afa4 [$8003afa4]
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = hu[S4 + 0034];
             8003AF98	nop
             V0 = V0 ^ ffff;
@@ -1524,7 +1408,6 @@ int func39c38()
             8003B010	nop
             V0 = V0 & 0001;
             8003B018	beq    v0, zero, L3b038 [$8003b038]
-            8003B01C	lui    v0, $8008
             8003B020	jal    func52da0 [$80052da0]
             8003B024	nop
             8003B028	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1533,7 +1416,7 @@ int func39c38()
             A2 = V0;
 
             L3b038:	; 8003B038
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003B03C	nop
             V0 = w[V1 + 0000];
             8003B044	nop
@@ -1543,11 +1426,9 @@ int func39c38()
 
             L3b054:	; 8003B054
             V0 = 0;
-            8003B058	lui    a0, $8008
             V1 = 0001;
-            8003B060	lui    a1, $8008
-            [A0 + b6f8] = w(V1);
-            V1 = w[A1 + b6f4];
+            [0x8007b6f8] = w(V1);
+            V1 = w[0x8007b6f4];
             A0 = A2 << 04;
             8003B070	j      L3dff4 [$8003dff4]
             [S4 + 0022] = h(A0);
@@ -1559,7 +1440,6 @@ int func39c38()
             8003B080	nop
             V0 = V0 & 0001;
             8003B088	beq    v0, zero, L3b0a8 [$8003b0a8]
-            8003B08C	lui    v0, $8008
             8003B090	jal    func52da0 [$80052da0]
             8003B094	nop
             8003B098	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1568,7 +1448,7 @@ int func39c38()
             A1 = V0;
 
             L3b0a8:	; 8003B0A8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003B0AC	nop
             V0 = w[V1 + 0000];
             8003B0B4	nop
@@ -1577,18 +1457,15 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3b0c4:	; 8003B0C4
-            8003B0C4	lui    v1, $8008
             V0 = 0001;
-            8003B0CC	lui    a0, $8008
-            [V1 + b6f8] = w(V0);
-            V0 = w[A0 + b6f4];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
             V1 = A1 << 04;
             [S4 + 0020] = h(V1);
             V0 = V0 >> 01;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & 0001;
             8003B0EC	beq    v0, zero, L3b10c [$8003b10c]
-            8003B0F0	lui    v0, $8008
             8003B0F4	jal    func52da0 [$80052da0]
             8003B0F8	nop
             8003B0FC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1597,7 +1474,7 @@ int func39c38()
             A2 = V0;
 
             L3b10c:	; 8003B10C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003B110	nop
             V0 = w[V1 + 0000];
             8003B118	nop
@@ -1607,11 +1484,9 @@ int func39c38()
 
             L3b128:	; 8003B128
             V0 = 0;
-            8003B12C	lui    a0, $8008
             V1 = 0001;
-            8003B134	lui    a1, $8008
-            [A0 + b6f8] = w(V1);
-            V1 = w[A1 + b6f4];
+            [0x8007b6f8] = w(V1);
+            V1 = w[0x8007b6f4];
             A0 = A2 << 04;
             8003B144	j      L3dff4 [$8003dff4]
             [S4 + 0024] = h(A0);
@@ -1623,7 +1498,6 @@ int func39c38()
             8003B154	nop
             V0 = V0 & 0001;
             8003B15C	beq    v0, zero, L3b17c [$8003b17c]
-            8003B160	lui    v0, $8008
             8003B164	jal    func52da0 [$80052da0]
             8003B168	nop
             8003B16C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1632,7 +1506,7 @@ int func39c38()
             A2 = V0;
 
             L3b17c:	; 8003B17C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003B180	nop
             V0 = w[V1 + 0000];
             8003B188	nop
@@ -1641,19 +1515,16 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3b198:	; 8003B198
-            8003B198	lui    a0, $8008
-            8003B19C	lui    a1, $8008
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             [S0 + 006a] = b(A2);
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003B1BC	nop
             V0 = V0 & V1;
             8003B1C4	beq    v0, zero, L3b1e4 [$8003b1e4]
-            8003B1C8	lui    v0, $8008
             8003B1CC	jal    func52da0 [$80052da0]
             8003B1D0	nop
             8003B1D4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1662,7 +1533,7 @@ int func39c38()
             A2 = V0;
 
             L3b1e4:	; 8003B1E4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003B1E8	nop
             V0 = w[V1 + 0000];
             8003B1F0	nop
@@ -1672,15 +1543,13 @@ int func39c38()
 
             L3b200:	; 8003B200
             V0 = 0;
-            8003B204	lui    a0, $8008
             V1 = 0001;
-            8003B20C	lui    a1, $8008
-            [A0 + b6f8] = w(V1);
-            V1 = w[A1 + b6f4];
+            [0x8007b6f8] = w(V1);
+            V1 = w[0x8007b6f4];
             A0 = hu[S0 + 0050];
             V1 = V1 >> 01;
             A0 = A0 | 0003;
-            [A1 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             [S0 + 006b] = b(A2);
             [S0 + 0050] = h(A0);
             return V0;
@@ -1688,9 +1557,8 @@ int func39c38()
 
         case 0x47:
         {
-            8003B234	lui    v0, $8008
             V1 = hu[S0 + 0050];
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = V1 & fff8;
             V0 = V0 & 0001;
             8003B248	beq    v0, zero, L3b268 [$8003b268]
@@ -1713,13 +1581,11 @@ int func39c38()
 
             L3b288:	; 8003B288
             V0 = 0;
-            8003B28C	lui    a2, $8008
-            8003B290	lui    a1, $8008
-            V1 = w[A2 + b6f4];
+            V1 = w[0x8007b6f4];
             A0 = 0001;
-            [A1 + b6f8] = w(A0);
+            [0x8007b6f8] = w(A0);
             V1 = V1 >> A0;
-            [A2 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             V1 = hu[S0 + 0050];
             A0 = A3 & 0007;
             V1 = V1 | A0;
@@ -1732,7 +1598,6 @@ int func39c38()
             8003B2C4	nop
             V0 = V0 & 0001;
             8003B2CC	beq    v0, zero, L3b2ec [$8003b2ec]
-            8003B2D0	lui    v0, $8008
             8003B2D4	jal    func52da0 [$80052da0]
             8003B2D8	nop
             8003B2DC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1741,7 +1606,7 @@ int func39c38()
             A3 = V0;
 
             L3b2ec:	; 8003B2EC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003B2F0	nop
             V0 = w[V1 + 0000];
             8003B2F8	nop
@@ -1751,14 +1616,12 @@ int func39c38()
 
             L3b308:	; 8003B308
             A2 = 0004;
-            8003B30C	lui    a1, $8008
-            8003B310	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003B324	beq    a3, zero, L3b330 [$8003b330]
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             A2 = 00a7;
 
             L3b330:	; 8003B330
@@ -1772,7 +1635,6 @@ int func39c38()
             8003B340	nop
             V0 = V0 & 0001;
             8003B348	beq    v0, zero, L3b368 [$8003b368]
-            8003B34C	lui    v0, $8008
             8003B350	jal    func52da0 [$80052da0]
             8003B354	nop
             8003B358	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1781,7 +1643,7 @@ int func39c38()
             A2 = V0;
 
             L3b368:	; 8003B368
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003B36C	nop
             V0 = w[V1 + 0000];
             8003B374	nop
@@ -1790,13 +1652,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3b384:	; 8003B384
-            8003B384	lui    a1, $8008
-            8003B388	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = A2 & 00ff;
             [S0 + 0073] = b(A2);
             if (V0 == 0)
@@ -1818,7 +1678,6 @@ int func39c38()
             8003B3CC	nop
             V0 = V0 & 0001;
             8003B3D4	beq    v0, zero, L3b3f4 [$8003b3f4]
-            8003B3D8	lui    v0, $8008
             8003B3DC	jal    func52da0 [$80052da0]
             8003B3E0	nop
             8003B3E4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1827,7 +1686,7 @@ int func39c38()
             A0 = V0;
 
             L3b3f4:	; 8003B3F4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003B3F8	nop
             V0 = w[V1 + 0000];
             8003B400	nop
@@ -1837,16 +1696,13 @@ int func39c38()
 
             L3b410:	; 8003B410
             S2 = A0 << 04;
-            8003B414	lui    a1, $8008
-            8003B418	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003B434	beq    v0, zero, L3b454 [$8003b454]
-            8003B438	lui    v0, $8008
             8003B43C	jal    func52da0 [$80052da0]
             8003B440	nop
             8003B444	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1855,7 +1711,7 @@ int func39c38()
             A3 = V0;
 
             L3b454:	; 8003B454
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003B458	nop
             V0 = w[V1 + 0000];
             8003B460	nop
@@ -1867,13 +1723,11 @@ int func39c38()
             A0 = S0;
             A1 = S2;
             A2 = 0001;
-            8003B47C	lui    t1, $8008
-            8003B480	lui    t0, $8008
-            V0 = w[T1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = A2;
-            [T0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> A2;
-            [T1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             func398d0();
 
             return 0;        }
@@ -1884,7 +1738,6 @@ int func39c38()
             8003B4A4	nop
             V0 = V0 & 0001;
             8003B4AC	beq    v0, zero, L3b4cc [$8003b4cc]
-            8003B4B0	lui    v0, $8008
             8003B4B4	jal    func52da0 [$80052da0]
             8003B4B8	nop
             8003B4BC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1893,7 +1746,7 @@ int func39c38()
             A1 = V0;
 
             L3b4cc:	; 8003B4CC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003B4D0	nop
             V0 = w[V1 + 0000];
             8003B4D8	nop
@@ -1904,13 +1757,11 @@ int func39c38()
             L3b4e8:	; 8003B4E8
             A0 = S0;
             A1 = A1 << 04;
-            8003B4F0	lui    a3, $8008
-            8003B4F4	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             A3 = bu[A0 + 0073];
             A2 = V1;
             func398d0();
@@ -1923,7 +1774,6 @@ int func39c38()
             8003B520	nop
             V0 = V0 & 0001;
             8003B528	beq    v0, zero, L3b548 [$8003b548]
-            8003B52C	lui    v0, $8008
             8003B530	jal    func52da0 [$80052da0]
             8003B534	nop
             8003B538	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -1932,7 +1782,7 @@ int func39c38()
             A1 = V0;
 
             L3b548:	; 8003B548
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003B54C	nop
             V0 = w[A0 + 0000];
             8003B554	nop
@@ -1948,15 +1798,13 @@ int func39c38()
             A1 = V0 >> 10;
 
             L3b580:	; 8003B580
-            8003B580	lui    v1, $8008
             V0 = 0001;
-            8003B588	lui    a0, $8008
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             V1 = w[S0 + 0014];
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003B598	nop
             V0 = V0 >> 01;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & 0001;
             8003B5A8	beq    v0, zero, L3b5c8 [$8003b5c8]
             S2 = A1 - V1;
@@ -1984,16 +1832,14 @@ int func39c38()
             A1 = V0 >> 10;
 
             L3b604:	; 8003B604
-            8003B604	lui    v1, $8008
             V0 = 0001;
-            8003B60C	lui    a0, $8008
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             V1 = w[S0 + 001c];
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
 
             S3 = A1 - V1;
             V0 = V0 >> 01;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = S2 | S3;
             if (V0 != 0)
             {
@@ -2028,13 +1874,11 @@ int func39c38()
 
             L3b6b0:	; 8003B6B0
             S2 = A0;
-            8003B6B4	lui    a1, $8008
-            8003B6B8	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
 
             if (S1 != 0)
             {
@@ -2061,7 +1905,6 @@ int func39c38()
             8003B730	nop
             V0 = V0 & 0001;
             8003B738	beq    v0, zero, L3b758 [$8003b758]
-            8003B73C	lui    v0, $8008
             8003B740	jal    func52da0 [$80052da0]
             8003B744	nop
             8003B748	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2070,7 +1913,7 @@ int func39c38()
             A0 = V0;
 
             L3b758:	; 8003B758
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003B75C	nop
             V0 = w[V1 + 0000];
             8003B764	nop
@@ -2080,16 +1923,13 @@ int func39c38()
 
             L3b774:	; 8003B774
             S2 = A0;
-            8003B778	lui    a1, $8008
-            8003B77C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003B798	beq    v0, zero, L3b7b8 [$8003b7b8]
-            8003B79C	lui    v0, $8008
             8003B7A0	jal    func52da0 [$80052da0]
             8003B7A4	nop
             8003B7A8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2098,7 +1938,7 @@ int func39c38()
             A1 = V0;
 
             L3b7b8:	; 8003B7B8
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003B7BC	nop
             V0 = w[A0 + 0000];
             8003B7C4	nop
@@ -2115,14 +1955,12 @@ int func39c38()
 
             L3b7f0:	; 8003B7F0
             A0 = S2;
-            8003B7F4	lui    a3, $8008
-            8003B7F8	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003B80C	jal    func4ec74 [$8004ec74]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xe3:
@@ -2131,7 +1969,6 @@ int func39c38()
             8003B824	nop
             V0 = V0 & 0001;
             8003B82C	beq    v0, zero, L3b84c [$8003b84c]
-            8003B830	lui    v0, $8008
             8003B834	jal    func52da0 [$80052da0]
             8003B838	nop
             8003B83C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2140,7 +1977,7 @@ int func39c38()
             A2 = V0;
 
             L3b84c:	; 8003B84C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003B850	nop
             V0 = w[V1 + 0000];
             8003B858	nop
@@ -2150,14 +1987,11 @@ int func39c38()
 
             L3b868:	; 8003B868
             V0 = 0;
-            8003B86C	lui    a0, $8008
             V1 = 0001;
-            8003B874	lui    a1, $8008
-            [A0 + b6f8] = w(V1);
-            V1 = w[A1 + b6f4];
-            8003B880	lui    a0, $8008
+            [0x8007b6f8] = w(V1);
+            V1 = w[0x8007b6f4];
             8003B884	j      L3dff4 [$8003dff4]
-            [A0 + bbd8] = w(A2);        }
+            [0x8007bbd8] = w(A2);        }
 
         case 0x7c:
         {
@@ -2165,7 +1999,6 @@ int func39c38()
             8003B894	nop
             V0 = V0 & 0001;
             8003B89C	beq    v0, zero, L3b8bc [$8003b8bc]
-            8003B8A0	lui    v0, $8008
             8003B8A4	jal    func52da0 [$80052da0]
             8003B8A8	nop
             8003B8AC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2174,7 +2007,7 @@ int func39c38()
             A1 = V0;
 
             L3b8bc:	; 8003B8BC
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003B8C0	nop
             V0 = w[A0 + 0000];
             8003B8C8	nop
@@ -2191,16 +2024,13 @@ int func39c38()
 
             L3b8f4:	; 8003B8F4
             S2 = A1;
-            8003B8F8	lui    a1, $8008
-            8003B8FC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003B918	beq    v0, zero, L3b938 [$8003b938]
-            8003B91C	lui    v0, $8008
             8003B920	jal    func52da0 [$80052da0]
             8003B924	nop
             8003B928	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2209,7 +2039,7 @@ int func39c38()
             A1 = V0;
 
             L3b938:	; 8003B938
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003B93C	nop
             V0 = w[V1 + 0000];
             8003B944	nop
@@ -2219,14 +2049,12 @@ int func39c38()
 
             L3b954:	; 8003B954
             A0 = S2;
-            8003B958	lui    a3, $8008
-            8003B95C	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003B970	jal    func4ed00 [$8004ed00]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x53:
@@ -2241,7 +2069,6 @@ int func39c38()
             8003B998	nop
             V0 = V0 & 0001;
             8003B9A0	beq    v0, zero, L3b9c0 [$8003b9c0]
-            8003B9A4	lui    v0, $8008
             8003B9A8	jal    func52da0 [$80052da0]
             8003B9AC	nop
             8003B9B0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2250,7 +2077,7 @@ int func39c38()
             A1 = V0;
 
             L3b9c0:	; 8003B9C0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003B9C4	nop
             V0 = w[V1 + 0000];
             8003B9CC	nop
@@ -2259,21 +2086,17 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3b9dc:	; 8003B9DC
-            8003B9DC	lui    v1, $8008
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
-            8003B9E8	lui    v1, $8008
-            8003B9EC	lui    a0, $8008
-            V0 = w[V1 + b6f4];
-            A0 = w[A0 + b704];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
+            A0 = w[0x8007b704];
             V0 = V0 >> 01;
-            [V1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             [A0 + 0010] = b(A1);
-            V0 = w[V1 + b6f4];
+            V0 = w[0x8007b6f4];
             8003BA08	nop
             V0 = V0 & 0001;
             8003BA10	beq    v0, zero, L3ba30 [$8003ba30]
-            8003BA14	lui    v0, $8008
             8003BA18	jal    func52da0 [$80052da0]
             8003BA1C	nop
             8003BA20	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2282,7 +2105,7 @@ int func39c38()
             A2 = V0;
 
             L3ba30:	; 8003BA30
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003BA34	nop
             V0 = w[V1 + 0000];
             8003BA3C	nop
@@ -2292,25 +2115,20 @@ int func39c38()
 
             L3ba4c:	; 8003BA4C
             S5 = A2;
-            8003BA50	lui    v1, $8008
             V0 = 0001;
-            8003BA58	lui    a0, $8008
-            [V1 + b6f8] = w(V0);
-            8003BA60	lui    v1, $8008
-            V0 = w[A0 + b6f4];
-            V1 = w[V1 + b704];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
+            V1 = w[0x8007b704];
             V0 = V0 >> 01;
             A1 = V1;
             V1 = S5 & 00a0;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = 0080;
             A2 = bu[A1 + 0010];
             8003BA84	bne    v1, v0, L3bb10 [$8003bb10]
-            8003BA88	lui    v0, $8008
             V1 = bu[A1 + 0005];
             V0 = 0004;
             8003BA94	bne    v1, v0, L3bb10 [$8003bb10]
-            8003BA98	lui    v0, $8008
             V0 = w[0x8007aecc];
             8003BAA4	nop
             A0 = w[V0 + 16d8];
@@ -2339,14 +2157,12 @@ int func39c38()
             8003BAF4	nop
 
             L3baf8:	; 8003BAF8
-            8003BAF8	lui    v0, $8008
             [A1 + 003e] = b(A2);
-            [V0 + ae68] = w(A1);
+            [0x8007ae68] = w(A1);
             [0x8007ae6c] = w(0);
-            8003BB0C	lui    v0, $8008
 
             L3bb10:	; 8003BB10
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003BB14	nop
             V0 = V0 & 0001;
             8003BB1C	beq    v0, zero, L3bb3c [$8003bb3c]
@@ -2377,23 +2193,20 @@ int func39c38()
             L3bb78:	; 8003BB78
             S3 = A1;
             A2 = S5;
-            8003BB80	lui    s0, $8008
-            8003BB84	lui    t0, $8008
-            8003BB88	lui    a3, $8008
-            A0 = w[S0 + b704];
-            V0 = w[T0 + b6f4];
+            A0 = w[0x8007b704];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A3 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003BBA0	jal    func39660 [$80039660]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             A0 = S3;
-            V1 = w[S0 + b704];
+            V1 = w[0x8007b704];
             A2 = V0;
             A1 = bu[V1 + 0010];
             8003BBB8	jal    func4dcec [$8004dcec]
             A3 = S5;
-            A0 = w[S0 + b704];
+            A0 = w[0x8007b704];
             8003BBC4	j      L3c374 [$8003c374]
             V0 = 0001;        }
 
@@ -2403,7 +2216,6 @@ int func39c38()
             8003BBD4	nop
             V0 = V0 & 0001;
             8003BBDC	beq    v0, zero, L3bbfc [$8003bbfc]
-            8003BBE0	lui    v0, $8008
             8003BBE4	jal    func52da0 [$80052da0]
             8003BBE8	nop
             8003BBEC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2412,7 +2224,7 @@ int func39c38()
             A1 = V0;
 
             L3bbfc:	; 8003BBFC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003BC00	nop
             V0 = w[V1 + 0000];
             8003BC08	nop
@@ -2421,21 +2233,17 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3bc18:	; 8003BC18
-            8003BC18	lui    v1, $8008
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
-            8003BC24	lui    v1, $8008
-            8003BC28	lui    a0, $8008
-            V0 = w[V1 + b6f4];
-            A0 = w[A0 + b704];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
+            A0 = w[0x8007b704];
             V0 = V0 >> 01;
-            [V1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             [A0 + 0010] = b(A1);
-            V0 = w[V1 + b6f4];
+            V0 = w[0x8007b6f4];
             8003BC44	nop
             V0 = V0 & 0001;
             8003BC4C	beq    v0, zero, L3bc6c [$8003bc6c]
-            8003BC50	lui    v0, $8008
             8003BC54	jal    func52da0 [$80052da0]
             8003BC58	nop
             8003BC5C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2444,7 +2252,7 @@ int func39c38()
             A2 = V0;
 
             L3bc6c:	; 8003BC6C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003BC70	nop
             V0 = w[V1 + 0000];
             8003BC78	nop
@@ -2454,25 +2262,20 @@ int func39c38()
 
             L3bc88:	; 8003BC88
             S5 = A2;
-            8003BC8C	lui    v1, $8008
             V0 = 0001;
-            8003BC94	lui    a0, $8008
-            [V1 + b6f8] = w(V0);
-            8003BC9C	lui    v1, $8008
-            V0 = w[A0 + b6f4];
-            V1 = w[V1 + b704];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
+            V1 = w[0x8007b704];
             V0 = V0 >> 01;
             A1 = V1;
             V1 = S5 & 00a0;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = 0080;
             A2 = bu[A1 + 0010];
             8003BCC0	bne    v1, v0, L3bd4c [$8003bd4c]
-            8003BCC4	lui    v0, $8008
             V1 = bu[A1 + 0005];
             V0 = 0004;
             8003BCD0	bne    v1, v0, L3bd4c [$8003bd4c]
-            8003BCD4	lui    v0, $8008
             V0 = w[0x8007aecc];
             8003BCE0	nop
             A0 = w[V0 + 16d8];
@@ -2501,18 +2304,15 @@ int func39c38()
             8003BD30	nop
 
             L3bd34:	; 8003BD34
-            8003BD34	lui    v0, $8008
             [A1 + 003e] = b(A2);
-            [V0 + ae68] = w(A1);
+            [0x8007ae68] = w(A1);
             [0x8007ae6c] = w(0);
-            8003BD48	lui    v0, $8008
 
             L3bd4c:	; 8003BD4C
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003BD50	nop
             V0 = V0 & 0001;
             8003BD58	beq    v0, zero, L3bd78 [$8003bd78]
-            8003BD5C	lui    v0, $8008
             8003BD60	jal    func52da0 [$80052da0]
             8003BD64	nop
             8003BD68	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2521,7 +2321,7 @@ int func39c38()
             A1 = V0;
 
             L3bd78:	; 8003BD78
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003BD7C	nop
             V0 = w[A0 + 0000];
             8003BD84	nop
@@ -2539,17 +2339,14 @@ int func39c38()
             L3bdb0:	; 8003BDB0
             S3 = A1;
             A2 = S5;
-            8003BDB8	lui    s0, $8008
-            8003BDBC	lui    t0, $8008
-            8003BDC0	lui    a3, $8008
-            A0 = w[S0 + b704];
-            V0 = w[T0 + b6f4];
+            A0 = w[0x8007b704];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A3 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003BDD8	jal    func39660 [$80039660]
-            [T0 + b6f4] = w(V0);
-            V1 = w[S0 + b704];
+            [0x8007b6f4] = w(V0);
+            V1 = w[0x8007b704];
             8003BDE4	j      L3c254 [$8003c254]
             A0 = S3;        }
 
@@ -2579,21 +2376,17 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3be44:	; 8003BE44
-            8003BE44	lui    v1, $8008
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
-            8003BE50	lui    v1, $8008
-            8003BE54	lui    a0, $8008
-            V0 = w[V1 + b6f4];
-            A0 = w[A0 + b704];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
+            A0 = w[0x8007b704];
             V0 = V0 >> 01;
-            [V1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             [A0 + 0010] = b(A1);
-            V0 = w[V1 + b6f4];
+            V0 = w[0x8007b6f4];
             8003BE70	nop
             V0 = V0 & 0001;
             8003BE78	beq    v0, zero, L3be98 [$8003be98]
-            8003BE7C	lui    v0, $8008
             8003BE80	jal    func52da0 [$80052da0]
             8003BE84	nop
             8003BE88	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2602,7 +2395,7 @@ int func39c38()
             A2 = V0;
 
             L3be98:	; 8003BE98
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003BE9C	nop
             V0 = w[V1 + 0000];
             8003BEA4	nop
@@ -2612,23 +2405,19 @@ int func39c38()
 
             L3beb4:	; 8003BEB4
             S5 = A2;
-            8003BEB8	lui    a1, $8008
-            8003BEBC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             A0 = S5 & 00a0;
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = w[0x8007b704];
             V1 = 0080;
             A1 = bu[V0 + 0010];
             8003BEE8	bne    a0, v1, L3bf74 [$8003bf74]
-            8003BEEC	lui    v0, $8008
             V1 = bu[S4 + 0005];
             V0 = 0004;
             8003BEF8	bne    v1, v0, L3bf74 [$8003bf74]
-            8003BEFC	lui    v0, $8008
             V0 = w[0x8007aecc];
             8003BF08	nop
             A0 = w[V0 + 16d8];
@@ -2657,14 +2446,12 @@ int func39c38()
             8003BF58	nop
 
             L3bf5c:	; 8003BF5C
-            8003BF5C	lui    v0, $8008
             [S4 + 003e] = b(A1);
-            [V0 + ae68] = w(S4);
+            [0x8007ae68] = w(S4);
             [0x8007ae6c] = w(0);
-            8003BF70	lui    v0, $8008
 
             L3bf74:	; 8003BF74
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003BF78	nop
             V0 = V0 & 0001;
             8003BF80	beq    v0, zero, L3bfa0 [$8003bfa0]
@@ -2696,21 +2483,19 @@ int func39c38()
             S3 = A1;
             A0 = S4;
             A2 = S5;
-            8003BFE8	lui    t0, $8008
-            8003BFEC	lui    a3, $8008
-            V0 = w[T0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A3 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003C000	jal    func39660 [$80039660]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             A0 = S3;
             V1 = w[0x8007b704];
             A2 = V0;
             A1 = bu[V1 + 0010];
             8003C01C	jal    func4dcec [$8004dcec]
             A3 = S5;
-            A0 = w[S0 + b704];
+            A0 = w[0x8007b704];
             8003C028	j      L3c374 [$8003c374]
             V0 = 0001;        }
 
@@ -2740,21 +2525,17 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3c088:	; 8003C088
-            8003C088	lui    v1, $8008
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
-            8003C094	lui    v1, $8008
-            8003C098	lui    a0, $8008
-            V0 = w[V1 + b6f4];
-            A0 = w[A0 + b704];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
+            A0 = w[0x8007b704];
             V0 = V0 >> 01;
-            [V1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             [A0 + 0010] = b(A1);
-            V0 = w[V1 + b6f4];
+            V0 = w[0x8007b6f4];
             8003C0B4	nop
             V0 = V0 & 0001;
             8003C0BC	beq    v0, zero, L3c0dc [$8003c0dc]
-            8003C0C0	lui    v0, $8008
             8003C0C4	jal    func52da0 [$80052da0]
             8003C0C8	nop
             8003C0CC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2763,7 +2544,7 @@ int func39c38()
             A2 = V0;
 
             L3c0dc:	; 8003C0DC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003C0E0	nop
             V0 = w[V1 + 0000];
             8003C0E8	nop
@@ -2773,23 +2554,19 @@ int func39c38()
 
             L3c0f8:	; 8003C0F8
             S5 = A2;
-            8003C0FC	lui    a1, $8008
-            8003C100	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             A0 = S5 & 00a0;
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = w[0x8007b704];
             V1 = 0080;
             A1 = bu[V0 + 0010];
             8003C12C	bne    a0, v1, L3c1b8 [$8003c1b8]
-            8003C130	lui    v0, $8008
             V1 = bu[S4 + 0005];
             V0 = 0004;
             8003C13C	bne    v1, v0, L3c1b8 [$8003c1b8]
-            8003C140	lui    v0, $8008
             V0 = w[0x8007aecc];
             8003C14C	nop
             A0 = w[V0 + 16d8];
@@ -2818,18 +2595,15 @@ int func39c38()
             8003C19C	nop
 
             L3c1a0:	; 8003C1A0
-            8003C1A0	lui    v0, $8008
             [S4 + 003e] = b(A1);
-            [V0 + ae68] = w(S4);
+            [0x8007ae68] = w(S4);
             [0x8007ae6c] = w(0);
-            8003C1B4	lui    v0, $8008
 
             L3c1b8:	; 8003C1B8
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003C1BC	nop
             V0 = V0 & 0001;
             8003C1C4	beq    v0, zero, L3c1e4 [$8003c1e4]
-            8003C1C8	lui    v0, $8008
             8003C1CC	jal    func52da0 [$80052da0]
             8003C1D0	nop
             8003C1D4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2838,7 +2612,7 @@ int func39c38()
             A1 = V0;
 
             L3c1e4:	; 8003C1E4
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003C1E8	nop
             V0 = w[A0 + 0000];
             8003C1F0	nop
@@ -2857,14 +2631,12 @@ int func39c38()
             S3 = A1;
             A0 = S4;
             A2 = S5;
-            8003C228	lui    t0, $8008
-            8003C22C	lui    a3, $8008
-            V0 = w[T0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A3 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003C240	jal    func39660 [$80039660]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             A0 = S3;
             V1 = w[0x8007b704];
 
@@ -2881,7 +2653,6 @@ int func39c38()
             8003C274	nop
             V0 = V0 & 0001;
             8003C27C	beq    v0, zero, L3c29c [$8003c29c]
-            8003C280	lui    v0, $8008
             8003C284	jal    func52da0 [$80052da0]
             8003C288	nop
             8003C28C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2890,7 +2661,7 @@ int func39c38()
             A0 = V0;
 
             L3c29c:	; 8003C29C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003C2A0	nop
             V0 = w[V1 + 0000];
             8003C2A8	nop
@@ -2899,14 +2670,12 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3c2b8:	; 8003C2B8
-            8003C2B8	lui    a2, $8008
-            8003C2BC	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003C2D0	jal    func4ea4c [$8004ea4c]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xeb:
@@ -2923,7 +2692,6 @@ int func39c38()
             8003C300	nop
             V0 = V0 & 0001;
             8003C308	beq    v0, zero, L3c328 [$8003c328]
-            8003C30C	lui    v0, $8008
             8003C310	jal    func52da0 [$80052da0]
             8003C314	nop
             8003C318	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2932,7 +2700,7 @@ int func39c38()
             A3 = V0;
 
             L3c328:	; 8003C328
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003C32C	nop
             V0 = w[V1 + 0000];
             8003C334	nop
@@ -2942,17 +2710,14 @@ int func39c38()
 
             L3c344:	; 8003C344
             V0 = 0001;
-            8003C348	lui    a0, $8008
             V1 = V0;
-            8003C350	lui    a1, $8008
-            8003C354	lui    a2, $8008
-            [A0 + b6f8] = w(V1);
-            V1 = w[A1 + b6f4];
-            A0 = w[A2 + b704];
+            [0x8007b6f8] = w(V1);
+            V1 = w[0x8007b6f4];
+            A0 = w[0x8007b704];
             V1 = V1 >> V0;
-            [A1 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             [A0 + 0010] = b(A3);
-            A0 = w[A2 + b704];
+            A0 = w[0x8007b704];
 
             L3c374:	; 8003C374
             V1 = 00fe;
@@ -2971,7 +2736,6 @@ int func39c38()
             8003C398	nop
             V0 = V0 & 0001;
             8003C3A0	beq    v0, zero, L3c3c0 [$8003c3c0]
-            8003C3A4	lui    v0, $8008
             8003C3A8	jal    func52da0 [$80052da0]
             8003C3AC	nop
             8003C3B0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -2980,7 +2744,7 @@ int func39c38()
             A1 = V0;
 
             L3c3c0:	; 8003C3C0
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003C3C4	nop
             V0 = w[A0 + 0000];
             8003C3CC	nop
@@ -2997,14 +2761,12 @@ int func39c38()
 
             L3c3f8:	; 8003C3F8
             A0 = A1;
-            8003C3FC	lui    a2, $8008
-            8003C400	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003C414	jal    func4f058 [$8004f058]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             A0 = V0;
             8003C420	jal    funcf4f04 [$800f4f04]
             A1 = 0003;
@@ -3028,7 +2790,6 @@ int func39c38()
             8003C464	nop
             V0 = V0 & 0001;
             8003C46C	bne    v0, zero, L3f0d0 [$8003f0d0]
-            8003C470	lui    v0, $8008
             8003C474	j      L3f0e8 [$8003f0e8]
             8003C478	nop        }
 
@@ -3038,7 +2799,6 @@ int func39c38()
             8003C484	nop
             V0 = V0 & 0001;
             8003C48C	beq    v0, zero, L3c4ac [$8003c4ac]
-            8003C490	lui    v0, $8008
             8003C494	jal    func52da0 [$80052da0]
             8003C498	nop
             8003C49C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -3047,7 +2807,7 @@ int func39c38()
             A1 = V0;
 
             L3c4ac:	; 8003C4AC
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003C4B0	nop
             V0 = w[A0 + 0000];
             8003C4B8	nop
@@ -3064,16 +2824,13 @@ int func39c38()
 
             L3c4e4:	; 8003C4E4
             S2 = A1;
-            8003C4E8	lui    a1, $8008
-            8003C4EC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003C508	beq    v0, zero, L3c528 [$8003c528]
-            8003C50C	lui    v0, $8008
             8003C510	jal    func52da0 [$80052da0]
             8003C514	nop
             8003C518	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -3082,7 +2839,7 @@ int func39c38()
             A2 = V0;
 
             L3c528:	; 8003C528
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003C52C	nop
             V0 = w[A0 + 0000];
             8003C534	nop
@@ -3109,7 +2866,6 @@ int func39c38()
             8003C578	nop
             V0 = V0 & 0001;
             8003C580	beq    v0, zero, L3c5a0 [$8003c5a0]
-            8003C584	lui    v0, $8008
             8003C588	jal    func52da0 [$80052da0]
             8003C58C	nop
             8003C590	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -3118,7 +2874,7 @@ int func39c38()
             A1 = V0;
 
             L3c5a0:	; 8003C5A0
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003C5A4	nop
             V0 = w[A0 + 0000];
             8003C5AC	nop
@@ -3135,13 +2891,11 @@ int func39c38()
 
             L3c5d8:	; 8003C5D8
             S2 = A1;
-            8003C5DC	lui    a1, $8008
-            8003C5E0	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003C5FC	beq    v0, zero, L3c61c [$8003c61c]
             8003C600	nop
@@ -3172,11 +2926,9 @@ int func39c38()
             A0 = S2;
             A1 = 0;
             A3 = 0001;
-            8003C664	lui    v1, $8008
-            8003C668	lui    s1, $8008
-            V0 = w[V1 + b6f4];
+            V0 = w[0x8007b6f4];
             S0 = A3;
-            [S1 + b6f8] = w(S0);
+            [0x8007b6f8] = w(S0);
             8003C678	j      L3ca10 [$8003ca10]
             V0 = V0 >> A3;        }
 
@@ -3191,18 +2943,14 @@ int func39c38()
             8003C698	jal    func38990 [$80038990]
             A3 = S4;
             8003C6A0	beq    v0, zero, L3c6c4 [$8003c6c4]
-            8003C6A4	lui    v0, $8008
-            8003C6A8	lui    v1, $8008
-            8003C6AC	lui    a0, $8008
-            A1 = w[V0 + b70c];
-            V1 = w[V1 + aea0];
+            A1 = w[0x8007b70c];
+            V1 = w[0x8007aea0];
             V0 = 0001;
-            [A0 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             [A1 + 0000] = w(V1);
 
             L3c6c4:	; 8003C6C4
-            8003C6C4	lui    v1, $8008
-            [V1 + b6f8] = w(0x1);
+            [0x8007b6f8] = w(0x1);
             return 0x1;        }
 
         case 0xa0:
@@ -3222,7 +2970,7 @@ int func39c38()
             [0x8007b6f8] = w(0x1);
             [A1 + 0000] = w(V1);
 
-            return 0x1        }
+            return 0x1;        }
 
         case 0xa2:
         {
@@ -3230,7 +2978,6 @@ int func39c38()
             8003C724	nop
             V0 = V0 & 0001;
             8003C72C	beq    v0, zero, L3c74c [$8003c74c]
-            8003C730	lui    v0, $8008
             8003C734	jal    func52da0 [$80052da0]
             8003C738	nop
             8003C73C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -3239,7 +2986,7 @@ int func39c38()
             A1 = V0;
 
             L3c74c:	; 8003C74C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003C750	nop
             V0 = w[A0 + 0000];
             8003C758	nop
@@ -3256,16 +3003,13 @@ int func39c38()
 
             L3c784:	; 8003C784
             S2 = A1;
-            8003C788	lui    a1, $8008
-            8003C78C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003C7A8	beq    v0, zero, L3c7c8 [$8003c7c8]
-            8003C7AC	lui    v0, $8008
             8003C7B0	jal    func52da0 [$80052da0]
             8003C7B4	nop
             8003C7B8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -3274,7 +3018,7 @@ int func39c38()
             A1 = V0;
 
             L3c7c8:	; 8003C7C8
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003C7CC	nop
             V0 = w[A0 + 0000];
             8003C7D4	nop
@@ -3291,25 +3035,23 @@ int func39c38()
 
             L3c800:	; 8003C800
             S3 = A1;
-            8003C804	lui    a1, $8008
-            8003C808	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003C824	beq    v0, zero, L3c844 [$8003c844]
-            8003C828	lui    v0, $8008
-            8003C82C	jal    func52da0 [$80052da0]
-            8003C830	nop
-            8003C834	jal    system_read_from_stack_command_not_from_script [$80052d40]
-            8003C838	nop
-            8003C83C	j      L3c87c [$8003c87c]
+
+            func52da0();
+
+            system_read_from_stack_command_not_from_script();
+
             A2 = V0;
+            8003C83C	j      L3c87c [$8003c87c]
 
             L3c844:	; 8003C844
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003C848	nop
             V0 = w[A0 + 0000];
             8003C850	nop
@@ -3336,7 +3078,6 @@ int func39c38()
             8003C894	nop
             V0 = V0 & 0001;
             8003C89C	beq    v0, zero, L3c8bc [$8003c8bc]
-            8003C8A0	lui    v0, $8008
             8003C8A4	jal    func52da0 [$80052da0]
             8003C8A8	nop
             8003C8AC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -3345,7 +3086,7 @@ int func39c38()
             A1 = V0;
 
             L3c8bc:	; 8003C8BC
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003C8C0	nop
             V0 = w[A0 + 0000];
             8003C8C8	nop
@@ -3362,16 +3103,13 @@ int func39c38()
 
             L3c8f4:	; 8003C8F4
             S2 = A1;
-            8003C8F8	lui    a1, $8008
-            8003C8FC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003C918	beq    v0, zero, L3c938 [$8003c938]
-            8003C91C	lui    v0, $8008
             8003C920	jal    func52da0 [$80052da0]
             8003C924	nop
             8003C928	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -3380,7 +3118,7 @@ int func39c38()
             A1 = V0;
 
             L3c938:	; 8003C938
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003C93C	nop
             V0 = w[A0 + 0000];
             8003C944	nop
@@ -3397,16 +3135,13 @@ int func39c38()
 
             L3c970:	; 8003C970
             S3 = A1;
-            8003C974	lui    a1, $8008
-            8003C978	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003C994	beq    v0, zero, L3c9b4 [$8003c9b4]
-            8003C998	lui    v0, $8008
             8003C99C	jal    func52da0 [$80052da0]
             8003C9A0	nop
             8003C9A4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -3415,7 +3150,7 @@ int func39c38()
             A2 = V0;
 
             L3c9b4:	; 8003C9B4
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003C9B8	nop
             V0 = w[A0 + 0000];
             8003C9C0	nop
@@ -3436,21 +3171,19 @@ int func39c38()
             A3 = 0003;
 
             L3c9f8:	; 8003C9F8
-            8003C9F8	lui    v1, $8008
-            8003C9FC	lui    s1, $8008
-            V0 = w[V1 + b6f4];
+            V0 = w[0x8007b6f4];
             S0 = 0001;
-            [S1 + b6f8] = w(S0);
+            [0x8007b6f8] = w(S0);
             V0 = V0 >> S0;
 
             L3ca10:	; 8003CA10
             8003CA10	jal    func38990 [$80038990]
-            [V1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             if (V0 != 0)
             {
                 A0 = w[0x8007b70c];
                 V0 = w[0x8007aea0];
-                [S1 + b6f8] = w(S0);
+                [0x8007b6f8] = w(S0);
                 [A0 + 0000] = w(V0);
             }
             return 0x1;        }
@@ -3461,7 +3194,6 @@ int func39c38()
             8003CA40	nop
             V0 = V0 & 0001;
             8003CA48	beq    v0, zero, L3ca68 [$8003ca68]
-            8003CA4C	lui    v0, $8008
             8003CA50	jal    func52da0 [$80052da0]
             8003CA54	nop
             8003CA58	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -3470,7 +3202,7 @@ int func39c38()
             A0 = V0;
 
             L3ca68:	; 8003CA68
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003CA6C	nop
             V0 = w[V1 + 0000];
             8003CA74	nop
@@ -3480,14 +3212,12 @@ int func39c38()
 
             L3ca84:	; 8003CA84
             S2 = A0;
-            8003CA88	lui    a1, $8008
-            8003CA8C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003CAA0	bne    s2, zero, L3caac [$8003caac]
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             S2 = 00ff;
 
             L3caac:	; 8003CAAC
@@ -3500,7 +3230,6 @@ int func39c38()
             8003CABC	nop
             V0 = V0 & 0001;
             8003CAC4	beq    v0, zero, L3cae4 [$8003cae4]
-            8003CAC8	lui    v0, $8008
             8003CACC	jal    func52da0 [$80052da0]
             8003CAD0	nop
             8003CAD4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -3509,7 +3238,7 @@ int func39c38()
             A3 = V0;
 
             L3cae4:	; 8003CAE4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003CAE8	nop
             V0 = w[V1 + 0000];
             8003CAF0	nop
@@ -3519,13 +3248,11 @@ int func39c38()
 
             L3cb00:	; 8003CB00
             V0 = 0;
-            8003CB04	lui    a2, $8008
-            8003CB08	lui    a1, $8008
-            V1 = w[A2 + b6f4];
+            V1 = w[0x8007b6f4];
             A0 = 0001;
-            [A1 + b6f8] = w(A0);
+            [0x8007b6f8] = w(A0);
             V1 = V1 >> A0;
-            [A2 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             [S0 + 005c] = b(A3);
             return V0;        }
 
@@ -3535,7 +3262,6 @@ int func39c38()
             8003CB30	nop
             V0 = V0 & 0001;
             8003CB38	beq    v0, zero, L3cb58 [$8003cb58]
-            8003CB3C	lui    v0, $8008
             8003CB40	jal    func52da0 [$80052da0]
             8003CB44	nop
             8003CB48	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -3544,7 +3270,7 @@ int func39c38()
             A3 = V0;
 
             L3cb58:	; 8003CB58
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003CB5C	nop
             V0 = w[V1 + 0000];
             8003CB64	nop
@@ -3554,13 +3280,11 @@ int func39c38()
 
             L3cb74:	; 8003CB74
             V0 = 0;
-            8003CB78	lui    a2, $8008
-            8003CB7C	lui    a1, $8008
-            V1 = w[A2 + b6f4];
+            V1 = w[0x8007b6f4];
             A0 = 0001;
-            [A1 + b6f8] = w(A0);
+            [0x8007b6f8] = w(A0);
             V1 = V1 >> A0;
-            [A2 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             [S0 + 005e] = b(A3);
             return V0;        }
 
@@ -3610,9 +3334,8 @@ int func39c38()
             [S0 + 0064] = b(0);
             V1 = bu[S0 + 0069];
             [S0 + 0038] = b(V0);
-            8003CC34	lui    v0, $8008
             [S0 + 005d] = b(V1);
-            V0 = w[V0 + aecc];
+            V0 = w[0x8007aecc];
             V1 = bu[S0 + 0007];
             V0 = bu[V0 + 16ed];
 
@@ -3676,9 +3399,8 @@ int func39c38()
             [S0 + 0064] = b(0);
             V1 = bu[S0 + 0069];
             [S0 + 0038] = b(V0);
-            8003CD20	lui    v0, $8008
             [S0 + 005d] = b(V1);
-            V0 = w[V0 + aecc];
+            V0 = w[0x8007aecc];
             V1 = bu[S0 + 0007];
             V0 = bu[V0 + 16ed];
 
@@ -3695,7 +3417,6 @@ int func39c38()
             8003CD60	nop
             V0 = V0 & 0001;
             8003CD68	beq    v0, zero, L3cd88 [$8003cd88]
-            8003CD6C	lui    v0, $8008
             8003CD70	jal    func52da0 [$80052da0]
             8003CD74	nop
             8003CD78	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -3704,7 +3425,7 @@ int func39c38()
             A2 = V0;
 
             L3cd88:	; 8003CD88
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003CD8C	nop
             V0 = w[A0 + 0000];
             8003CD94	nop
@@ -3720,17 +3441,14 @@ int func39c38()
             A2 = V0 >> 10;
 
             L3cdc0:	; 8003CDC0
-            8003CDC0	lui    a1, $8008
-            8003CDC4	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             [S0 + 0094] = h(A2);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003CDE4	beq    v0, zero, L3ce04 [$8003ce04]
-            8003CDE8	lui    v0, $8008
             8003CDEC	jal    func52da0 [$80052da0]
             8003CDF0	nop
             8003CDF4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -3739,7 +3457,7 @@ int func39c38()
             A2 = V0;
 
             L3ce04:	; 8003CE04
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003CE08	nop
             V0 = w[A0 + 0000];
             8003CE10	nop
@@ -3755,17 +3473,14 @@ int func39c38()
             A2 = V0 >> 10;
 
             L3ce3c:	; 8003CE3C
-            8003CE3C	lui    a1, $8008
-            8003CE40	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             [S0 + 00aa] = h(A2);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003CE60	beq    v0, zero, L3ce80 [$8003ce80]
-            8003CE64	lui    v0, $8008
             8003CE68	jal    func52da0 [$80052da0]
             8003CE6C	nop
             8003CE70	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -3774,7 +3489,7 @@ int func39c38()
             A2 = V0;
 
             L3ce80:	; 8003CE80
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003CE84	nop
             V0 = w[A0 + 0000];
             8003CE8C	nop
@@ -3790,17 +3505,14 @@ int func39c38()
             A2 = V0 >> 10;
 
             L3ceb8:	; 8003CEB8
-            8003CEB8	lui    a1, $8008
-            8003CEBC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             [S0 + 0096] = h(A2);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003CEDC	beq    v0, zero, L3cefc [$8003cefc]
-            8003CEE0	lui    v0, $8008
             8003CEE4	jal    func52da0 [$80052da0]
             8003CEE8	nop
             8003CEEC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -3809,7 +3521,7 @@ int func39c38()
             A0 = V0;
 
             L3cefc:	; 8003CEFC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003CF00	nop
             V0 = w[V1 + 0000];
             8003CF08	nop
@@ -3819,14 +3531,12 @@ int func39c38()
 
             L3cf18:	; 8003CF18
             S2 = A0;
-            8003CF1C	lui    a1, $8008
-            8003CF20	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003CF34	bne    s2, zero, L3cf40 [$8003cf40]
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             S2 = 0008;
 
             L3cf40:	; 8003CF40
@@ -3881,9 +3591,8 @@ int func39c38()
             [S0 + 0064] = b(0);
             V1 = bu[S0 + 0069];
             [S0 + 0038] = b(V0);
-            8003CFF4	lui    v0, $8008
             [S0 + 005d] = b(V1);
-            V0 = w[V0 + aecc];
+            V0 = w[0x8007aecc];
             V1 = bu[S0 + 0007];
             V0 = bu[V0 + 16ed];
             8003D008	nop
@@ -3891,7 +3600,7 @@ int func39c38()
             V0 = w[0x8007b710];
             8003D018	nop
             V0 = V0 + 0001;
-            [V1 + b710] = w(V0);
+            [0x8007b710] = w(V0);
 
             L3d024:	; 8003D024
             V0 = bu[S0 + 0061];
@@ -4037,10 +3746,8 @@ int func39c38()
 
         case 0x29:
         {
-            8003D214	lui    v0, $8008
-            8003D218	lui    v1, $8008
-            A0 = w[V0 + b704];
-            V0 = w[V1 + b6f4];
+            A0 = w[0x8007b704];
+            V0 = w[0x8007b6f4];
             8003D224	nop
             V0 = V0 & 0001;
             8003D22C	beq    v0, zero, L3d24c [$8003d24c]
@@ -4063,15 +3770,12 @@ int func39c38()
 
             L3d26c:	; 8003D26C
             8003D26C	addiu  s0, a0, $ffff (=-$1)
-            8003D270	lui    a2, $8008
             V0 = 0001;
-            8003D278	lui    a1, $8008
-            8003D27C	lui    v1, $8008
-            [A2 + b6f8] = w(V0);
-            V0 = w[A1 + b6f4];
-            V1 = w[V1 + b704];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
+            V1 = w[0x8007b704];
             V0 = V0 >> 01;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             [V1 + 0014] = w(A0);
 
             if (A0 != 0)
@@ -4082,7 +3786,7 @@ int func39c38()
                 S3 = 0001;
 
                 loop3d2ac:	; 8003D2AC
-                V0 = w[S2 + b6f4];
+                V0 = w[0x8007b6f4];
                 8003D2B0	nop
                 V0 = V0 & 0001;
                 8003D2B8	beq    v0, zero, L3d2d8 [$8003d2d8]
@@ -4095,7 +3799,7 @@ int func39c38()
                 A1 = V0;
 
                 L3d2d8:	; 8003D2D8
-                A0 = w[S5 + b70c];
+                A0 = w[0x8007b70c];
                 8003D2DC	nop
                 V0 = w[A0 + 0000];
                 8003D2E4	nop
@@ -4111,11 +3815,11 @@ int func39c38()
                 A1 = V0 >> 10;
 
                 L3d310:	; 8003D310
-                V0 = w[S2 + b6f4];
-                [S4 + b6f8] = w(S3);
+                V0 = w[0x8007b6f4];
+                [0x8007b6f8] = w(S3);
                 [S1 + 0000] = h(A1);
                 V0 = V0 >> 01;
-                [S2 + b6f4] = w(V0);
+                [0x8007b6f4] = w(V0);
                 V0 = V0 & 0001;
                 8003D328	beq    v0, zero, L3d348 [$8003d348]
                 8003D32C	nop
@@ -4127,7 +3831,7 @@ int func39c38()
                 A1 = V0;
 
                 L3d348:	; 8003D348
-                A0 = w[S5 + b70c];
+                A0 = w[0x8007b70c];
                 8003D34C	nop
                 V0 = w[A0 + 0000];
                 8003D354	nop
@@ -4144,11 +3848,11 @@ int func39c38()
 
                 L3d380:	; 8003D380
                 [S1 + 0002] = h(A1);
-                V0 = w[S2 + b6f4];
+                V0 = w[0x8007b6f4];
                 8003D388	addiu  s0, s0, $ffff (=-$1)
-                [S4 + b6f8] = w(S3);
+                [0x8007b6f8] = w(S3);
                 V0 = V0 >> 01;
-                [S2 + b6f4] = w(V0);
+                [0x8007b6f4] = w(V0);
                 8003D398	addiu  v0, zero, $ffff (=-$1)
                 8003D39C	bne    s0, v0, loop3d2ac [$8003d2ac]
                 S1 = S1 + 0004;
@@ -4252,22 +3956,20 @@ int func39c38()
             8003D4E0	nop
             8003D4E4	mult   a0, a1
             V1 = h[A3 + 0000];
-            8003D4EC	lui    a0, $8008
             V0 = T0 >> 08;
             V0 = V0 + V1;
-            [A0 + ae24] = w(V0);
-            8003D4FC	lui    a0, $8008
+            [0x8007ae24] = w(V0);
             V1 = h[A3 + 0002];
             8003D504	mflo   a1
             V0 = A1 >> 08;
             V0 = V0 + V1;
-            [A0 + ae28] = w(V0);
+            [0x8007ae28] = w(V0);
             return 0;
 
             L3d518:	; 8003D518
             [0x8007ae28] = w(0);
-            8003D520	lui    v0, $8008
-            [V0 + ae24] = w(0);
+            [0x8007ae24] = w(0);
+
             return 0;        }
 
         case 0x9e:
@@ -4299,13 +4001,12 @@ int func39c38()
             L3d57c:	; 8003D57C
             8003D57C	nop
             S4 = V0;
-            8003D588	lui    a2, $8008
 
             if (S4 != 0)
             {
                 A1 = bu[S4 + 0009];
                 V1 = bu[S4 + 000a];
-                A0 = w[A2 + aecc];
+                A0 = w[0x8007aecc];
                 V0 = w[S4 + 0000];
                 A1 = A1 << 02;
                 A1 = S4 + A1;
@@ -4314,9 +4015,8 @@ int func39c38()
                 A1 = A1 + V1;
                 V0 = V0 - A0;
                 [A1 + 0000] = w(V0);
-                8003D5B8	lui    v0, $8008
                 V1 = bu[S4 + 0004];
-                V0 = w[V0 + b70c];
+                V0 = w[0x8007b70c];
                 A0 = bu[S4 + 000d];
                 V1 = V1 << 08;
                 A0 = A0 | V1;
@@ -4332,11 +4032,11 @@ int func39c38()
                 V0 = V0 + 0002;
                 [S4 + 000a] = b(V0);
                 8003D5FC	lui    v0, $8007
-                V1 = w[A2 + aecc];
+                V1 = w[0x8007aecc];
                 8003D604	addiu  v0, v0, $e658 (=-$19a8)
                 [S4 + 0000] = w(V0);
                 [V1 + 16ec] = b(0);
-                V0 = w[A2 + aecc];
+                V0 = w[0x8007aecc];
                 8003D614	nop
                 A0 = w[V0 + 16d8];
                 if (A0 != 0)
@@ -4357,10 +4057,8 @@ int func39c38()
 
         case 0x76:
         {
-            8003D658	lui    v0, $8008
-            8003D65C	lui    v1, $8008
-            S0 = w[V0 + b704];
-            V0 = w[V1 + b6f4];
+            S0 = w[0x8007b704];
+            V0 = w[0x8007b6f4];
             V1 = 0002;
             V0 = V0 & 0001;
             8003D670	beq    v0, zero, L3d690 [$8003d690]
@@ -4389,18 +4087,16 @@ int func39c38()
             A2 = V0 >> 10;
 
             L3d6cc:	; 8003D6CC
-            8003D6CC	lui    a1, $8008
-            8003D6D0	lui    a0, $8008
-            V1 = w[A1 + b6f4];
+            V1 = w[0x8007b6f4];
             V0 = 0001;
-            [A0 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             [S0 + 001c] = h(A2);
             [S0 + 0018] = h(A2);
             V1 = V1 >> V0;
-            [A1 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             V1 = V1 & V0;
             8003D6F4	beq    v1, zero, L3d714 [$8003d714]
-            8003D6F8	lui    v0, $8008
+
             8003D6FC	jal    func52da0 [$80052da0]
             8003D700	nop
             8003D704	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -4409,7 +4105,7 @@ int func39c38()
             A3 = V0;
 
             L3d714:	; 8003D714
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003D718	nop
             V0 = w[A0 + 0000];
             8003D720	nop
@@ -4426,11 +4122,9 @@ int func39c38()
 
             L3d74c:	; 8003D74C
             V0 = 0;
-            8003D750	lui    a2, $8008
-            8003D754	lui    a1, $8008
-            A0 = w[A2 + b6f4];
+            A0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             [S0 + 001e] = h(A3);
             8003D768	j      L3eee4 [$8003eee4]
             [S0 + 001a] = h(A3);        }
@@ -4477,17 +4171,15 @@ int func39c38()
             A2 = V0 >> 10;
 
             L3d804:	; 8003D804
-            8003D804	lui    a1, $8008
-            8003D808	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             [S0 + 0000] = h(A2);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003D828	beq    v0, zero, L3d848 [$8003d848]
-            8003D82C	lui    v0, $8008
+
             8003D830	jal    func52da0 [$80052da0]
             8003D834	nop
             8003D838	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -4496,7 +4188,7 @@ int func39c38()
             A3 = V0;
 
             L3d848:	; 8003D848
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003D84C	nop
             V0 = w[A0 + 0000];
             8003D854	nop
@@ -4513,11 +4205,9 @@ int func39c38()
 
             L3d880:	; 8003D880
             V0 = 0;
-            8003D884	lui    a2, $8008
-            8003D888	lui    a1, $8008
-            A0 = w[A2 + b6f4];
+            A0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             8003D898	j      L3eee4 [$8003eee4]
             [S0 + 0002] = h(A3);        }
 
@@ -4580,14 +4270,12 @@ int func39c38()
 
             L3d964:	; 8003D964
             A0 = A1;
-            8003D968	lui    a2, $8008
-            8003D96C	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003D980	jal    func21640 [$80021640]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0x4;        }
 
         case 0xb6:
@@ -4622,14 +4310,12 @@ int func39c38()
 
             L3d9fc:	; 8003D9FC
             A0 = A1;
-            8003DA00	lui    a2, $8008
-            8003DA04	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003DA18	jal    func21640 [$80021640]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0x5;        }
 
         case 0xae:
@@ -4664,14 +4350,12 @@ int func39c38()
 
             L3da94:	; 8003DA94
             A0 = A1 & ffff;
-            8003DA98	lui    a2, $8008
-            8003DA9C	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003DAB0	jal    func21680 [$80021680]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0x7;        }
 
         case 0xf5:
@@ -4680,7 +4364,6 @@ int func39c38()
         }
         case 0x2a:
         {
-            8003DAC8	lui    v1, $8008
             V0 = w[0x8007b6f4];
             8003DAD4	nop
             V0 = V0 & 0001;
@@ -4703,29 +4386,26 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3db1c:	; 8003DB1C
-            8003DB1C	lui    v1, $8008
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             [S0 + 0000] = b(A0);
-            8003DB2C	lui    a0, $8008
             V1 = w[0x8006794c];
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = w[V1 + 001c];
             V0 = V0 >> 01;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             8003DB48	addiu  v0, zero, $ffff (=-$1)
             [V1 + 0848] = b(V0);
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003DB54	nop
             V0 = V0 & 0001;
             8003DB5C	bne    v0, zero, L3dc64 [$8003dc64]
             8003DB60	nop
             8003DB64	j      L3dc80 [$8003dc80]
-            8003DB68	lui    v0, $8008        }
+        }
 
         case 0x8c:
         {
-            8003DB6C	lui    v1, $8008
             V0 = w[0x8007b6f4];
             8003DB78	nop
             V0 = V0 & 0001;
@@ -4749,13 +4429,12 @@ int func39c38()
 
             L3dbc0:	; 8003DBC0
             V0 = w[0x8007b6f4];
-            8003DBC8	lui    a0, $8008
             V0 = V0 >> 01;
-            [V1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V1 = V0;
             V0 = 0001;
             V1 = V1 & V0;
-            [A0 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             8003DBE4	beq    v1, zero, L3dc04 [$8003dc04]
             [S0 + 0000] = b(A1);
             8003DBEC	jal    func52da0 [$80052da0]
@@ -4775,17 +4454,15 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3dc24:	; 8003DC24
-            8003DC24	lui    v1, $8008
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
-            8003DC30	lui    v1, $8008
+            [0x8007b6f8] = w(V0);
             A0 = w[0x8006794c];
-            V0 = w[V1 + b6f4];
+            V0 = w[0x8007b6f4];
             A0 = w[A0 + 001c];
             V0 = V0 >> 01;
-            [V1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             [A0 + 0848] = b(A1);
-            V0 = w[V1 + b6f4];
+            V0 = w[0x8007b6f4];
             8003DC54	nop
             V0 = V0 & 0001;
             8003DC5C	beq    v0, zero, L3dc7c [$8003dc7c]
@@ -4800,10 +4477,8 @@ int func39c38()
             A1 = V0;
 
             L3dc7c:	; 8003DC7C
-            8003DC7C	lui    v0, $8008
-
             L3dc80:	; 8003DC80
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003DC84	nop
             V0 = w[A0 + 0000];
             8003DC8C	nop
@@ -4821,13 +4496,11 @@ int func39c38()
             L3dcb8:	; 8003DCB8
             S2 = A1;
             A0 = S2 & 7fff;
-            8003DCC0	lui    a2, $8008
-            8003DCC4	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V1 = w[0x8006794c];
             V0 = S2 >> 0f;
             V1 = w[V1 + 001c];
@@ -4842,7 +4515,7 @@ int func39c38()
             8003DD08	nop
             V0 = V0 & 0001;
             8003DD10	beq    v0, zero, L3dd30 [$8003dd30]
-            8003DD14	lui    v0, $8008
+
             8003DD18	jal    func52da0 [$80052da0]
             8003DD1C	nop
             8003DD20	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -4851,7 +4524,7 @@ int func39c38()
             A1 = V0;
 
             L3dd30:	; 8003DD30
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003DD34	nop
             V0 = w[V1 + 0000];
             8003DD3C	nop
@@ -4860,15 +4533,12 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3dd4c:	; 8003DD4C
-            8003DD4C	lui    v1, $8008
             V0 = 0001;
-            8003DD54	lui    a0, $8008
-            [V1 + b6f8] = w(V0);
-            8003DD5C	lui    v1, $8008
-            V0 = w[A0 + b6f4];
-            V1 = w[V1 + aecc];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
+            V1 = w[0x8007aecc];
             V0 = V0 >> 01;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = A1 & 00ff;
             [V1 + 16ef] = b(A1);
             if (V0 == 0)
@@ -4883,7 +4553,7 @@ int func39c38()
             8003DD90	nop
             V0 = V0 & 0001;
             8003DD98	beq    v0, zero, L3ddb8 [$8003ddb8]
-            8003DD9C	lui    v0, $8008
+
             8003DDA0	jal    func52da0 [$80052da0]
             8003DDA4	nop
             8003DDA8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -4892,7 +4562,7 @@ int func39c38()
             A1 = V0;
 
             L3ddb8:	; 8003DDB8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003DDBC	nop
             V0 = w[V1 + 0000];
             8003DDC4	nop
@@ -4901,17 +4571,15 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3ddd4:	; 8003DDD4
-            8003DDD4	lui    v1, $8008
             V0 = 0001;
-            8003DDDC	lui    a0, $8008
-            [V1 + b6f8] = w(V0);
-            V0 = w[A0 + b6f4];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
             [0x8007ae48] = b(A1);
             V0 = V0 >> 01;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & 0001;
             8003DDFC	beq    v0, zero, L3de1c [$8003de1c]
-            8003DE00	lui    v0, $8008
+
             8003DE04	jal    func52da0 [$80052da0]
             8003DE08	nop
             8003DE0C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -4920,7 +4588,7 @@ int func39c38()
             A1 = V0;
 
             L3de1c:	; 8003DE1C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003DE20	nop
             V0 = w[A0 + 0000];
             8003DE28	nop
@@ -4936,17 +4604,15 @@ int func39c38()
             A1 = V0 >> 10;
 
             L3de54:	; 8003DE54
-            8003DE54	lui    v1, $8008
             V0 = 0001;
-            8003DE5C	lui    a0, $8008
-            [V1 + b6f8] = w(V0);
-            V0 = w[A0 + b6f4];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
             [0x8007ae40] = h(A1);
             V0 = V0 >> 01;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & 0001;
             8003DE7C	beq    v0, zero, L3de9c [$8003de9c]
-            8003DE80	lui    v0, $8008
+
             8003DE84	jal    func52da0 [$80052da0]
             8003DE88	nop
             8003DE8C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -4955,7 +4621,7 @@ int func39c38()
             A1 = V0;
 
             L3de9c:	; 8003DE9C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003DEA0	nop
             V0 = w[A0 + 0000];
             8003DEA8	nop
@@ -4971,17 +4637,15 @@ int func39c38()
             A1 = V0 >> 10;
 
             L3ded4:	; 8003DED4
-            8003DED4	lui    v1, $8008
             V0 = 0001;
-            8003DEDC	lui    a0, $8008
-            [V1 + b6f8] = w(V0);
-            V0 = w[A0 + b6f4];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
             [0x8007ae42] = h(A1);
             V0 = V0 >> 01;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & 0001;
             8003DEFC	beq    v0, zero, L3df1c [$8003df1c]
-            8003DF00	lui    v0, $8008
+
             8003DF04	jal    func52da0 [$80052da0]
             8003DF08	nop
             8003DF0C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -4990,7 +4654,7 @@ int func39c38()
             A1 = V0;
 
             L3df1c:	; 8003DF1C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003DF20	nop
             V0 = w[A0 + 0000];
             8003DF28	nop
@@ -5006,17 +4670,15 @@ int func39c38()
             A1 = V0 >> 10;
 
             L3df54:	; 8003DF54
-            8003DF54	lui    v1, $8008
             V0 = 0001;
-            8003DF5C	lui    a0, $8008
-            [V1 + b6f8] = w(V0);
-            V0 = w[A0 + b6f4];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
             [0x8007ae44] = h(A1);
             V0 = V0 >> 01;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & 0001;
             8003DF7C	beq    v0, zero, L3df9c [$8003df9c]
-            8003DF80	lui    v0, $8008
+
             8003DF84	jal    func52da0 [$80052da0]
             8003DF88	nop
             8003DF8C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -5025,7 +4687,7 @@ int func39c38()
             A2 = V0;
 
             L3df9c:	; 8003DF9C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003DFA0	nop
             V0 = w[A0 + 0000];
             8003DFA8	nop
@@ -5105,16 +4767,15 @@ int func39c38()
             8003E0C8	nop
             V0 = V0 & 0001;
             8003E0D0	beq    v0, zero, L3e0f0 [$8003e0f0]
-            8003E0D4	lui    v0, $8008
             8003E0D8	jal    func52da0 [$80052da0]
-            8003E0DC	lui    s1, $8008
+
             8003E0E0	jal    system_read_from_stack_command_not_from_script [$80052d40]
-            8003E0E4	lui    s0, $8008
+
             8003E0E8	j      L3e130 [$8003e130]
             A2 = V0;
 
             L3e0f0:	; 8003E0F0
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003E0F4	nop
             V0 = w[A0 + 0000];
             8003E0FC	nop
@@ -5128,27 +4789,24 @@ int func39c38()
             A2 = A2 | V1;
             V0 = A2 << 10;
             A2 = V0 >> 10;
-            8003E128	lui    s1, $8008
-            8003E12C	lui    s0, $8008
 
             L3e130:	; 8003E130
-            8003E130	lui    a1, $8008
-            A0 = w[S1 + b70c];
-            V1 = w[S0 + b6f4];
+            A0 = w[0x8007b70c];
+            V1 = w[0x8007b6f4];
             V0 = 0001;
-            [A1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             [S4 + 0034] = h(A2);
             V1 = V1 >> V0;
             8003E14C	jal    func21698 [$80021698]
-            [S0 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             [S4 + 003b] = b(V0);
-            V1 = w[S1 + b70c];
+            V1 = w[0x8007b70c];
             8003E15C	nop
             V0 = bu[V1 + 000f];
             8003E164	nop
             V0 = V0 | 0001;
             [V1 + 000f] = b(V0);
-            V0 = w[S0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003E174	nop
             V0 = V0 & 0001;
             8003E17C	beq    v0, zero, L3e19c [$8003e19c]
@@ -5161,7 +4819,7 @@ int func39c38()
             A2 = V0;
 
             L3e19c:	; 8003E19C
-            V1 = w[S1 + b70c];
+            V1 = w[0x8007b70c];
             8003E1A0	nop
             V0 = w[V1 + 0000];
             8003E1A8	nop
@@ -5170,16 +4828,14 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3e1b8:	; 8003E1B8
-            8003E1BC	lui    a0, $8008
             V1 = 0001;
-            8003E1C4	lui    a1, $8008
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V1 = A2 << 02;
-            A0 = w[A1 + b6f4];
+            A0 = w[0x8007b6f4];
             V1 = 0 - V1;
             [S4 + 0032] = h(V1);
             A0 = A0 >> 01;
-            [A1 + b6f4] = w(A0);
+            [0x8007b6f4] = w(A0);
             return 0;        }
 
         case 0xd4:
@@ -5199,20 +4855,17 @@ int func39c38()
             8003E21C	nop
             S0 = w[V0 + 0008];
             8003E224	j      L3e234 [$8003e234]
-            8003E228	lui    v0, $8008
 
             L3e22c:	; 8003E22C
             S0 = 0;
 
             L3e230:	; 8003E230
-            8003E230	lui    v0, $8008
-
             L3e234:	; 8003E234
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003E238	nop
             V0 = V0 & 0001;
             8003E240	beq    v0, zero, L3e260 [$8003e260]
-            8003E244	lui    v0, $8008
+
             8003E248	jal    func52da0 [$80052da0]
             8003E24C	nop
             8003E250	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -5221,7 +4874,7 @@ int func39c38()
             A1 = V0;
 
             L3e260:	; 8003E260
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003E264	nop
             V0 = w[A0 + 0000];
             8003E26C	nop
@@ -5238,16 +4891,14 @@ int func39c38()
 
             L3e298:	; 8003E298
             S2 = A1;
-            8003E29C	lui    a1, $8008
-            8003E2A0	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003E2BC	beq    v0, zero, L3e2dc [$8003e2dc]
-            8003E2C0	lui    v0, $8008
+
             8003E2C4	jal    func52da0 [$80052da0]
             8003E2C8	nop
             8003E2CC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -5256,7 +4907,7 @@ int func39c38()
             A1 = V0;
 
             L3e2dc:	; 8003E2DC
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003E2E0	nop
             V0 = w[A0 + 0000];
             8003E2E8	nop
@@ -5273,16 +4924,14 @@ int func39c38()
 
             L3e314:	; 8003E314
             S3 = A1;
-            8003E318	lui    a1, $8008
-            8003E31C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003E338	beq    v0, zero, L3e358 [$8003e358]
-            8003E33C	lui    v0, $8008
+
             8003E340	jal    func52da0 [$80052da0]
             8003E344	nop
             8003E348	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -5291,7 +4940,7 @@ int func39c38()
             A2 = V0;
 
             L3e358:	; 8003E358
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003E35C	nop
             V0 = w[A0 + 0000];
             8003E364	nop
@@ -5308,13 +4957,11 @@ int func39c38()
 
             L3e390:	; 8003E390
             S5 = A2;
-            8003E394	lui    a1, $8008
-            8003E398	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
 
             if (S0 != 0)
             {
@@ -5365,20 +5012,17 @@ int func39c38()
             8003E440	nop
             S1 = w[V0 + 0008];
             8003E448	j      L3e458 [$8003e458]
-            8003E44C	lui    v0, $8008
 
             L3e450:	; 8003E450
             S1 = 0;
 
             L3e454:	; 8003E454
-            8003E454	lui    v0, $8008
-
             L3e458:	; 8003E458
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003E45C	nop
             V0 = V0 & 0001;
             8003E464	beq    v0, zero, L3e484 [$8003e484]
-            8003E468	lui    v0, $8008
+
             8003E46C	jal    func52da0 [$80052da0]
             8003E470	nop
             8003E474	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -5387,7 +5031,7 @@ int func39c38()
             A0 = V0;
 
             L3e484:	; 8003E484
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003E488	nop
             V0 = w[V1 + 0000];
             8003E490	nop
@@ -5397,13 +5041,11 @@ int func39c38()
 
             L3e4a0:	; 8003E4A0
             S2 = A0;
-            8003E4A4	lui    a1, $8008
-            8003E4A8	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
 
             if (S0 != 0)
             {
@@ -5465,20 +5107,17 @@ int func39c38()
             8003E564	nop
             S0 = w[V0 + 0008];
             8003E56C	j      L3e57c [$8003e57c]
-            8003E570	lui    v0, $8008
 
             L3e574:	; 8003E574
             S0 = 0;
 
             L3e578:	; 8003E578
-            8003E578	lui    v0, $8008
-
             L3e57c:	; 8003E57C
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003E580	nop
             V0 = V0 & 0001;
             8003E588	beq    v0, zero, L3e5a8 [$8003e5a8]
-            8003E58C	lui    v0, $8008
+
             8003E590	jal    func52da0 [$80052da0]
             8003E594	nop
             8003E598	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -5487,7 +5126,7 @@ int func39c38()
             A0 = V0;
 
             L3e5a8:	; 8003E5A8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003E5AC	nop
             V0 = w[V1 + 0000];
             8003E5B4	nop
@@ -5497,16 +5136,14 @@ int func39c38()
 
             L3e5c4:	; 8003E5C4
             S2 = A0;
-            8003E5C8	lui    a1, $8008
-            8003E5CC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003E5E8	beq    v0, zero, L3e608 [$8003e608]
-            8003E5EC	lui    v0, $8008
+
             8003E5F0	jal    func52da0 [$80052da0]
             8003E5F4	nop
             8003E5F8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -5515,7 +5152,7 @@ int func39c38()
             A0 = V0;
 
             L3e608:	; 8003E608
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003E60C	nop
             V0 = w[V1 + 0000];
             8003E614	nop
@@ -5525,16 +5162,14 @@ int func39c38()
 
             L3e624:	; 8003E624
             S3 = A0;
-            8003E628	lui    a1, $8008
-            8003E62C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003E648	beq    v0, zero, L3e668 [$8003e668]
-            8003E64C	lui    v0, $8008
+
             8003E650	jal    func52da0 [$80052da0]
             8003E654	nop
             8003E658	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -5543,7 +5178,7 @@ int func39c38()
             A2 = V0;
 
             L3e668:	; 8003E668
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003E66C	nop
             V0 = w[V1 + 0000];
             8003E674	nop
@@ -5553,14 +5188,12 @@ int func39c38()
 
             L3e684:	; 8003E684
             S5 = A2;
-            8003E688	lui    a1, $8008
-            8003E68C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003E6A0	beq    s0, zero, L3e6d8 [$8003e6d8]
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = S2 << 18;
             V0 = V0 >> 12;
             [S0 + 0054] = h(V0);
@@ -5596,20 +5229,17 @@ int func39c38()
             8003E714	nop
             S0 = w[V0 + 0008];
             8003E71C	j      L3e72c [$8003e72c]
-            8003E720	lui    v0, $8008
 
             L3e724:	; 8003E724
             S0 = 0;
 
             L3e728:	; 8003E728
-            8003E728	lui    v0, $8008
-
             L3e72c:	; 8003E72C
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003E730	nop
             V0 = V0 & 0001;
             8003E738	beq    v0, zero, L3e758 [$8003e758]
-            8003E73C	lui    v0, $8008
+
             8003E740	jal    func52da0 [$80052da0]
             8003E744	nop
             8003E748	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -5618,7 +5248,7 @@ int func39c38()
             A0 = V0;
 
             L3e758:	; 8003E758
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003E75C	nop
             V0 = w[V1 + 0000];
             8003E764	nop
@@ -5628,13 +5258,11 @@ int func39c38()
 
             L3e774:	; 8003E774
             S3 = A0;
-            8003E778	lui    a1, $8008
-            8003E77C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
 
             if (S0 != 0)
             {
@@ -5678,20 +5306,17 @@ int func39c38()
             8003E818	nop
             S0 = w[V0 + 0008];
             8003E820	j      L3e830 [$8003e830]
-            8003E824	lui    v0, $8008
 
             L3e828:	; 8003E828
             S0 = 0;
 
             L3e82c:	; 8003E82C
-            8003E82C	lui    v0, $8008
-
             L3e830:	; 8003E830
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003E834	nop
             V0 = V0 & 0001;
             8003E83C	beq    v0, zero, L3e85c [$8003e85c]
-            8003E840	lui    v0, $8008
+
             8003E844	jal    func52da0 [$80052da0]
             8003E848	nop
             8003E84C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -5700,7 +5325,7 @@ int func39c38()
             A0 = V0;
 
             L3e85c:	; 8003E85C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003E860	nop
             V0 = w[V1 + 0000];
             8003E868	nop
@@ -5710,13 +5335,11 @@ int func39c38()
 
             L3e878:	; 8003E878
             S3 = A0;
-            8003E87C	lui    a1, $8008
-            8003E880	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
 
             if (S0 != 0)
             {
@@ -5758,20 +5381,17 @@ int func39c38()
             8003E91C	nop
             S0 = w[V0 + 0008];
             8003E924	j      L3e934 [$8003e934]
-            8003E928	lui    v0, $8008
 
             L3e92c:	; 8003E92C
             S0 = 0;
 
             L3e930:	; 8003E930
-            8003E930	lui    v0, $8008
 
             L3e934:	; 8003E934
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003E938	nop
             V0 = V0 & 0001;
             8003E940	beq    v0, zero, L3e960 [$8003e960]
-            8003E944	lui    v0, $8008
             8003E948	jal    func52da0 [$80052da0]
             8003E94C	nop
             8003E950	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -5780,7 +5400,7 @@ int func39c38()
             A0 = V0;
 
             L3e960:	; 8003E960
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003E964	nop
             V0 = w[V1 + 0000];
             8003E96C	nop
@@ -5790,13 +5410,11 @@ int func39c38()
 
             L3e97c:	; 8003E97C
             S3 = A0;
-            8003E980	lui    a1, $8008
-            8003E984	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
 
             if (S0 != 0)
             {
@@ -5847,15 +5465,13 @@ int func39c38()
             A2 = V0 >> 10;
 
             L3ea40:	; 8003EA40
-            8003EA44	lui    a0, $8008
             V1 = 0001;
-            8003EA4C	lui    a1, $8008
-            [A0 + b6f8] = w(V1);
-            V1 = w[A1 + b6f4];
+            [0x8007b6f8] = w(V1);
+            V1 = w[0x8007b6f4];
             A0 = w[S0 + 0000];
             V1 = V1 >> 01;
             A0 = A0 | A2;
-            [A1 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             [S0 + 0000] = w(A0);
             return 0;        }
 
@@ -5893,13 +5509,11 @@ int func39c38()
             A3 = V0 >> 10;
 
             L3eae8:	; 8003EAE8
-            8003EAEC	lui    a2, $8008
-            8003EAF0	lui    a1, $8008
-            V1 = w[A2 + b6f4];
+            V1 = w[0x8007b6f4];
             A0 = 0001;
-            [A1 + b6f8] = w(A0);
+            [0x8007b6f8] = w(A0);
             V1 = V1 >> A0;
-            [A2 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             V1 = w[S0 + 0000];
             A0 = 0 NOR A3;
             V1 = V1 & A0;
@@ -5931,12 +5545,10 @@ int func39c38()
             8003EB60	jal    func52d0c [$80052d0c]
             A0 = SP + 0028;
 
-            8003EB6C	lui    a0, $8008
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
-            8003EB78	lui    a0, $8008
+            [0x8007b6f8] = w(V1);
             V1 = w[SP + 0028];
-            A0 = w[A0 + b70c];
+            A0 = w[0x8007b70c];
             V1 = V1 + 0001;
             [A0 + 0000] = w(V1);
             return 0;        }
@@ -5944,10 +5556,9 @@ int func39c38()
         case 0x4f:
         {
             A2 = w[0x8007b70c];
-            8003EB9C	lui    a1, $8008
             V1 = w[A2 + 0000];
             A0 = 0001;
-            [A1 + b6f8] = w(A0);
+            [0x8007b6f8] = w(A0);
             V1 = V1 + A0;
             [A2 + 0000] = w(V1);
             return 0x6;        }
@@ -5958,7 +5569,6 @@ int func39c38()
             8003EBC0	nop
             V0 = V0 & 0001;
             8003EBC8	beq    v0, zero, L3ebe8 [$8003ebe8]
-            8003EBCC	lui    v0, $8008
             8003EBD0	jal    func52da0 [$80052da0]
             8003EBD4	nop
             8003EBD8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -5967,7 +5577,7 @@ int func39c38()
             A3 = V0;
 
             L3ebe8:	; 8003EBE8
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003EBEC	nop
             V0 = w[A0 + 0000];
             8003EBF4	nop
@@ -5984,11 +5594,9 @@ int func39c38()
 
             L3ec20:	; 8003EC20
             V0 = 0;
-            8003EC24	lui    a2, $8008
-            8003EC28	lui    a1, $8008
-            A0 = w[A2 + b6f4];
+            A0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             8003EC38	j      L3eee4 [$8003eee4]
             [S0 + 0054] = h(A3);        }
 
@@ -5998,7 +5606,6 @@ int func39c38()
             8003EC48	nop
             V0 = V0 & 0001;
             8003EC50	beq    v0, zero, L3ec70 [$8003ec70]
-            8003EC54	lui    v0, $8008
             8003EC58	jal    func52da0 [$80052da0]
             8003EC5C	nop
             8003EC60	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6007,7 +5614,7 @@ int func39c38()
             A3 = V0;
 
             L3ec70:	; 8003EC70
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003EC74	nop
             V0 = w[A0 + 0000];
             8003EC7C	nop
@@ -6024,11 +5631,9 @@ int func39c38()
 
             L3eca8:	; 8003ECA8
             V0 = 0;
-            8003ECAC	lui    a2, $8008
-            8003ECB0	lui    a1, $8008
-            A0 = w[A2 + b6f4];
+            A0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             8003ECC0	j      L3eee4 [$8003eee4]
             [S0 + 0056] = h(A3);        }
 
@@ -6038,7 +5643,6 @@ int func39c38()
             8003ECD0	nop
             V0 = V0 & 0001;
             8003ECD8	beq    v0, zero, L3ecf8 [$8003ecf8]
-            8003ECDC	lui    v0, $8008
             8003ECE0	jal    func52da0 [$80052da0]
             8003ECE4	nop
             8003ECE8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6047,7 +5651,7 @@ int func39c38()
             A3 = V0;
 
             L3ecf8:	; 8003ECF8
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003ECFC	nop
             V0 = w[A0 + 0000];
             8003ED04	nop
@@ -6064,11 +5668,9 @@ int func39c38()
 
             L3ed30:	; 8003ED30
             V0 = 0;
-            8003ED34	lui    a2, $8008
-            8003ED38	lui    a1, $8008
-            A0 = w[A2 + b6f4];
+            A0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             8003ED48	j      L3eee4 [$8003eee4]
             [S0 + 0058] = h(A3);        }
 
@@ -6078,7 +5680,6 @@ int func39c38()
             8003ED58	nop
             V0 = V0 & 0001;
             8003ED60	beq    v0, zero, L3ed80 [$8003ed80]
-            8003ED64	lui    v0, $8008
             8003ED68	jal    func52da0 [$80052da0]
             8003ED6C	nop
             8003ED70	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6087,7 +5688,7 @@ int func39c38()
             A3 = V0;
 
             L3ed80:	; 8003ED80
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003ED84	nop
             V0 = w[A0 + 0000];
             8003ED8C	nop
@@ -6104,11 +5705,9 @@ int func39c38()
 
             L3edb8:	; 8003EDB8
             V0 = 0;
-            8003EDBC	lui    a2, $8008
-            8003EDC0	lui    a1, $8008
-            A0 = w[A2 + b6f4];
+            A0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             8003EDD0	j      L3eee4 [$8003eee4]
             [S0 + 004c] = h(A3);        }
 
@@ -6118,7 +5717,6 @@ int func39c38()
             8003EDE0	nop
             V0 = V0 & 0001;
             8003EDE8	beq    v0, zero, L3ee08 [$8003ee08]
-            8003EDEC	lui    v0, $8008
             8003EDF0	jal    func52da0 [$80052da0]
             8003EDF4	nop
             8003EDF8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6127,7 +5725,7 @@ int func39c38()
             A3 = V0;
 
             L3ee08:	; 8003EE08
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003EE0C	nop
             V0 = w[A0 + 0000];
             8003EE14	nop
@@ -6144,11 +5742,9 @@ int func39c38()
 
             L3ee40:	; 8003EE40
             V0 = 0;
-            8003EE44	lui    a2, $8008
-            8003EE48	lui    a1, $8008
-            A0 = w[A2 + b6f4];
+            A0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             8003EE58	j      L3eee4 [$8003eee4]
             [S0 + 004e] = h(A3);        }
 
@@ -6158,7 +5754,6 @@ int func39c38()
             8003EE68	nop
             V0 = V0 & 0001;
             8003EE70	beq    v0, zero, L3ee90 [$8003ee90]
-            8003EE74	lui    v0, $8008
             8003EE78	jal    func52da0 [$80052da0]
             8003EE7C	nop
             8003EE80	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6167,7 +5762,7 @@ int func39c38()
             A3 = V0;
 
             L3ee90:	; 8003EE90
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003EE94	nop
             V0 = w[A0 + 0000];
             8003EE9C	nop
@@ -6184,16 +5779,14 @@ int func39c38()
 
             L3eec8:	; 8003EEC8
             V0 = 0;
-            8003EECC	lui    a2, $8008
-            8003EED0	lui    a1, $8008
-            A0 = w[A2 + b6f4];
+            A0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             [S0 + 0074] = h(A3);
 
             L3eee4:	; 8003EEE4
             A0 = A0 >> V1;
-            [A2 + b6f4] = w(A0);
+            [0x8007b6f4] = w(A0);
             return V0;        }
 
         case 0x94:
@@ -6202,7 +5795,6 @@ int func39c38()
             8003EEF8	nop
             V0 = V0 & 0001;
             8003EF00	beq    v0, zero, L3ef20 [$8003ef20]
-            8003EF04	lui    v0, $8008
             8003EF08	jal    func52da0 [$80052da0]
             8003EF0C	nop
             8003EF10	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6211,7 +5803,7 @@ int func39c38()
             A2 = V0;
 
             L3ef20:	; 8003EF20
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003EF24	nop
             V0 = w[A0 + 0000];
             8003EF2C	nop
@@ -6227,17 +5819,14 @@ int func39c38()
             A2 = V0 >> 10;
 
             L3ef58:	; 8003EF58
-            8003EF58	lui    a1, $8008
-            8003EF5C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             [S0 + 0076] = h(A2);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003EF7C	beq    v0, zero, L3ef9c [$8003ef9c]
-            8003EF80	lui    v0, $8008
             8003EF84	jal    func52da0 [$80052da0]
             8003EF88	nop
             8003EF8C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6246,7 +5835,7 @@ int func39c38()
             A2 = V0;
 
             L3ef9c:	; 8003EF9C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003EFA0	nop
             V0 = w[V1 + 0000];
             8003EFA8	nop
@@ -6255,19 +5844,16 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3efb8:	; 8003EFB8
-            8003EFB8	lui    a0, $8008
-            8003EFBC	lui    a1, $8008
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             [S0 + 0090] = b(A2);
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003EFDC	nop
             V0 = V0 & V1;
             8003EFE4	beq    v0, zero, L3f004 [$8003f004]
-            8003EFE8	lui    v0, $8008
             8003EFEC	jal    func52da0 [$80052da0]
             8003EFF0	nop
             8003EFF4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6276,7 +5862,7 @@ int func39c38()
             A3 = V0;
 
             L3f004:	; 8003F004
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003F008	nop
             V0 = w[V1 + 0000];
             8003F010	nop
@@ -6285,13 +5871,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3f020:	; 8003F020
-            8003F024	lui    a2, $8008
-            8003F028	lui    a1, $8008
-            V1 = w[A2 + b6f4];
+            V1 = w[0x8007b6f4];
             A0 = 0001;
-            [A1 + b6f8] = w(A0);
+            [0x8007b6f8] = w(A0);
             V1 = V1 >> A0;
-            [A2 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             [S0 + 0091] = b(A3);
             return 0;        }
 
@@ -6301,7 +5885,6 @@ int func39c38()
             8003F050	nop
             V0 = V0 & 0001;
             8003F058	beq    v0, zero, L3f078 [$8003f078]
-            8003F05C	lui    v0, $8008
             8003F060	jal    func52da0 [$80052da0]
             8003F064	nop
             8003F068	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6310,7 +5893,7 @@ int func39c38()
             A2 = V0;
 
             L3f078:	; 8003F078
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003F07C	nop
             V0 = w[V1 + 0000];
             8003F084	nop
@@ -6319,21 +5902,18 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3f094:	; 8003F094
-            8003F094	lui    a0, $8008
-            8003F098	lui    a1, $8008
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = A2 << 03;
             V0 = V0 & 0038;
             [S0 + 0062] = b(V0);
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003F0C0	nop
             V0 = V0 & V1;
             8003F0C8	beq    v0, zero, L3f0e8 [$8003f0e8]
-            8003F0CC	lui    v0, $8008
 
             L3f0d0:	; 8003F0D0
             8003F0D0	jal    func52da0 [$80052da0]
@@ -6344,7 +5924,7 @@ int func39c38()
             A3 = V0;
 
             L3f0e8:	; 8003F0E8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003F0EC	nop
             V0 = w[V1 + 0000];
             8003F0F4	nop
@@ -6353,13 +5933,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3f104:	; 8003F104
-            8003F108	lui    a2, $8008
-            8003F10C	lui    a1, $8008
-            V1 = w[A2 + b6f4];
+            V1 = w[0x8007b6f4];
             A0 = 0001;
-            [A1 + b6f8] = w(A0);
+            [0x8007b6f8] = w(A0);
             V1 = V1 >> A0;
-            [A2 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             [S0 + 0063] = b(A3);
             return 0;        }
 
@@ -6369,7 +5947,6 @@ int func39c38()
             8003F134	nop
             V0 = V0 & 0001;
             8003F13C	beq    v0, zero, L3f15c [$8003f15c]
-            8003F140	lui    v0, $8008
             8003F144	jal    func52da0 [$80052da0]
             8003F148	nop
             8003F14C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6378,7 +5955,7 @@ int func39c38()
             A3 = V0;
 
             L3f15c:	; 8003F15C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003F160	nop
             V0 = w[V1 + 0000];
             8003F168	nop
@@ -6387,13 +5964,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3f178:	; 8003F178
-            8003F17C	lui    a2, $8008
-            8003F180	lui    a1, $8008
-            V1 = w[A2 + b6f4];
+            V1 = w[0x8007b6f4];
             A0 = 0001;
-            [A1 + b6f8] = w(A0);
+            [0x8007b6f8] = w(A0);
             V1 = V1 >> A0;
-            [A2 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             [S0 + 0069] = b(A3);
             return 0;        }
 
@@ -6403,7 +5978,6 @@ int func39c38()
             8003F1A8	nop
             V0 = V0 & 0001;
             8003F1B0	beq    v0, zero, L3f1d0 [$8003f1d0]
-            8003F1B4	lui    v0, $8008
             8003F1B8	jal    func52da0 [$80052da0]
             8003F1BC	nop
             8003F1C0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6412,7 +5986,7 @@ int func39c38()
             A2 = V0;
 
             L3f1d0:	; 8003F1D0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003F1D4	nop
             V0 = w[V1 + 0000];
             8003F1DC	nop
@@ -6421,19 +5995,16 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3f1ec:	; 8003F1EC
-            8003F1EC	lui    a0, $8008
-            8003F1F0	lui    a1, $8008
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             [S0 + 007c] = b(A2);
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003F210	nop
             V0 = V0 & V1;
             8003F218	beq    v0, zero, L3f238 [$8003f238]
-            8003F21C	lui    v0, $8008
             8003F220	jal    func52da0 [$80052da0]
             8003F224	nop
             8003F228	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6442,7 +6013,7 @@ int func39c38()
             A2 = V0;
 
             L3f238:	; 8003F238
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003F23C	nop
             V0 = w[V1 + 0000];
             8003F244	nop
@@ -6451,19 +6022,16 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3f254:	; 8003F254
-            8003F254	lui    a0, $8008
-            8003F258	lui    a1, $8008
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             [S0 + 007d] = b(A2);
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003F278	nop
             V0 = V0 & V1;
             8003F280	beq    v0, zero, L3f2a0 [$8003f2a0]
-            8003F284	lui    v0, $8008
             8003F288	jal    func52da0 [$80052da0]
             8003F28C	nop
             8003F290	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6472,7 +6040,7 @@ int func39c38()
             A2 = V0;
 
             L3f2a0:	; 8003F2A0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003F2A4	nop
             V0 = w[V1 + 0000];
             8003F2AC	nop
@@ -6481,19 +6049,16 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3f2bc:	; 8003F2BC
-            8003F2BC	lui    a0, $8008
-            8003F2C0	lui    a1, $8008
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             [S0 + 007e] = b(A2);
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003F2E0	nop
             V0 = V0 & V1;
             8003F2E8	beq    v0, zero, L3f308 [$8003f308]
-            8003F2EC	lui    v0, $8008
             8003F2F0	jal    func52da0 [$80052da0]
             8003F2F4	nop
             8003F2F8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6502,7 +6067,7 @@ int func39c38()
             A3 = V0;
 
             L3f308:	; 8003F308
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003F30C	nop
             V0 = w[V1 + 0000];
             8003F314	nop
@@ -6511,13 +6076,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3f324:	; 8003F324
-            8003F328	lui    a2, $8008
-            8003F32C	lui    a1, $8008
-            V1 = w[A2 + b6f4];
+            V1 = w[0x8007b6f4];
             A0 = 0001;
-            [A1 + b6f8] = w(A0);
+            [0x8007b6f8] = w(A0);
             V1 = V1 >> A0;
-            [A2 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             [S0 + 007f] = b(A3);
             return 0;        }
 
@@ -6527,7 +6090,6 @@ int func39c38()
             8003F354	nop
             V0 = V0 & 0001;
             8003F35C	beq    v0, zero, L3f37c [$8003f37c]
-            8003F360	lui    v0, $8008
             8003F364	jal    func52da0 [$80052da0]
             8003F368	nop
             8003F36C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6536,7 +6098,7 @@ int func39c38()
             A2 = V0;
 
             L3f37c:	; 8003F37C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003F380	nop
             V0 = w[V1 + 0000];
             8003F388	nop
@@ -6545,19 +6107,16 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3f398:	; 8003F398
-            8003F398	lui    a0, $8008
-            8003F39C	lui    a1, $8008
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             [S0 + 0060] = b(A2);
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003F3BC	nop
             V0 = V0 & V1;
             8003F3C4	beq    v0, zero, L3f3e4 [$8003f3e4]
-            8003F3C8	lui    v0, $8008
             8003F3CC	jal    func52da0 [$80052da0]
             8003F3D0	nop
             8003F3D4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6566,7 +6125,7 @@ int func39c38()
             A3 = V0;
 
             L3f3e4:	; 8003F3E4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003F3E8	nop
             V0 = w[V1 + 0000];
             8003F3F0	nop
@@ -6575,13 +6134,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3f400:	; 8003F400
-            8003F404	lui    a2, $8008
-            8003F408	lui    a1, $8008
-            V1 = w[A2 + b6f4];
+            V1 = w[0x8007b6f4];
             A0 = 0001;
-            [A1 + b6f8] = w(A0);
+            [0x8007b6f8] = w(A0);
             V1 = V1 >> A0;
-            [A2 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             [S0 + 0061] = b(A3);
             return 0;        }
 
@@ -6597,7 +6154,6 @@ int func39c38()
             8003F43C	nop
             V0 = V0 & 0001;
             8003F444	beq    v0, zero, L3f464 [$8003f464]
-            8003F448	lui    v0, $8008
             8003F44C	jal    func52da0 [$80052da0]
             8003F450	nop
             8003F454	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6606,7 +6162,7 @@ int func39c38()
             A2 = V0;
 
             L3f464:	; 8003F464
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003F468	nop
             V0 = w[A0 + 0000];
             8003F470	nop
@@ -6622,13 +6178,11 @@ int func39c38()
             A2 = V0 >> 10;
 
             L3f49c:	; 8003F49C
-            8003F49C	lui    a1, $8008
-            8003F4A0	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = bu[S0 + 0062];
             8003F4BC	nop
             V0 = V0 & 0080;
@@ -6668,9 +6222,8 @@ int func39c38()
             [S0 + 0064] = b(0);
             V1 = bu[S0 + 0069];
             [S0 + 0038] = b(V0);
-            8003F53C	lui    v0, $8008
             [S0 + 005d] = b(V1);
-            V0 = w[V0 + aecc];
+            V0 = w[0x8007aecc];
             V1 = bu[S0 + 0007];
             V0 = bu[V0 + 16ed];
             if (V1 == V0)
@@ -6723,10 +6276,8 @@ int func39c38()
 
         case 0x43:
         {
-            8003F5E0	lui    v0, $8008
-            8003F5E4	lui    v1, $8008
-            V0 = w[V0 + b70c];
-            V1 = w[V1 + aecc];
+            V0 = w[0x8007b70c];
+            V1 = w[0x8007aecc];
             V0 = bu[V0 + 0007];
             V1 = w[V1 + 16d8];
             8003F5F8	nop
@@ -6753,17 +6304,14 @@ int func39c38()
             L3f638:	; 8003F638
             8003F638	nop
             8003F63C	beq    a0, zero, L3f650 [$8003f650]
-            8003F640	lui    v0, $8008
             8003F644	jal    func36978 [$80036978]
             8003F648	nop
-            8003F64C	lui    v0, $8008
 
             L3f650:	; 8003F650
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             8003F654	nop
             V0 = V0 & 0001;
             8003F65C	beq    v0, zero, L3f67c [$8003f67c]
-            8003F660	lui    v0, $8008
             8003F664	jal    func52da0 [$80052da0]
             8003F668	nop
             8003F66C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -6772,7 +6320,7 @@ int func39c38()
             A0 = V0;
 
             L3f67c:	; 8003F67C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003F680	nop
             V0 = w[V1 + 0000];
             8003F688	nop
@@ -6784,24 +6332,20 @@ int func39c38()
             A1 = S2;
             A2 = 0014;
             A3 = 0;
-            8003F6A4	lui    t0, $8008
-            8003F6A8	lui    v1, $8008
-            V0 = w[T0 + b6f4];
+            V0 = w[0x8007b6f4];
             S0 = 0001;
-            [V1 + b6f8] = w(S0);
+            [0x8007b6f8] = w(S0);
             V0 = V0 >> S0;
             8003F6BC	jal    func367d0 [$800367d0]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             [V0 + 0005] = b(S0);
 
             return 0;        }
 
         case 0x44:
         {
-            8003F6CC	lui    v0, $8008
-            8003F6D0	lui    v1, $8008
-            V0 = w[V0 + b70c];
-            V1 = w[V1 + aecc];
+            V0 = w[0x8007b70c];
+            V1 = w[0x8007aecc];
             V0 = bu[V0 + 0007];
             V1 = w[V1 + 16d8];
             8003F6E4	nop
@@ -6838,10 +6382,8 @@ int func39c38()
 
         case 0x45:
         {
-            8003F758	lui    v0, $8008
-            8003F75C	lui    v1, $8008
-            V0 = w[V0 + b70c];
-            V1 = w[V1 + aecc];
+            V0 = w[0x8007b70c];
+            V1 = w[0x8007aecc];
             V0 = bu[V0 + 0007];
             V1 = w[V1 + 16d8];
             8003F770	nop
@@ -6893,12 +6435,10 @@ int func39c38()
             return 0;
 
             L3f810:	; 8003F810
-            8003F810	lui    a0, $8008
-            8003F814	lui    v0, $8008
             8003F818	addiu  v1, a0, $ae10 (=-$51f0)
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             S0 = hu[V1 + 0002];
-            S1 = hu[A0 + ae10];
+            S1 = hu[0x8007ae10];
             V0 = V0 & 0001;
             8003F82C	beq    v0, zero, L3f84c [$8003f84c]
             8003F830	nop
@@ -6923,12 +6463,10 @@ int func39c38()
             A2 = 0036;
 
             L3f870:	; 8003F870
-            8003F870	lui    a0, $8008
-            8003F874	lui    v0, $8008
             8003F878	addiu  v1, a0, $ae10 (=-$51f0)
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             S0 = hu[V1 + 0002];
-            S1 = hu[A0 + ae10];
+            S1 = hu[0x8007ae10];
             V0 = V0 & 0001;
             8003F88C	beq    v0, zero, L3f8ac [$8003f8ac]
             8003F890	nop
@@ -6952,23 +6490,19 @@ int func39c38()
             A2 = 0035;
 
             L3f8cc:	; 8003F8CC
-            8003F8CC	lui    t1, $8008
-            8003F8D0	lui    t0, $8008
-            V0 = w[T1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [T0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003F8E4	jal    funcb1520 [$800b1520]
-            [T1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;
 
             L3f8f4:	; 8003F8F4
-            8003F8F4	lui    a0, $8008
-            8003F8F8	lui    v0, $8008
             8003F8FC	addiu  v1, a0, $ae10 (=-$51f0)
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             S0 = hu[V1 + 0002];
-            S1 = hu[A0 + ae10];
+            S1 = hu[0x8007ae10];
             V0 = V0 & 0001;
             8003F910	beq    v0, zero, L3f930 [$8003f930]
             8003F914	nop
@@ -6990,14 +6524,12 @@ int func39c38()
             A0 = S0;
             A1 = S1;
             A2 = 002f;
-            8003F950	lui    t1, $8008
-            8003F954	lui    t0, $8008
-            V0 = w[T1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [T0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003F968	jal    funcb1520 [$800b1520]
-            [T1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = w[0x8007b70c];
             [V0 + 000b] = b(0);
 
@@ -7005,15 +6537,12 @@ int func39c38()
 
         case 0xe5:
         {
-            8003F980	lui    a0, $8008
-            8003F984	lui    v0, $8008
             8003F988	addiu  v1, a0, $ae10 (=-$51f0)
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             S0 = hu[V1 + 0002];
-            S1 = hu[A0 + ae10];
+            S1 = hu[0x8007ae10];
             V0 = V0 & 0001;
             8003F99C	beq    v0, zero, L3f9bc [$8003f9bc]
-            8003F9A0	lui    v0, $8008
             8003F9A4	jal    func52da0 [$80052da0]
             8003F9A8	nop
             8003F9AC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7022,7 +6551,7 @@ int func39c38()
             A2 = V0;
 
             L3f9bc:	; 8003F9BC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003F9C0	nop
             V0 = w[V1 + 0000];
             8003F9C8	nop
@@ -7034,14 +6563,12 @@ int func39c38()
             A0 = S0;
             A1 = S1;
             A2 = A2 & ffff;
-            8003F9E4	lui    t0, $8008
-            8003F9E8	lui    a3, $8008
-            V0 = w[T0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A3 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003F9FC	jal    funcca694 [$800ca694]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x4a:
@@ -7050,7 +6577,6 @@ int func39c38()
             8003FA14	nop
             V0 = V0 & 0001;
             8003FA1C	beq    v0, zero, L3fa3c [$8003fa3c]
-            8003FA20	lui    v0, $8008
             8003FA24	jal    func52da0 [$80052da0]
             8003FA28	nop
             8003FA2C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7059,7 +6585,7 @@ int func39c38()
             A0 = V0;
 
             L3fa3c:	; 8003FA3C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003FA40	nop
             V0 = w[V1 + 0000];
             8003FA48	nop
@@ -7069,16 +6595,13 @@ int func39c38()
 
             L3fa58:	; 8003FA58
             S2 = A0;
-            8003FA5C	lui    a1, $8008
-            8003FA60	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003FA7C	beq    v0, zero, L3fa9c [$8003fa9c]
-            8003FA80	lui    v0, $8008
             8003FA84	jal    func52da0 [$80052da0]
             8003FA88	nop
             8003FA8C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7087,7 +6610,7 @@ int func39c38()
             A1 = V0;
 
             L3fa9c:	; 8003FA9C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003FAA0	nop
             V0 = w[A0 + 0000];
             8003FAA8	nop
@@ -7104,14 +6627,12 @@ int func39c38()
 
             L3fad4:	; 8003FAD4
             A0 = S2;
-            8003FAD8	lui    a3, $8008
-            8003FADC	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003FAF0	jal    funcbe99c [$800be99c]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x1b:
@@ -7120,7 +6641,6 @@ int func39c38()
             8003FB08	nop
             V0 = V0 & 0001;
             8003FB10	beq    v0, zero, L3fb30 [$8003fb30]
-            8003FB14	lui    v0, $8008
             8003FB18	jal    func52da0 [$80052da0]
             8003FB1C	nop
             8003FB20	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7129,7 +6649,7 @@ int func39c38()
             A2 = V0;
 
             L3fb30:	; 8003FB30
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003FB34	nop
             V0 = w[V1 + 0000];
             8003FB3C	nop
@@ -7138,14 +6658,12 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3fb4c:	; 8003FB4C
-            8003FB4C	lui    a1, $8008
-            8003FB50	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003FB64	beq    a2, zero, L3fb8c [$8003fb8c]
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = w[0x8006794c];
             8003FB74	nop
             V1 = w[V0 + 001c];
@@ -7172,9 +6690,8 @@ int func39c38()
         {
             8003FBB4	jal    $801f0ff4
             8003FBB8	nop
-            8003FBBC	lui    v1, $8008
             V0 = 0001;
-            [V1 + b718] = w(V0);
+            [0x8007b718] = w(V0);
 
             return 0;        }
 
@@ -7184,7 +6701,6 @@ int func39c38()
             8003FBD4	nop
             V0 = V0 & 0001;
             8003FBDC	beq    v0, zero, L3fbfc [$8003fbfc]
-            8003FBE0	lui    v0, $8008
             8003FBE4	jal    func52da0 [$80052da0]
             8003FBE8	nop
             8003FBEC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7193,7 +6709,7 @@ int func39c38()
             A0 = V0;
 
             L3fbfc:	; 8003FBFC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003FC00	nop
             V0 = w[V1 + 0000];
             8003FC08	nop
@@ -7203,15 +6719,13 @@ int func39c38()
 
             L3fc18:	; 8003FC18
             A3 = A0;
-            8003FC1C	lui    a1, $8008
-            8003FC20	lui    v1, $8008
-            A0 = w[A1 + b6f4];
+            A0 = w[0x8007b6f4];
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             A0 = A0 >> V0;
             V0 = A3 < 0009;
             8003FC38	bne    v0, zero, L3fc44 [$8003fc44]
-            [A1 + b6f4] = w(A0);
+            [0x8007b6f4] = w(A0);
             8003FC40	addiu  a3, a3, $fffc (=-$4)
 
             L3fc44:	; 8003FC44
@@ -7220,7 +6734,6 @@ int func39c38()
             8003FC4C	beq    v0, zero, L3fd2c [$8003fd2c]
             V0 = A0 & 0001;
             8003FC54	beq    v0, zero, L3fc74 [$8003fc74]
-            8003FC58	lui    v0, $8008
             8003FC5C	jal    func52da0 [$80052da0]
             8003FC60	nop
             8003FC64	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7229,7 +6742,7 @@ int func39c38()
             A1 = V0;
 
             L3fc74:	; 8003FC74
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8003FC78	nop
             V0 = w[A0 + 0000];
             8003FC80	nop
@@ -7246,14 +6759,12 @@ int func39c38()
 
             L3fcac:	; 8003FCAC
             A0 = A1;
-            8003FCB0	lui    a2, $8008
-            8003FCB4	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8003FCC8	jal    func4f058 [$8004f058]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             A1 = V0;
             8003FCD4	lui    v1, $8006
             V0 = S2 << 03;
@@ -7285,30 +6796,26 @@ int func39c38()
 
             L3fd2c:	; 8003FD2C
             8003FD2C	beq    v0, zero, L3fd4c [$8003fd4c]
-            8003FD30	lui    v0, $8008
             8003FD34	jal    func52da0 [$80052da0]
             8003FD38	nop
             8003FD3C	jal    system_read_from_stack_command_not_from_script [$80052d40]
             8003FD40	nop
             8003FD44	j      L3fd68 [$8003fd68]
-            8003FD48	lui    a1, $8008
 
             L3fd4c:	; 8003FD4C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003FD50	nop
             V0 = w[V1 + 0000];
             8003FD58	nop
             V0 = V0 + 0002;
             [V1 + 0000] = w(V0);
-            8003FD64	lui    a1, $8008
 
             L3fd68:	; 8003FD68
-            8003FD68	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
 
             return 0;        }
 
@@ -7318,7 +6825,6 @@ int func39c38()
             8003FD8C	nop
             V0 = V0 & 0001;
             8003FD94	beq    v0, zero, L3fdb4 [$8003fdb4]
-            8003FD98	lui    v0, $8008
             8003FD9C	jal    func52da0 [$80052da0]
             8003FDA0	nop
             8003FDA4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7327,7 +6833,7 @@ int func39c38()
             A0 = V0;
 
             L3fdb4:	; 8003FDB4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003FDB8	nop
             V0 = w[V1 + 0000];
             8003FDC0	nop
@@ -7337,15 +6843,13 @@ int func39c38()
 
             L3fdd0:	; 8003FDD0
             A3 = A0;
-            8003FDD4	lui    a1, $8008
-            8003FDD8	lui    v1, $8008
-            A0 = w[A1 + b6f4];
+            A0 = w[0x8007b6f4];
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             A0 = A0 >> V0;
             V0 = A3 < 0009;
             8003FDF0	bne    v0, zero, L3fdfc [$8003fdfc]
-            [A1 + b6f4] = w(A0);
+            [0x8007b6f4] = w(A0);
             8003FDF8	addiu  a3, a3, $fffc (=-$4)
 
             L3fdfc:	; 8003FDFC
@@ -7364,7 +6868,7 @@ int func39c38()
                 A2 = V0;
 
                 L3fe2c:	; 8003FE2C
-                V1 = w[V0 + b70c];
+                V1 = w[0x8007b70c];
                 8003FE30	nop
                 V0 = w[V1 + 0000];
                 8003FE38	nop
@@ -7375,12 +6879,12 @@ int func39c38()
                 L3fe48:	; 8003FE48
                 8003FE48	lui    a1, $8008
                 8003FE4C	lui    a0, $8008
-                V0 = w[A1 + b6f4];
+                V0 = w[0x8007b6f4];
                 V1 = 0001;
-                [A0 + b6f8] = w(V1);
+                [0x8007b6f8] = w(V1);
                 V0 = V0 >> V1;
                 8003FE60	lui    v1, $8006
-                [A1 + b6f4] = w(V0);
+                [0x8007b6f4] = w(V0);
                 V0 = S2 << 03;
                 V1 = w[V1 + 794c];
                 V0 = V0 + S2;
@@ -7404,7 +6908,6 @@ int func39c38()
             8003FEA8	nop
             V0 = V0 & 0001;
             8003FEB0	beq    v0, zero, L3fed0 [$8003fed0]
-            8003FEB4	lui    v0, $8008
             8003FEB8	jal    func52da0 [$80052da0]
             8003FEBC	nop
             8003FEC0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7413,7 +6916,7 @@ int func39c38()
             A2 = V0;
 
             L3fed0:	; 8003FED0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003FED4	nop
             V0 = w[V1 + 0000];
             8003FEDC	nop
@@ -7422,15 +6925,13 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3feec:	; 8003FEEC
-            8003FEEC	lui    a1, $8008
-            8003FEF0	lui    a0, $8008
-            V1 = w[A1 + b6f4];
+            V1 = w[0x8007b6f4];
             V0 = 0001;
-            [A0 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             V1 = V1 >> V0;
             A0 = w[0x8007aecc];
             V0 = A2 << 04;
-            [A1 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             V1 = V1 & 0001;
             8003FF18	beq    v1, zero, L3ff38 [$8003ff38]
             [A0 + 16e8] = h(V0);
@@ -7451,13 +6952,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L3ff58:	; 8003FF58
-            8003FF5C	lui    a2, $8008
-            8003FF60	lui    a1, $8008
-            V1 = w[A2 + b6f4];
+            V1 = w[0x8007b6f4];
             A0 = 0001;
-            [A1 + b6f8] = w(A0);
+            [0x8007b6f8] = w(A0);
             V1 = V1 >> A0;
-            [A2 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             A0 = w[0x8007aecc];
             V1 = A3 << 04;
             [A0 + 16ea] = h(V1);
@@ -7469,7 +6968,6 @@ int func39c38()
             8003FF94	nop
             V0 = V0 & 0001;
             8003FF9C	beq    v0, zero, L3ffbc [$8003ffbc]
-            8003FFA0	lui    v0, $8008
             8003FFA4	jal    func52da0 [$80052da0]
             8003FFA8	nop
             8003FFAC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7478,7 +6976,7 @@ int func39c38()
             A0 = V0;
 
             L3ffbc:	; 8003FFBC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8003FFC0	nop
             V0 = w[V1 + 0000];
             8003FFC8	nop
@@ -7488,16 +6986,13 @@ int func39c38()
 
             L3ffd8:	; 8003FFD8
             S2 = A0;
-            8003FFDC	lui    a1, $8008
-            8003FFE0	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8003FFFC	beq    v0, zero, L4001c [$8004001c]
-            80040000	lui    v0, $8008
 
             L40004:	; 80040004
             80040004	jal    func52da0 [$80052da0]
@@ -7508,7 +7003,7 @@ int func39c38()
             A0 = V0;
 
             L4001c:	; 8004001C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80040020	nop
             V0 = w[V1 + 0000];
             80040028	nop
@@ -7518,16 +7013,13 @@ int func39c38()
 
             L40038:	; 80040038
             S3 = A0;
-            8004003C	lui    a1, $8008
-            80040040	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8004005C	beq    v0, zero, L4007c [$8004007c]
-            80040060	lui    v0, $8008
             80040064	jal    func52da0 [$80052da0]
             80040068	nop
             8004006C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7536,7 +7028,7 @@ int func39c38()
             A2 = V0;
 
             L4007c:	; 8004007C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80040080	nop
             V0 = w[V1 + 0000];
             80040088	nop
@@ -7547,14 +7039,12 @@ int func39c38()
             L40098:	; 80040098
             A0 = S2;
             A1 = S3;
-            800400A0	lui    t0, $8008
-            800400A4	lui    a3, $8008
-            V0 = w[T0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A3 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             800400B8	jal    func1ccb4 [$8001ccb4]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x58:
@@ -7563,7 +7053,6 @@ int func39c38()
             800400D0	nop
             V0 = V0 & 0001;
             800400D8	beq    v0, zero, L400f8 [$800400f8]
-            800400DC	lui    v0, $8008
             800400E0	jal    func52da0 [$80052da0]
             800400E4	nop
             800400E8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7572,7 +7061,7 @@ int func39c38()
             A1 = V0;
 
             L400f8:	; 800400F8
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             800400FC	nop
             V0 = w[A0 + 0000];
             80040104	nop
@@ -7589,16 +7078,13 @@ int func39c38()
 
             L40130:	; 80040130
             S2 = A1;
-            80040134	lui    a1, $8008
-            80040138	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80040154	beq    v0, zero, L40174 [$80040174]
-            80040158	lui    v0, $8008
             8004015C	jal    func52da0 [$80052da0]
             80040160	nop
             80040164	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7607,7 +7093,7 @@ int func39c38()
             A1 = V0;
 
             L40174:	; 80040174
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80040178	nop
             V0 = w[A0 + 0000];
             80040180	nop
@@ -7624,16 +7110,13 @@ int func39c38()
 
             L401ac:	; 800401AC
             S3 = A1;
-            800401B0	lui    a1, $8008
-            800401B4	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800401D0	beq    v0, zero, L401f0 [$800401f0]
-            800401D4	lui    v0, $8008
             800401D8	jal    func52da0 [$80052da0]
             800401DC	nop
             800401E0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7642,7 +7125,7 @@ int func39c38()
             A2 = V0;
 
             L401f0:	; 800401F0
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             800401F4	nop
             V0 = w[A0 + 0000];
             800401FC	nop
@@ -7664,14 +7147,12 @@ int func39c38()
             A1 = A1 >> 10;
             A2 = A2 << 10;
             A2 = A2 >> 10;
-            80040240	lui    t0, $8008
-            80040244	lui    a3, $8008
-            V0 = w[T0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A3 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80040258	jal    funcc0db0 [$800c0db0]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x6f:
@@ -7680,7 +7161,6 @@ int func39c38()
             80040270	nop
             V0 = V0 & 0001;
             80040278	beq    v0, zero, L40298 [$80040298]
-            8004027C	lui    v0, $8008
             80040280	jal    func52da0 [$80052da0]
             80040284	nop
             80040288	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7689,7 +7169,7 @@ int func39c38()
             A1 = V0;
 
             L40298:	; 80040298
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8004029C	nop
             V0 = w[A0 + 0000];
             800402A4	nop
@@ -7706,16 +7186,13 @@ int func39c38()
 
             L402d0:	; 800402D0
             S2 = A1;
-            800402D4	lui    a1, $8008
-            800402D8	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800402F4	beq    v0, zero, L40314 [$80040314]
-            800402F8	lui    v0, $8008
             800402FC	jal    func52da0 [$80052da0]
             80040300	nop
             80040304	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7724,7 +7201,7 @@ int func39c38()
             A1 = V0;
 
             L40314:	; 80040314
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80040318	nop
             V0 = w[A0 + 0000];
             80040320	nop
@@ -7741,16 +7218,13 @@ int func39c38()
 
             L4034c:	; 8004034C
             S3 = A1;
-            80040350	lui    a1, $8008
-            80040354	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80040370	beq    v0, zero, L40390 [$80040390]
-            80040374	lui    v0, $8008
             80040378	jal    func52da0 [$80052da0]
             8004037C	nop
             80040380	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7759,7 +7233,7 @@ int func39c38()
             A2 = V0;
 
             L40390:	; 80040390
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80040394	nop
             V0 = w[V1 + 0000];
             8004039C	nop
@@ -7768,13 +7242,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L403ac:	; 800403AC
-            800403AC	lui    a1, $8008
-            800403B0	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800403CC	beq    v0, zero, L403ec [$800403ec]
             S5 = A2;
@@ -7800,14 +7272,12 @@ int func39c38()
             A1 = S3 << 10;
             A1 = A1 >> 10;
             A2 = S5 & ffff;
-            80040420	lui    t1, $8008
-            80040424	lui    t0, $8008
-            V0 = w[T1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [T0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80040438	jal    funcc0df4 [$800c0df4]
-            [T1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x70:
@@ -7816,7 +7286,6 @@ int func39c38()
             80040450	nop
             V0 = V0 & 0001;
             80040458	beq    v0, zero, L40478 [$80040478]
-            8004045C	lui    v0, $8008
             80040460	jal    func52da0 [$80052da0]
             80040464	nop
             80040468	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7825,7 +7294,7 @@ int func39c38()
             A0 = V0;
 
             L40478:	; 80040478
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8004047C	nop
             V0 = w[V1 + 0000];
             80040484	nop
@@ -7835,16 +7304,13 @@ int func39c38()
 
             L40494:	; 80040494
             S2 = A0;
-            80040498	lui    a1, $8008
-            8004049C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800404B8	beq    v0, zero, L404d8 [$800404d8]
-            800404BC	lui    v0, $8008
             800404C0	jal    func52da0 [$80052da0]
             800404C4	nop
             800404C8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7853,7 +7319,7 @@ int func39c38()
             A1 = V0;
 
             L404d8:	; 800404D8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800404DC	nop
             V0 = w[V1 + 0000];
             800404E4	nop
@@ -7863,14 +7329,12 @@ int func39c38()
 
             L404f4:	; 800404F4
             A0 = S2;
-            800404F8	lui    a3, $8008
-            800404FC	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80040510	jal    funcc0038 [$800c0038]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x71:
@@ -7879,7 +7343,6 @@ int func39c38()
             80040528	nop
             V0 = V0 & 0001;
             80040530	beq    v0, zero, L40550 [$80040550]
-            80040534	lui    v0, $8008
             80040538	jal    func52da0 [$80052da0]
             8004053C	nop
             80040540	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7888,7 +7351,7 @@ int func39c38()
             A0 = V0;
 
             L40550:	; 80040550
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80040554	nop
             V0 = w[V1 + 0000];
             8004055C	nop
@@ -7898,16 +7361,13 @@ int func39c38()
 
             L4056c:	; 8004056C
             S2 = A0;
-            80040570	lui    a1, $8008
-            80040574	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80040590	beq    v0, zero, L405b0 [$800405b0]
-            80040594	lui    v0, $8008
             80040598	jal    func52da0 [$80052da0]
             8004059C	nop
             800405A0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7916,7 +7376,7 @@ int func39c38()
             A0 = V0;
 
             L405b0:	; 800405B0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800405B4	nop
             V0 = w[V1 + 0000];
             800405BC	nop
@@ -7926,16 +7386,13 @@ int func39c38()
 
             L405cc:	; 800405CC
             S3 = A0;
-            800405D0	lui    a1, $8008
-            800405D4	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800405F0	beq    v0, zero, L40610 [$80040610]
-            800405F4	lui    v0, $8008
             800405F8	jal    func52da0 [$80052da0]
             800405FC	nop
             80040600	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7944,7 +7401,7 @@ int func39c38()
             A2 = V0;
 
             L40610:	; 80040610
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80040614	nop
             V0 = w[V1 + 0000];
             8004061C	nop
@@ -7955,14 +7412,12 @@ int func39c38()
             L4062c:	; 8004062C
             A0 = S2;
             A1 = S3;
-            80040634	lui    t0, $8008
-            80040638	lui    a3, $8008
-            V0 = w[T0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A3 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8004064C	jal    funcc0e94 [$800c0e94]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x72:
@@ -7971,7 +7426,6 @@ int func39c38()
             80040664	nop
             V0 = V0 & 0001;
             8004066C	beq    v0, zero, L4068c [$8004068c]
-            80040670	lui    v0, $8008
             80040674	jal    func52da0 [$80052da0]
             80040678	nop
             8004067C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -7980,7 +7434,7 @@ int func39c38()
             A1 = V0;
 
             L4068c:	; 8004068C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80040690	nop
             V0 = w[A0 + 0000];
             80040698	nop
@@ -7998,14 +7452,12 @@ int func39c38()
             L406c4:	; 800406C4
             A0 = A1 << 10;
             A0 = A0 >> 10;
-            800406CC	lui    a2, $8008
-            800406D0	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             800406E4	jal    funcc1024 [$800c1024]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x73:
@@ -8026,7 +7478,6 @@ int func39c38()
             8004071C	nop
             V0 = V0 & 0001;
             80040724	beq    v0, zero, L40744 [$80040744]
-            80040728	lui    v0, $8008
             8004072C	jal    func52da0 [$80052da0]
             80040730	nop
             80040734	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8035,7 +7486,7 @@ int func39c38()
             A0 = V0;
 
             L40744:	; 80040744
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80040748	nop
             V0 = w[V1 + 0000];
             80040750	nop
@@ -8045,16 +7496,13 @@ int func39c38()
 
             L40760:	; 80040760
             S2 = A0;
-            80040764	lui    a1, $8008
-            80040768	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80040784	beq    v0, zero, L407a4 [$800407a4]
-            80040788	lui    v0, $8008
             8004078C	jal    func52da0 [$80052da0]
             80040790	nop
             80040794	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8063,7 +7511,7 @@ int func39c38()
             A0 = V0;
 
             L407a4:	; 800407A4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800407A8	nop
             V0 = w[V1 + 0000];
             800407B0	nop
@@ -8073,16 +7521,13 @@ int func39c38()
 
             L407c0:	; 800407C0
             S3 = A0;
-            800407C4	lui    a1, $8008
-            800407C8	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800407E4	beq    v0, zero, L40804 [$80040804]
-            800407E8	lui    v0, $8008
             800407EC	jal    func52da0 [$80052da0]
             800407F0	nop
             800407F4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8091,7 +7536,7 @@ int func39c38()
             A2 = V0;
 
             L40804:	; 80040804
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80040808	nop
             V0 = w[V1 + 0000];
             80040810	nop
@@ -8100,13 +7545,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L40820:	; 80040820
-            80040820	lui    a1, $8008
-            80040824	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80040840	beq    v0, zero, L40860 [$80040860]
             S5 = A2;
@@ -8131,14 +7574,12 @@ int func39c38()
             A1 = S3 & 00ff;
             A2 = S5 & 00ff;
             A3 = A3 & 00ff;
-            80040890	lui    t1, $8008
-            80040894	lui    t0, $8008
-            V0 = w[T1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [T0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             800408A8	jal    funcc1368 [$800c1368]
-            [T1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x5a:
@@ -8147,7 +7588,6 @@ int func39c38()
             800408C0	nop
             V0 = V0 & 0001;
             800408C8	beq    v0, zero, L408e8 [$800408e8]
-            800408CC	lui    v0, $8008
             800408D0	jal    func52da0 [$80052da0]
             800408D4	nop
             800408D8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8156,7 +7596,7 @@ int func39c38()
             A0 = V0;
 
             L408e8:	; 800408E8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800408EC	nop
             V0 = w[V1 + 0000];
             800408F4	nop
@@ -8166,16 +7606,13 @@ int func39c38()
 
             L40904:	; 80040904
             S2 = A0;
-            80040908	lui    a1, $8008
-            8004090C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80040928	beq    v0, zero, L40948 [$80040948]
-            8004092C	lui    v0, $8008
             80040930	jal    func52da0 [$80052da0]
             80040934	nop
             80040938	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8184,7 +7621,7 @@ int func39c38()
             A1 = V0;
 
             L40948:	; 80040948
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8004094C	nop
             V0 = w[A0 + 0000];
             80040954	nop
@@ -8201,16 +7638,13 @@ int func39c38()
 
             L40980:	; 80040980
             S3 = A1;
-            80040984	lui    a1, $8008
-            80040988	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800409A4	beq    v0, zero, L409c4 [$800409c4]
-            800409A8	lui    v0, $8008
             800409AC	jal    func52da0 [$80052da0]
             800409B0	nop
             800409B4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8219,7 +7653,7 @@ int func39c38()
             A2 = V0;
 
             L409c4:	; 800409C4
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             800409C8	nop
             V0 = w[A0 + 0000];
             800409D0	nop
@@ -8235,13 +7669,11 @@ int func39c38()
             A2 = V0 >> 10;
 
             L409fc:	; 800409FC
-            800409FC	lui    a1, $8008
-            80040A00	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80040A1C	beq    v0, zero, L40a3c [$80040a3c]
             S5 = A2;
@@ -8276,14 +7708,12 @@ int func39c38()
             A2 = A2 >> 10;
             A3 = A3 << 10;
             A3 = A3 >> 10;
-            80040A94	lui    t1, $8008
-            80040A98	lui    t0, $8008
-            V0 = w[T1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [T0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80040AAC	jal    funcc11e8 [$800c11e8]
-            [T1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x5b:
@@ -8292,7 +7722,6 @@ int func39c38()
             80040AC4	nop
             V0 = V0 & 0001;
             80040ACC	beq    v0, zero, L40aec [$80040aec]
-            80040AD0	lui    v0, $8008
             80040AD4	jal    func52da0 [$80052da0]
             80040AD8	nop
             80040ADC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8301,7 +7730,7 @@ int func39c38()
             A0 = V0;
 
             L40aec:	; 80040AEC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80040AF0	nop
             V0 = w[V1 + 0000];
             80040AF8	nop
@@ -8311,16 +7740,13 @@ int func39c38()
 
             L40b08:	; 80040B08
             S2 = A0;
-            80040B0C	lui    a1, $8008
-            80040B10	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80040B2C	beq    v0, zero, L40b4c [$80040b4c]
-            80040B30	lui    v0, $8008
             80040B34	jal    func52da0 [$80052da0]
             80040B38	nop
             80040B3C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8329,7 +7755,7 @@ int func39c38()
             A1 = V0;
 
             L40b4c:	; 80040B4C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80040B50	nop
             V0 = w[V1 + 0000];
             80040B58	nop
@@ -8339,14 +7765,12 @@ int func39c38()
 
             L40b68:	; 80040B68
             A0 = S2;
-            80040B6C	lui    a3, $8008
-            80040B70	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80040B84	jal    funcc142c [$800c142c]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x5c:
@@ -8355,7 +7779,6 @@ int func39c38()
             80040B9C	nop
             V0 = V0 & 0001;
             80040BA4	beq    v0, zero, L40bc4 [$80040bc4]
-            80040BA8	lui    v0, $8008
             80040BAC	jal    func52da0 [$80052da0]
             80040BB0	nop
             80040BB4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8364,7 +7787,7 @@ int func39c38()
             A0 = V0;
 
             L40bc4:	; 80040BC4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80040BC8	nop
             V0 = w[V1 + 0000];
             80040BD0	nop
@@ -8374,16 +7797,13 @@ int func39c38()
 
             L40be0:	; 80040BE0
             S2 = A0;
-            80040BE4	lui    a1, $8008
-            80040BE8	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80040C04	beq    v0, zero, L40c24 [$80040c24]
-            80040C08	lui    v0, $8008
             80040C0C	jal    func52da0 [$80052da0]
             80040C10	nop
             80040C14	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8392,7 +7812,7 @@ int func39c38()
             A0 = V0;
 
             L40c24:	; 80040C24
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80040C28	nop
             V0 = w[V1 + 0000];
             80040C30	nop
@@ -8402,16 +7822,13 @@ int func39c38()
 
             L40c40:	; 80040C40
             S3 = A0;
-            80040C44	lui    a1, $8008
-            80040C48	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80040C64	beq    v0, zero, L40c84 [$80040c84]
-            80040C68	lui    v0, $8008
             80040C6C	jal    func52da0 [$80052da0]
             80040C70	nop
             80040C74	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8420,7 +7837,7 @@ int func39c38()
             A2 = V0;
 
             L40c84:	; 80040C84
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80040C88	nop
             V0 = w[A0 + 0000];
             80040C90	nop
@@ -8436,13 +7853,11 @@ int func39c38()
             A2 = V0 >> 10;
 
             L40cbc:	; 80040CBC
-            80040CBC	lui    a1, $8008
-            80040CC0	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80040CDC	beq    v0, zero, L40cfc [$80040cfc]
             S5 = A2;
@@ -8473,14 +7888,12 @@ int func39c38()
             A0 = S2;
             A1 = S3;
             A2 = S5;
-            80040D44	lui    t1, $8008
-            80040D48	lui    t0, $8008
-            V0 = w[T1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [T0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80040D5C	jal    funcc147c [$800c147c]
-            [T1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x5d:
@@ -8489,7 +7902,6 @@ int func39c38()
             80040D74	nop
             V0 = V0 & 0001;
             80040D7C	beq    v0, zero, L40d9c [$80040d9c]
-            80040D80	lui    v0, $8008
             80040D84	jal    func52da0 [$80052da0]
             80040D88	nop
             80040D8C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8498,7 +7910,7 @@ int func39c38()
             A0 = V0;
 
             L40d9c:	; 80040D9C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80040DA0	nop
             V0 = w[V1 + 0000];
             80040DA8	nop
@@ -8508,16 +7920,13 @@ int func39c38()
 
             L40db8:	; 80040DB8
             S2 = A0;
-            80040DBC	lui    a1, $8008
-            80040DC0	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80040DDC	beq    v0, zero, L40dfc [$80040dfc]
-            80040DE0	lui    v0, $8008
             80040DE4	jal    func52da0 [$80052da0]
             80040DE8	nop
             80040DEC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8526,7 +7935,7 @@ int func39c38()
             A0 = V0;
 
             L40dfc:	; 80040DFC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80040E00	nop
             V0 = w[V1 + 0000];
             80040E08	nop
@@ -8536,16 +7945,13 @@ int func39c38()
 
             L40e18:	; 80040E18
             S3 = A0;
-            80040E1C	lui    a1, $8008
-            80040E20	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80040E3C	beq    v0, zero, L40e5c [$80040e5c]
-            80040E40	lui    v0, $8008
             80040E44	jal    func52da0 [$80052da0]
             80040E48	nop
             80040E4C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8554,7 +7960,7 @@ int func39c38()
             A2 = V0;
 
             L40e5c:	; 80040E5C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80040E60	nop
             V0 = w[A0 + 0000];
             80040E68	nop
@@ -8570,13 +7976,11 @@ int func39c38()
             A2 = V0 >> 10;
 
             L40e94:	; 80040E94
-            80040E94	lui    a1, $8008
-            80040E98	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80040EB4	beq    v0, zero, L40ed4 [$80040ed4]
             S5 = A2;
@@ -8607,14 +8011,12 @@ int func39c38()
             A0 = S2;
             A1 = S3;
             A2 = S5;
-            80040F1C	lui    t1, $8008
-            80040F20	lui    t0, $8008
-            V0 = w[T1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [T0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80040F34	jal    funcc15bc [$800c15bc]
-            [T1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x5e:
@@ -8623,7 +8025,6 @@ int func39c38()
             80040F4C	nop
             V0 = V0 & 0001;
             80040F54	beq    v0, zero, L40f74 [$80040f74]
-            80040F58	lui    v0, $8008
             80040F5C	jal    func52da0 [$80052da0]
             80040F60	nop
             80040F64	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8632,7 +8033,7 @@ int func39c38()
             A0 = V0;
 
             L40f74:	; 80040F74
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80040F78	nop
             V0 = w[V1 + 0000];
             80040F80	nop
@@ -8642,16 +8043,13 @@ int func39c38()
 
             L40f90:	; 80040F90
             S2 = A0;
-            80040F94	lui    a1, $8008
-            80040F98	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80040FB4	beq    v0, zero, L40fd4 [$80040fd4]
-            80040FB8	lui    v0, $8008
             80040FBC	jal    func52da0 [$80052da0]
             80040FC0	nop
             80040FC4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8660,7 +8058,7 @@ int func39c38()
             A1 = V0;
 
             L40fd4:	; 80040FD4
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80040FD8	nop
             V0 = w[A0 + 0000];
             80040FE0	nop
@@ -8677,16 +8075,13 @@ int func39c38()
 
             L4100c:	; 8004100C
             S3 = A1;
-            80041010	lui    a1, $8008
-            80041014	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80041030	beq    v0, zero, L41050 [$80041050]
-            80041034	lui    v0, $8008
             80041038	jal    func52da0 [$80052da0]
             8004103C	nop
             80041040	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8695,7 +8090,7 @@ int func39c38()
             A2 = V0;
 
             L41050:	; 80041050
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80041054	nop
             V0 = w[A0 + 0000];
             8004105C	nop
@@ -8713,14 +8108,12 @@ int func39c38()
             L41088:	; 80041088
             A0 = S2;
             A1 = S3;
-            80041090	lui    t0, $8008
-            80041094	lui    a3, $8008
-            V0 = w[T0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A3 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             800410A8	jal    funcc1614 [$800c1614]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x92:
@@ -8729,7 +8122,6 @@ int func39c38()
             800410C0	nop
             V0 = V0 & 0001;
             800410C8	beq    v0, zero, L410e8 [$800410e8]
-            800410CC	lui    v0, $8008
             800410D0	jal    func52da0 [$80052da0]
             800410D4	nop
             800410D8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8738,7 +8130,7 @@ int func39c38()
             A0 = V0;
 
             L410e8:	; 800410E8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800410EC	nop
             V0 = w[V1 + 0000];
             800410F4	nop
@@ -8748,16 +8140,13 @@ int func39c38()
 
             L41104:	; 80041104
             S2 = A0;
-            80041108	lui    a1, $8008
-            8004110C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80041128	beq    v0, zero, L41148 [$80041148]
-            8004112C	lui    v0, $8008
             80041130	jal    func52da0 [$80052da0]
             80041134	nop
             80041138	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8766,7 +8155,7 @@ int func39c38()
             A1 = V0;
 
             L41148:	; 80041148
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8004114C	nop
             V0 = w[A0 + 0000];
             80041154	nop
@@ -8783,16 +8172,13 @@ int func39c38()
 
             L41180:	; 80041180
             S3 = A1;
-            80041184	lui    a1, $8008
-            80041188	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800411A4	beq    v0, zero, L411c4 [$800411c4]
-            800411A8	lui    v0, $8008
             800411AC	jal    func52da0 [$80052da0]
             800411B0	nop
             800411B4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8801,7 +8187,7 @@ int func39c38()
             A2 = V0;
 
             L411c4:	; 800411C4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800411C8	nop
             V0 = w[V1 + 0000];
             800411D0	nop
@@ -8810,13 +8196,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L411e0:	; 800411E0
-            800411E0	lui    a1, $8008
-            800411E4	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80041200	beq    v0, zero, L41220 [$80041220]
             S5 = A2;
@@ -8837,13 +8221,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L41240:	; 80041240
-            80041240	lui    a1, $8008
-            80041244	lui    a0, $8008
             V1 = 0001;
-            V0 = w[A1 + b6f4];
-            [A0 + b6f8] = w(V1);
+            V0 = w[0x8007b6f4];
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80041260	beq    v0, zero, L41280 [$80041280]
             S4 = A3;
@@ -8864,13 +8246,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L412a0:	; 800412A0
-            800412A0	lui    a1, $8008
-            800412A4	lui    a0, $8008
             V1 = 0001;
-            V0 = w[A1 + b6f4];
-            [A0 + b6f8] = w(V1);
+            V0 = w[0x8007b6f4];
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800412C0	beq    v0, zero, L412e0 [$800412e0]
             S1 = A2;
@@ -8891,13 +8271,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L41300:	; 80041300
-            80041300	lui    a1, $8008
-            80041304	lui    a0, $8008
             V1 = 0001;
-            V0 = w[A1 + b6f4];
-            [A0 + b6f8] = w(V1);
+            V0 = w[0x8007b6f4];
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80041320	beq    v0, zero, L41340 [$80041340]
             S0 = A2;
@@ -8925,20 +8303,18 @@ int func39c38()
             A2 = A2 >> 10;
             A3 = S4 << 18;
             A3 = A3 >> 18;
-            8004137C	lui    v1, $8008
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             V0 = S1 & 00ff;
             [SP + 0010] = w(V0);
             V0 = S0 & 00ff;
-            80041394	lui    t0, $8008
             [SP + 0014] = w(V0);
-            V0 = w[T0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = T1 & 00ff;
             [SP + 0018] = w(V1);
             V0 = V0 >> 01;
             800413AC	jal    funcc02d0 [$800c02d0]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xe6:
@@ -8947,7 +8323,6 @@ int func39c38()
             800413C4	nop
             V0 = V0 & 0001;
             800413CC	beq    v0, zero, L413ec [$800413ec]
-            800413D0	lui    v0, $8008
             800413D4	jal    func52da0 [$80052da0]
             800413D8	nop
             800413DC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8956,7 +8331,7 @@ int func39c38()
             A0 = V0;
 
             L413ec:	; 800413EC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800413F0	nop
             V0 = w[V1 + 0000];
             800413F8	nop
@@ -8966,16 +8341,13 @@ int func39c38()
 
             L41408:	; 80041408
             S2 = A0;
-            8004140C	lui    a1, $8008
-            80041410	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8004142C	beq    v0, zero, L4144c [$8004144c]
-            80041430	lui    v0, $8008
             80041434	jal    func52da0 [$80052da0]
             80041438	nop
             8004143C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -8984,7 +8356,7 @@ int func39c38()
             A1 = V0;
 
             L4144c:	; 8004144C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041450	nop
             V0 = w[V1 + 0000];
             80041458	nop
@@ -8994,14 +8366,12 @@ int func39c38()
 
             L41468:	; 80041468
             A0 = S2;
-            8004146C	lui    a3, $8008
-            80041470	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80041484	jal    funcc14dc [$800c14dc]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x5f:
@@ -9010,7 +8380,6 @@ int func39c38()
             8004149C	nop
             V0 = V0 & 0001;
             800414A4	beq    v0, zero, L414c4 [$800414c4]
-            800414A8	lui    v0, $8008
             800414AC	jal    func52da0 [$80052da0]
             800414B0	nop
             800414B4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9019,7 +8388,7 @@ int func39c38()
             A0 = V0;
 
             L414c4:	; 800414C4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800414C8	nop
             V0 = w[V1 + 0000];
             800414D0	nop
@@ -9029,16 +8398,13 @@ int func39c38()
 
             L414e0:	; 800414E0
             S2 = A0;
-            800414E4	lui    a1, $8008
-            800414E8	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80041504	beq    v0, zero, L41524 [$80041524]
-            80041508	lui    v0, $8008
             8004150C	jal    func52da0 [$80052da0]
             80041510	nop
             80041514	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9047,7 +8413,7 @@ int func39c38()
             A1 = V0;
 
             L41524:	; 80041524
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041528	nop
             V0 = w[V1 + 0000];
             80041530	nop
@@ -9057,14 +8423,12 @@ int func39c38()
 
             L41540:	; 80041540
             A0 = S2;
-            80041544	lui    a3, $8008
-            80041548	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8004155C	jal    funcc16b0 [$800c16b0]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x60:
@@ -9073,7 +8437,6 @@ int func39c38()
             80041574	nop
             V0 = V0 & 0001;
             8004157C	beq    v0, zero, L4159c [$8004159c]
-            80041580	lui    v0, $8008
             80041584	jal    func52da0 [$80052da0]
             80041588	nop
             8004158C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9082,7 +8445,7 @@ int func39c38()
             A0 = V0;
 
             L4159c:	; 8004159C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800415A0	nop
             V0 = w[V1 + 0000];
             800415A8	nop
@@ -9092,16 +8455,13 @@ int func39c38()
 
             L415b8:	; 800415B8
             S2 = A0;
-            800415BC	lui    a1, $8008
-            800415C0	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800415DC	beq    v0, zero, L415fc [$800415fc]
-            800415E0	lui    v0, $8008
             800415E4	jal    func52da0 [$80052da0]
             800415E8	nop
             800415EC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9110,7 +8470,7 @@ int func39c38()
             A1 = V0;
 
             L415fc:	; 800415FC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041600	nop
             V0 = w[V1 + 0000];
             80041608	nop
@@ -9120,14 +8480,12 @@ int func39c38()
 
             L41618:	; 80041618
             A0 = S2;
-            8004161C	lui    a3, $8008
-            80041620	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80041634	jal    funcc17ac [$800c17ac]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x61:
@@ -9136,7 +8494,6 @@ int func39c38()
             8004164C	nop
             V0 = V0 & 0001;
             80041654	beq    v0, zero, L41674 [$80041674]
-            80041658	lui    v0, $8008
             8004165C	jal    func52da0 [$80052da0]
             80041660	nop
             80041664	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9145,7 +8502,7 @@ int func39c38()
             A0 = V0;
 
             L41674:	; 80041674
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041678	nop
             V0 = w[V1 + 0000];
             80041680	nop
@@ -9155,16 +8512,13 @@ int func39c38()
 
             L41690:	; 80041690
             S2 = A0;
-            80041694	lui    a1, $8008
-            80041698	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800416B4	beq    v0, zero, L416d4 [$800416d4]
-            800416B8	lui    v0, $8008
             800416BC	jal    func52da0 [$80052da0]
             800416C0	nop
             800416C4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9173,7 +8527,7 @@ int func39c38()
             A1 = V0;
 
             L416d4:	; 800416D4
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             800416D8	nop
             V0 = w[A0 + 0000];
             800416E0	nop
@@ -9190,14 +8544,12 @@ int func39c38()
 
             L4170c:	; 8004170C
             A0 = S2;
-            80041710	lui    a3, $8008
-            80041714	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80041728	jal    funcc17f0 [$800c17f0]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x63:
@@ -9206,7 +8558,6 @@ int func39c38()
             80041740	nop
             V0 = V0 & 0001;
             80041748	beq    v0, zero, L41768 [$80041768]
-            8004174C	lui    v0, $8008
             80041750	jal    func52da0 [$80052da0]
             80041754	nop
             80041758	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9215,7 +8566,7 @@ int func39c38()
             A0 = V0;
 
             L41768:	; 80041768
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8004176C	nop
             V0 = w[V1 + 0000];
             80041774	nop
@@ -9225,16 +8576,13 @@ int func39c38()
 
             L41784:	; 80041784
             S2 = A0;
-            80041788	lui    a1, $8008
-            8004178C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800417A8	beq    v0, zero, L417c8 [$800417c8]
-            800417AC	lui    v0, $8008
             800417B0	jal    func52da0 [$80052da0]
             800417B4	nop
             800417B8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9243,7 +8591,7 @@ int func39c38()
             A0 = V0;
 
             L417c8:	; 800417C8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800417CC	nop
             V0 = w[V1 + 0000];
             800417D4	nop
@@ -9253,16 +8601,13 @@ int func39c38()
 
             L417e4:	; 800417E4
             S3 = A0;
-            800417E8	lui    a1, $8008
-            800417EC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80041808	beq    v0, zero, L41828 [$80041828]
-            8004180C	lui    v0, $8008
             80041810	jal    func52da0 [$80052da0]
             80041814	nop
             80041818	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9271,7 +8616,7 @@ int func39c38()
             A2 = V0;
 
             L41828:	; 80041828
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8004182C	nop
             V0 = w[V1 + 0000];
             80041834	nop
@@ -9282,14 +8627,12 @@ int func39c38()
             L41844:	; 80041844
             A0 = S2;
             A1 = S3;
-            8004184C	lui    t0, $8008
-            80041850	lui    a3, $8008
-            V0 = w[T0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A3 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80041864	jal    funcc1868 [$800c1868]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x64:
@@ -9298,7 +8641,6 @@ int func39c38()
             8004187C	nop
             V0 = V0 & 0001;
             80041884	beq    v0, zero, L418a4 [$800418a4]
-            80041888	lui    v0, $8008
             8004188C	jal    func52da0 [$80052da0]
             80041890	nop
             80041894	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9307,7 +8649,7 @@ int func39c38()
             A0 = V0;
 
             L418a4:	; 800418A4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800418A8	nop
             V0 = w[V1 + 0000];
             800418B0	nop
@@ -9317,16 +8659,13 @@ int func39c38()
 
             L418c0:	; 800418C0
             S2 = A0;
-            800418C4	lui    a1, $8008
-            800418C8	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800418E4	beq    v0, zero, L41904 [$80041904]
-            800418E8	lui    v0, $8008
             800418EC	jal    func52da0 [$80052da0]
             800418F0	nop
             800418F4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9335,7 +8674,7 @@ int func39c38()
             A1 = V0;
 
             L41904:	; 80041904
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041908	nop
             V0 = w[V1 + 0000];
             80041910	nop
@@ -9345,14 +8684,12 @@ int func39c38()
 
             L41920:	; 80041920
             A0 = S2;
-            80041924	lui    a3, $8008
-            80041928	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             8004193C	jal    funcc18a0 [$800c18a0]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x65:
@@ -9361,7 +8698,6 @@ int func39c38()
             80041954	nop
             V0 = V0 & 0001;
             8004195C	beq    v0, zero, L4197c [$8004197c]
-            80041960	lui    v0, $8008
             80041964	jal    func52da0 [$80052da0]
             80041968	nop
             8004196C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9370,7 +8706,7 @@ int func39c38()
             A0 = V0;
 
             L4197c:	; 8004197C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041980	nop
             V0 = w[V1 + 0000];
             80041988	nop
@@ -9380,16 +8716,13 @@ int func39c38()
 
             L41998:	; 80041998
             S2 = A0;
-            8004199C	lui    a1, $8008
-            800419A0	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800419BC	beq    v0, zero, L419dc [$800419dc]
-            800419C0	lui    v0, $8008
             800419C4	jal    func52da0 [$80052da0]
             800419C8	nop
             800419CC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9398,7 +8731,7 @@ int func39c38()
             A0 = V0;
 
             L419dc:	; 800419DC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800419E0	nop
             V0 = w[V1 + 0000];
             800419E8	nop
@@ -9408,16 +8741,13 @@ int func39c38()
 
             L419f8:	; 800419F8
             S3 = A0;
-            800419FC	lui    a1, $8008
-            80041A00	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80041A1C	beq    v0, zero, L41a3c [$80041a3c]
-            80041A20	lui    v0, $8008
             80041A24	jal    func52da0 [$80052da0]
             80041A28	nop
             80041A2C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9426,7 +8756,7 @@ int func39c38()
             A2 = V0;
 
             L41a3c:	; 80041A3C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041A40	nop
             V0 = w[V1 + 0000];
             80041A48	nop
@@ -9437,14 +8767,12 @@ int func39c38()
             L41a58:	; 80041A58
             A0 = S2;
             A1 = S3;
-            80041A60	lui    t0, $8008
-            80041A64	lui    a3, $8008
-            V0 = w[T0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A3 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80041A78	jal    funcc18d4 [$800c18d4]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xca:
@@ -9453,7 +8781,6 @@ int func39c38()
             80041A90	nop
             V0 = V0 & 0001;
             80041A98	beq    v0, zero, L41ab8 [$80041ab8]
-            80041A9C	lui    v0, $8008
             80041AA0	jal    func52da0 [$80052da0]
             80041AA4	nop
             80041AA8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9462,7 +8789,7 @@ int func39c38()
             A0 = V0;
 
             L41ab8:	; 80041AB8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041ABC	nop
             V0 = w[V1 + 0000];
             80041AC4	nop
@@ -9472,16 +8799,13 @@ int func39c38()
 
             L41ad4:	; 80041AD4
             S2 = A0;
-            80041AD8	lui    a1, $8008
-            80041ADC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80041AF8	beq    v0, zero, L41b18 [$80041b18]
-            80041AFC	lui    v0, $8008
             80041B00	jal    func52da0 [$80052da0]
             80041B04	nop
             80041B08	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9490,7 +8814,7 @@ int func39c38()
             A1 = V0;
 
             L41b18:	; 80041B18
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041B1C	nop
             V0 = w[V1 + 0000];
             80041B24	nop
@@ -9500,14 +8824,12 @@ int func39c38()
 
             L41b34:	; 80041B34
             A0 = S2;
-            80041B38	lui    a3, $8008
-            80041B3C	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80041B50	jal    funcc196c [$800c196c]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xe7:
@@ -9516,7 +8838,6 @@ int func39c38()
             80041B68	nop
             V0 = V0 & 0001;
             80041B70	beq    v0, zero, L41b90 [$80041b90]
-            80041B74	lui    v0, $8008
             80041B78	jal    func52da0 [$80052da0]
             80041B7C	nop
             80041B80	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9525,7 +8846,7 @@ int func39c38()
             A0 = V0;
 
             L41b90:	; 80041B90
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041B94	nop
             V0 = w[V1 + 0000];
             80041B9C	nop
@@ -9535,16 +8856,13 @@ int func39c38()
 
             L41bac:	; 80041BAC
             S2 = A0;
-            80041BB0	lui    a1, $8008
-            80041BB4	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80041BD0	beq    v0, zero, L41bf0 [$80041bf0]
-            80041BD4	lui    v0, $8008
             80041BD8	jal    func52da0 [$80052da0]
             80041BDC	nop
             80041BE0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9553,7 +8871,7 @@ int func39c38()
             A1 = V0;
 
             L41bf0:	; 80041BF0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041BF4	nop
             V0 = w[V1 + 0000];
             80041BFC	nop
@@ -9563,14 +8881,12 @@ int func39c38()
 
             L41c0c:	; 80041C0C
             A0 = S2;
-            80041C10	lui    a3, $8008
-            80041C14	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80041C28	jal    funcc16f4 [$800c16f4]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x9a:
@@ -9579,7 +8895,6 @@ int func39c38()
             80041C40	nop
             V0 = V0 & 0001;
             80041C48	beq    v0, zero, L41c68 [$80041c68]
-            80041C4C	lui    v0, $8008
             80041C50	jal    func52da0 [$80052da0]
             80041C54	nop
             80041C58	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9588,7 +8903,7 @@ int func39c38()
             A1 = V0;
 
             L41c68:	; 80041C68
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80041C6C	nop
             V0 = w[A0 + 0000];
             80041C74	nop
@@ -9605,16 +8920,13 @@ int func39c38()
 
             L41ca0:	; 80041CA0
             S2 = A1;
-            80041CA4	lui    a1, $8008
-            80041CA8	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80041CC4	beq    v0, zero, L41ce4 [$80041ce4]
-            80041CC8	lui    v0, $8008
             80041CCC	jal    func52da0 [$80052da0]
             80041CD0	nop
             80041CD4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9623,7 +8935,7 @@ int func39c38()
             A1 = V0;
 
             L41ce4:	; 80041CE4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041CE8	nop
             V0 = w[V1 + 0000];
             80041CF0	nop
@@ -9633,14 +8945,12 @@ int func39c38()
 
             L41d00:	; 80041D00
             A0 = S2;
-            80041D04	lui    a3, $8008
-            80041D08	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80041D1C	jal    funcc778c [$800c778c]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xcb:
@@ -9649,7 +8959,6 @@ int func39c38()
             80041D34	nop
             V0 = V0 & 0001;
             80041D3C	beq    v0, zero, L41d5c [$80041d5c]
-            80041D40	lui    v0, $8008
             80041D44	jal    func52da0 [$80052da0]
             80041D48	nop
             80041D4C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9658,7 +8967,7 @@ int func39c38()
             A0 = V0;
 
             L41d5c:	; 80041D5C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041D60	nop
             V0 = w[V1 + 0000];
             80041D68	nop
@@ -9668,16 +8977,13 @@ int func39c38()
 
             L41d78:	; 80041D78
             S2 = A0;
-            80041D7C	lui    a1, $8008
-            80041D80	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80041D9C	beq    v0, zero, L41dbc [$80041dbc]
-            80041DA0	lui    v0, $8008
             80041DA4	jal    func52da0 [$80052da0]
             80041DA8	nop
             80041DAC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9686,7 +8992,7 @@ int func39c38()
             A1 = V0;
 
             L41dbc:	; 80041DBC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041DC0	nop
             V0 = w[V1 + 0000];
             80041DC8	nop
@@ -9696,14 +9002,12 @@ int func39c38()
 
             L41dd8:	; 80041DD8
             A0 = S2;
-            80041DDC	lui    a3, $8008
-            80041DE0	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80041DF4	jal    funcc47e4 [$800c47e4]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xa8:
@@ -9712,7 +9016,6 @@ int func39c38()
             80041E0C	nop
             V0 = V0 & 0001;
             80041E14	beq    v0, zero, L41e34 [$80041e34]
-            80041E18	lui    v0, $8008
             80041E1C	jal    func52da0 [$80052da0]
             80041E20	nop
             80041E24	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9721,7 +9024,7 @@ int func39c38()
             A0 = V0;
 
             L41e34:	; 80041E34
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041E38	nop
             V0 = w[V1 + 0000];
             80041E40	nop
@@ -9731,14 +9034,12 @@ int func39c38()
 
             L41e50:	; 80041E50
             S2 = A0;
-            80041E54	lui    a1, $8008
-            80041E58	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             V1 = hu[S4 + 0034];
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
 
             if (V1 != 0xffff)
             {
@@ -9753,7 +9054,6 @@ int func39c38()
             80041E9C	nop
             V0 = V0 & 0001;
             80041EA4	beq    v0, zero, L41ec4 [$80041ec4]
-            80041EA8	lui    v0, $8008
             80041EAC	jal    func52da0 [$80052da0]
             80041EB0	nop
             80041EB4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9762,7 +9062,7 @@ int func39c38()
             A0 = V0;
 
             L41ec4:	; 80041EC4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041EC8	nop
             V0 = w[V1 + 0000];
             80041ED0	nop
@@ -9772,14 +9072,12 @@ int func39c38()
 
             L41ee0:	; 80041EE0
             A0 = A0 & 00ff;
-            80041EE4	lui    a2, $8008
-            80041EE8	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80041EFC	jal    funcc7464 [$800c7464]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x1e:
@@ -9788,7 +9086,6 @@ int func39c38()
             80041F14	nop
             V0 = V0 & 0001;
             80041F1C	beq    v0, zero, L41f3c [$80041f3c]
-            80041F20	lui    v0, $8008
             80041F24	jal    func52da0 [$80052da0]
             80041F28	nop
             80041F2C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9797,7 +9094,7 @@ int func39c38()
             A0 = V0;
 
             L41f3c:	; 80041F3C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80041F40	nop
             V0 = w[V1 + 0000];
             80041F48	nop
@@ -9807,16 +9104,13 @@ int func39c38()
 
             L41f58:	; 80041F58
             S2 = A0;
-            80041F5C	lui    a1, $8008
-            80041F60	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80041F7C	beq    v0, zero, L41f9c [$80041f9c]
-            80041F80	lui    v0, $8008
             80041F84	jal    func52da0 [$80052da0]
             80041F88	nop
             80041F8C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9825,7 +9119,7 @@ int func39c38()
             A1 = V0;
 
             L41f9c:	; 80041F9C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80041FA0	nop
             V0 = w[A0 + 0000];
             80041FA8	nop
@@ -9842,16 +9136,13 @@ int func39c38()
 
             L41fd4:	; 80041FD4
             S3 = A1;
-            80041FD8	lui    a1, $8008
-            80041FDC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80041FF8	beq    v0, zero, L42018 [$80042018]
-            80041FFC	lui    v0, $8008
             80042000	jal    func52da0 [$80052da0]
             80042004	nop
             80042008	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9860,7 +9151,7 @@ int func39c38()
             A2 = V0;
 
             L42018:	; 80042018
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8004201C	nop
             V0 = w[A0 + 0000];
             80042024	nop
@@ -9876,13 +9167,11 @@ int func39c38()
             A2 = V0 >> 10;
 
             L42050:	; 80042050
-            80042050	lui    a1, $8008
-            80042054	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80042070	beq    v0, zero, L42090 [$80042090]
             S5 = A2;
@@ -9910,13 +9199,11 @@ int func39c38()
             A3 = V0 >> 10;
 
             L420cc:	; 800420CC
-            800420CC	lui    a1, $8008
-            800420D0	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800420EC	beq    v0, zero, L4210c [$8004210c]
             S1 = A3;
@@ -9951,17 +9238,15 @@ int func39c38()
             A2 = A2 >> 10;
             A3 = S1 << 10;
             A3 = A3 >> 10;
-            80042164	lui    v1, $8008
             V0 = 0001;
-            8004216C	lui    t0, $8008
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             V0 = T1 << 10;
-            V1 = w[T0 + b6f4];
+            V1 = w[0x8007b6f4];
             V0 = V0 >> 10;
             [SP + 0010] = w(V0);
             V1 = V1 >> 01;
             80042188	jal    funcc1a8c [$800c1a8c]
-            [T0 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             return 0;        }
 
         case 0xc3:
@@ -9970,7 +9255,6 @@ int func39c38()
             800421A0	nop
             V0 = V0 & 0001;
             800421A8	beq    v0, zero, L421c8 [$800421c8]
-            800421AC	lui    v0, $8008
             800421B0	jal    func52da0 [$80052da0]
             800421B4	nop
             800421B8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -9979,7 +9263,7 @@ int func39c38()
             A0 = V0;
 
             L421c8:	; 800421C8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800421CC	nop
             V0 = w[V1 + 0000];
             800421D4	nop
@@ -9989,16 +9273,13 @@ int func39c38()
 
             L421e4:	; 800421E4
             S2 = A0;
-            800421E8	lui    a1, $8008
-            800421EC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80042208	beq    v0, zero, L42228 [$80042228]
-            8004220C	lui    v0, $8008
             80042210	jal    func52da0 [$80052da0]
             80042214	nop
             80042218	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10007,7 +9288,7 @@ int func39c38()
             A1 = V0;
 
             L42228:	; 80042228
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8004222C	nop
             V0 = w[V1 + 0000];
             80042234	nop
@@ -10017,14 +9298,12 @@ int func39c38()
 
             L42244:	; 80042244
             A0 = S2;
-            80042248	lui    a3, $8008
-            8004224C	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80042260	jal    funcc1668 [$800c1668]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xc9:
@@ -10033,7 +9312,6 @@ int func39c38()
             80042278	nop
             V0 = V0 & 0001;
             80042280	beq    v0, zero, L422a0 [$800422a0]
-            80042284	lui    v0, $8008
             80042288	jal    func52da0 [$80052da0]
             8004228C	nop
             80042290	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10042,7 +9320,7 @@ int func39c38()
             A0 = V0;
 
             L422a0:	; 800422A0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800422A4	nop
             V0 = w[V1 + 0000];
             800422AC	nop
@@ -10052,16 +9330,13 @@ int func39c38()
 
             L422bc:	; 800422BC
             S2 = A0;
-            800422C0	lui    a1, $8008
-            800422C4	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800422E0	beq    v0, zero, L42300 [$80042300]
-            800422E4	lui    v0, $8008
             800422E8	jal    func52da0 [$80052da0]
             800422EC	nop
             800422F0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10070,7 +9345,7 @@ int func39c38()
             A1 = V0;
 
             L42300:	; 80042300
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80042304	nop
             V0 = w[A0 + 0000];
             8004230C	nop
@@ -10087,16 +9362,13 @@ int func39c38()
 
             L42338:	; 80042338
             S3 = A1;
-            8004233C	lui    a1, $8008
-            80042340	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8004235C	beq    v0, zero, L4237c [$8004237c]
-            80042360	lui    v0, $8008
             80042364	jal    func52da0 [$80052da0]
             80042368	nop
             8004236C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10105,7 +9377,7 @@ int func39c38()
             A2 = V0;
 
             L4237c:	; 8004237C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80042380	nop
             V0 = w[A0 + 0000];
             80042388	nop
@@ -10121,13 +9393,11 @@ int func39c38()
             A2 = V0 >> 10;
 
             L423b4:	; 800423B4
-            800423B4	lui    a1, $8008
-            800423B8	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800423D4	beq    v0, zero, L423f4 [$800423f4]
             S5 = A2;
@@ -10155,13 +9425,11 @@ int func39c38()
             A3 = V0 >> 10;
 
             L42430:	; 80042430
-            80042430	lui    a1, $8008
-            80042434	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80042450	beq    v0, zero, L42470 [$80042470]
             S1 = A3;
@@ -10196,17 +9464,15 @@ int func39c38()
             A2 = A2 >> 10;
             A3 = S1 << 10;
             A3 = A3 >> 10;
-            800424C8	lui    v1, $8008
             V0 = 0001;
-            800424D0	lui    t0, $8008
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             V0 = T1 << 10;
-            V1 = w[T0 + b6f4];
+            V1 = w[0x8007b6f4];
             V0 = V0 >> 10;
             [SP + 0010] = w(V0);
             V1 = V1 >> 01;
             800424EC	jal    funcc119c [$800c119c]
-            [T0 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             return 0;        }
 
         case 0xed:
@@ -10215,7 +9481,6 @@ int func39c38()
             80042504	nop
             V0 = V0 & 0001;
             8004250C	beq    v0, zero, L4252c [$8004252c]
-            80042510	lui    v0, $8008
             80042514	jal    func52da0 [$80052da0]
             80042518	nop
             8004251C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10224,7 +9489,7 @@ int func39c38()
             A0 = V0;
 
             L4252c:	; 8004252C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80042530	nop
             V0 = w[V1 + 0000];
             80042538	nop
@@ -10234,16 +9499,13 @@ int func39c38()
 
             L42548:	; 80042548
             S2 = A0;
-            8004254C	lui    a1, $8008
-            80042550	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8004256C	beq    v0, zero, L4258c [$8004258c]
-            80042570	lui    v0, $8008
             80042574	jal    func52da0 [$80052da0]
             80042578	nop
             8004257C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10252,7 +9514,7 @@ int func39c38()
             A1 = V0;
 
             L4258c:	; 8004258C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80042590	nop
             V0 = w[A0 + 0000];
             80042598	nop
@@ -10269,16 +9531,13 @@ int func39c38()
 
             L425c4:	; 800425C4
             S3 = A1;
-            800425C8	lui    a1, $8008
-            800425CC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800425E8	beq    v0, zero, L42608 [$80042608]
-            800425EC	lui    v0, $8008
             800425F0	jal    func52da0 [$80052da0]
             800425F4	nop
             800425F8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10287,7 +9546,7 @@ int func39c38()
             A2 = V0;
 
             L42608:	; 80042608
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8004260C	nop
             V0 = w[A0 + 0000];
             80042614	nop
@@ -10305,14 +9564,12 @@ int func39c38()
             L42640:	; 80042640
             A0 = S2;
             A1 = S3;
-            80042648	lui    t0, $8008
-            8004264C	lui    a3, $8008
-            V0 = w[T0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A3 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80042660	jal    funcc11c8 [$800c11c8]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xe4:
@@ -10321,7 +9578,6 @@ int func39c38()
             80042678	nop
             V0 = V0 & 0001;
             80042680	beq    v0, zero, L426a0 [$800426a0]
-            80042684	lui    v0, $8008
             80042688	jal    func52da0 [$80052da0]
             8004268C	nop
             80042690	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10330,7 +9586,7 @@ int func39c38()
             A0 = V0;
 
             L426a0:	; 800426A0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800426A4	nop
             V0 = w[V1 + 0000];
             800426AC	nop
@@ -10340,16 +9596,13 @@ int func39c38()
 
             L426bc:	; 800426BC
             S2 = A0;
-            800426C0	lui    a1, $8008
-            800426C4	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800426E0	beq    v0, zero, L42700 [$80042700]
-            800426E4	lui    v0, $8008
             800426E8	jal    func52da0 [$80052da0]
             800426EC	nop
             800426F0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10358,7 +9611,7 @@ int func39c38()
             A0 = V0;
 
             L42700:	; 80042700
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80042704	nop
             V0 = w[V1 + 0000];
             8004270C	nop
@@ -10368,16 +9621,13 @@ int func39c38()
 
             L4271c:	; 8004271C
             S3 = A0;
-            80042720	lui    a1, $8008
-            80042724	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80042740	beq    v0, zero, L42760 [$80042760]
-            80042744	lui    v0, $8008
             80042748	jal    func52da0 [$80052da0]
             8004274C	nop
             80042750	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10386,7 +9636,7 @@ int func39c38()
             A2 = V0;
 
             L42760:	; 80042760
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80042764	nop
             V0 = w[A0 + 0000];
             8004276C	nop
@@ -10402,13 +9652,11 @@ int func39c38()
             A2 = V0 >> 10;
 
             L42798:	; 80042798
-            80042798	lui    a1, $8008
-            8004279C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800427B8	beq    v0, zero, L427d8 [$800427d8]
             S5 = A2;
@@ -10436,13 +9684,11 @@ int func39c38()
             A3 = V0 >> 10;
 
             L42814:	; 80042814
-            80042814	lui    a1, $8008
-            80042818	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80042834	beq    v0, zero, L42854 [$80042854]
             S1 = A3;
@@ -10467,15 +9713,13 @@ int func39c38()
             A1 = S3;
             A2 = S5;
             A3 = S1;
-            80042884	lui    t1, $8008
-            80042888	lui    t0, $8008
-            V1 = w[T1 + b6f4];
+            V1 = w[0x8007b6f4];
             V0 = 0001;
-            [T0 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             [SP + 0010] = w(T2);
             V1 = V1 >> V0;
             800428A0	jal    funcc152c [$800c152c]
-            [T1 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             return 0;        }
 
         case 0x7e:
@@ -10484,7 +9728,6 @@ int func39c38()
             800428B8	nop
             V0 = V0 & 0001;
             800428C0	beq    v0, zero, L428e0 [$800428e0]
-            800428C4	lui    v0, $8008
             800428C8	jal    func52da0 [$80052da0]
             800428CC	nop
             800428D0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10493,7 +9736,7 @@ int func39c38()
             A0 = V0;
 
             L428e0:	; 800428E0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800428E4	nop
             V0 = w[V1 + 0000];
             800428EC	nop
@@ -10502,14 +9745,12 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L428fc:	; 800428FC
-            800428FC	lui    a2, $8008
-            80042900	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80042914	jal    funcc0bcc [$800c0bcc]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xea:
@@ -10520,8 +9761,7 @@ int func39c38()
             A0 = h[SP + 002c];
             [0x8007ae2c] = w(A0);
             A0 = h[SP + 002e];
-            80042944	lui    v1, $8008
-            [V1 + ae30] = w(A0);
+            [0x8007ae30] = w(A0);
             return 0;        }
 
         case 0x8f:
@@ -10551,16 +9791,13 @@ int func39c38()
 
             L429a8:	; 800429A8
             S2 = A0;
-            800429AC	lui    a1, $8008
-            800429B0	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800429CC	beq    v0, zero, L429ec [$800429ec]
-            800429D0	lui    v0, $8008
             800429D4	jal    func52da0 [$80052da0]
             800429D8	nop
             800429DC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10569,7 +9806,7 @@ int func39c38()
             A0 = V0;
 
             L429ec:	; 800429EC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800429F0	nop
             V0 = w[V1 + 0000];
             800429F8	nop
@@ -10579,16 +9816,13 @@ int func39c38()
 
             L42a08:	; 80042A08
             S3 = A0;
-            80042A0C	lui    a1, $8008
-            80042A10	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80042A2C	beq    v0, zero, L42a4c [$80042a4c]
-            80042A30	lui    v0, $8008
             80042A34	jal    func52da0 [$80052da0]
             80042A38	nop
             80042A3C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10597,7 +9831,7 @@ int func39c38()
             A3 = V0;
 
             L42a4c:	; 80042A4C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80042A50	nop
             V0 = w[V1 + 0000];
             80042A58	nop
@@ -10607,23 +9841,19 @@ int func39c38()
 
             L42a68:	; 80042A68
             A1 = S2;
-            80042A6C	lui    v1, $8008
-            80042A70	lui    s2, $8008
-            V0 = w[V1 + b6f4];
+            V0 = w[0x8007b6f4];
             S0 = 0001;
-            [S2 + b6f8] = w(S0);
+            [0x8007b6f8] = w(S0);
             V0 = V0 >> S0;
-            [V1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             A0 = bu[S1 + 003b];
             80042A8C	jal    funcb2cc0 [$800b2cc0]
             A2 = S3;
             if (V0 == 0) return 0;
 
-            80042A98	lui    v0, $8008
-            80042A9C	lui    v1, $8008
-            A0 = w[V0 + b70c];
-            V1 = w[V1 + aea0];
-            [S2 + b6f8] = w(S0);
+            A0 = w[0x8007b70c];
+            V1 = w[0x8007aea0];
+            [0x8007b6f8] = w(S0);
             [A0 + 0000] = w(V1);
             return S0;        }
 
@@ -10633,7 +9863,6 @@ int func39c38()
             80042AC0	nop
             V0 = V0 & 0001;
             80042AC8	beq    v0, zero, L42ae8 [$80042ae8]
-            80042ACC	lui    v0, $8008
             80042AD0	jal    func52da0 [$80052da0]
             80042AD4	nop
             80042AD8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10642,7 +9871,7 @@ int func39c38()
             A0 = V0;
 
             L42ae8:	; 80042AE8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80042AEC	nop
             V0 = w[V1 + 0000];
             80042AF4	nop
@@ -10652,16 +9881,13 @@ int func39c38()
 
             L42b04:	; 80042B04
             S2 = A0;
-            80042B08	lui    a1, $8008
-            80042B0C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80042B28	beq    v0, zero, L42b48 [$80042b48]
-            80042B2C	lui    v0, $8008
             80042B30	jal    func52da0 [$80052da0]
             80042B34	nop
             80042B38	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10670,7 +9896,7 @@ int func39c38()
             A1 = V0;
 
             L42b48:	; 80042B48
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80042B4C	nop
             V0 = w[A0 + 0000];
             80042B54	nop
@@ -10687,16 +9913,13 @@ int func39c38()
 
             L42b80:	; 80042B80
             S3 = A1;
-            80042B84	lui    a1, $8008
-            80042B88	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80042BA4	beq    v0, zero, L42bc4 [$80042bc4]
-            80042BA8	lui    v0, $8008
             80042BAC	jal    func52da0 [$80052da0]
             80042BB0	nop
             80042BB4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10705,7 +9928,7 @@ int func39c38()
             A2 = V0;
 
             L42bc4:	; 80042BC4
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80042BC8	nop
             V0 = w[A0 + 0000];
             80042BD0	nop
@@ -10721,13 +9944,11 @@ int func39c38()
             A2 = V0 >> 10;
 
             L42bfc:	; 80042BFC
-            80042BFC	lui    a1, $8008
-            80042C00	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80042C1C	beq    v0, zero, L42c3c [$80042c3c]
             S5 = A2;
@@ -10757,13 +9978,11 @@ int func39c38()
             L42c78:	; 80042C78
             A1 = S2;
             A2 = S3;
-            80042C80	lui    a3, $8008
-            80042C84	lui    a0, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             A0 = bu[S4 + 003b];
             A3 = S5;
             80042CA4	jal    funcaba98 [$800aba98]
@@ -10788,20 +10007,17 @@ int func39c38()
             80042CE8	nop
             S0 = w[V0 + 0008];
             80042CF0	j      L42d00 [$80042d00]
-            80042CF4	lui    v0, $8008
 
             L42cf8:	; 80042CF8
             S0 = 0;
 
             L42cfc:	; 80042CFC
-            80042CFC	lui    v0, $8008
 
             L42d00:	; 80042D00
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             80042D04	nop
             V0 = V0 & 0001;
             80042D0C	beq    v0, zero, L42d2c [$80042d2c]
-            80042D10	lui    v0, $8008
             80042D14	jal    func52da0 [$80052da0]
             80042D18	nop
             80042D1C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10810,7 +10026,7 @@ int func39c38()
             A0 = V0;
 
             L42d2c:	; 80042D2C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80042D30	nop
             V0 = w[V1 + 0000];
             80042D38	nop
@@ -10820,13 +10036,11 @@ int func39c38()
 
             L42d48:	; 80042D48
             S2 = A0;
-            80042D4C	lui    a0, $8008
-            80042D50	lui    v1, $8008
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             A1 = 0001;
-            [V1 + b6f8] = w(A1);
+            [0x8007b6f8] = w(A1);
             V0 = V0 >> A1;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
 
             if (S0 != 0)
             {
@@ -10856,20 +10070,17 @@ int func39c38()
             80042DB4	nop
             S0 = w[V0 + 0008];
             80042DBC	j      L42dcc [$80042dcc]
-            80042DC0	lui    v0, $8008
 
             L42dc4:	; 80042DC4
             S0 = 0;
 
             L42dc8:	; 80042DC8
-            80042DC8	lui    v0, $8008
 
             L42dcc:	; 80042DCC
-            V0 = w[V0 + b6f4];
+            V0 = w[0x8007b6f4];
             80042DD0	nop
             V0 = V0 & 0001;
             80042DD8	beq    v0, zero, L42df8 [$80042df8]
-            80042DDC	lui    v0, $8008
             80042DE0	jal    func52da0 [$80052da0]
             80042DE4	nop
             80042DE8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10878,7 +10089,7 @@ int func39c38()
             A0 = V0;
 
             L42df8:	; 80042DF8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80042DFC	nop
             V0 = w[V1 + 0000];
             80042E04	nop
@@ -10888,13 +10099,11 @@ int func39c38()
 
             L42e14:	; 80042E14
             S2 = A0;
-            80042E18	lui    a0, $8008
-            80042E1C	lui    v1, $8008
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             A1 = 0001;
-            [V1 + b6f8] = w(A1);
+            [0x8007b6f8] = w(A1);
             V0 = V0 >> A1;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
 
             if (S0 != 0)
             {
@@ -10913,7 +10122,6 @@ int func39c38()
             80042E58	nop
             V0 = V0 & 0001;
             80042E60	beq    v0, zero, L42e80 [$80042e80]
-            80042E64	lui    v0, $8008
             80042E68	jal    func52da0 [$80052da0]
             80042E6C	nop
             80042E70	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10922,7 +10130,7 @@ int func39c38()
             A0 = V0;
 
             L42e80:	; 80042E80
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80042E84	nop
             V0 = w[V1 + 0000];
             80042E8C	nop
@@ -10931,14 +10139,12 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L42e9c:	; 80042E9C
-            80042E9C	lui    a2, $8008
-            80042EA0	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80042EB4	jal    func50068 [$80050068]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xd7:
@@ -10947,7 +10153,6 @@ int func39c38()
             80042ECC	nop
             V0 = V0 & 0001;
             80042ED4	beq    v0, zero, L42ef4 [$80042ef4]
-            80042ED8	lui    v0, $8008
             80042EDC	jal    func52da0 [$80052da0]
             80042EE0	nop
             80042EE4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10956,7 +10161,7 @@ int func39c38()
             A0 = V0;
 
             L42ef4:	; 80042EF4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80042EF8	nop
             V0 = w[V1 + 0000];
             80042F00	nop
@@ -10965,14 +10170,12 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L42f10:	; 80042F10
-            80042F10	lui    a2, $8008
-            80042F14	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80042F28	jal    func50080 [$80050080]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xef:
@@ -10981,7 +10184,6 @@ int func39c38()
             80042F40	nop
             V0 = V0 & 0001;
             80042F48	beq    v0, zero, L42f68 [$80042f68]
-            80042F4C	lui    v0, $8008
             80042F50	jal    func52da0 [$80052da0]
             80042F54	nop
             80042F58	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -10990,7 +10192,7 @@ int func39c38()
             A0 = V0;
 
             L42f68:	; 80042F68
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80042F6C	nop
             V0 = w[V1 + 0000];
             80042F74	nop
@@ -10999,14 +10201,12 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L42f84:	; 80042F84
-            80042F84	lui    a2, $8008
-            80042F88	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80042F9C	jal    func4ff98 [$8004ff98]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x90:
@@ -11028,7 +10228,6 @@ int func39c38()
             80042FE0	nop
             V0 = V0 & 0001;
             80042FE8	beq    v0, zero, L43008 [$80043008]
-            80042FEC	lui    v0, $8008
 
             func42ff0:	; 80042FF0
             80042FF0	jal    func52da0 [$80052da0]
@@ -11041,7 +10240,7 @@ int func39c38()
             A0 = V0;
 
             L43008:	; 80043008
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8004300C	nop
             V0 = w[V1 + 0000];
             80043014	nop
@@ -11051,16 +10250,13 @@ int func39c38()
 
             L43024:	; 80043024
             S2 = A0;
-            80043028	lui    a1, $8008
-            8004302C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043048	beq    v0, zero, L43068 [$80043068]
-            8004304C	lui    v0, $8008
             80043050	jal    func52da0 [$80052da0]
             80043054	nop
             80043058	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11069,7 +10265,7 @@ int func39c38()
             A3 = V0;
 
             L43068:	; 80043068
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8004306C	nop
             V0 = w[A0 + 0000];
             80043074	nop
@@ -11085,18 +10281,16 @@ int func39c38()
             A3 = V0 >> 10;
 
             L430a0:	; 800430A0
-            800430A4	lui    a0, $8008
             V1 = 0001;
-            800430AC	lui    a2, $8008
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V1 = 80073998;
             A1 = S2 << 02;
             A1 = A1 + V1;
-            V1 = w[A2 + b6f4];
+            V1 = w[0x8007b6f4];
             A0 = w[A1 + 0000];
             V1 = V1 >> 01;
             A0 = A0 | A3;
-            [A2 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             [A1 + 0000] = w(A0);
             return 0;        }
 
@@ -11106,7 +10300,6 @@ int func39c38()
             800430E8	nop
             V0 = V0 & 0001;
             800430F0	beq    v0, zero, L43110 [$80043110]
-            800430F4	lui    v0, $8008
             800430F8	jal    func52da0 [$80052da0]
             800430FC	nop
             80043100	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11115,7 +10308,7 @@ int func39c38()
             A0 = V0;
 
             L43110:	; 80043110
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80043114	nop
             V0 = w[V1 + 0000];
             8004311C	nop
@@ -11125,16 +10318,13 @@ int func39c38()
 
             L4312c:	; 8004312C
             S2 = A0;
-            80043130	lui    a1, $8008
-            80043134	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043150	beq    v0, zero, L43170 [$80043170]
-            80043154	lui    v0, $8008
             80043158	jal    func52da0 [$80052da0]
             8004315C	nop
             80043160	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11143,7 +10333,7 @@ int func39c38()
             A3 = V0;
 
             L43170:	; 80043170
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80043174	nop
             V0 = w[A0 + 0000];
             8004317C	nop
@@ -11159,13 +10349,11 @@ int func39c38()
             A3 = V0 >> 10;
 
             L431a8:	; 800431A8
-            800431AC	lui    a2, $8008
-            800431B0	lui    a1, $8008
-            V1 = w[A2 + b6f4];
+            V1 = w[0x8007b6f4];
             A0 = 0001;
-            [A1 + b6f8] = w(A0);
+            [0x8007b6f8] = w(A0);
             V1 = V1 >> A0;
-            [A2 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             V1 = 80073998;
             A0 = S2 << 02;
             A0 = A0 + V1;
@@ -11181,7 +10369,6 @@ int func39c38()
             800431F4	nop
             V0 = V0 & 0001;
             800431FC	beq    v0, zero, L4321c [$8004321c]
-            80043200	lui    v0, $8008
             80043204	jal    func52da0 [$80052da0]
             80043208	nop
             8004320C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11190,7 +10377,7 @@ int func39c38()
             A1 = V0;
 
             L4321c:	; 8004321C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80043220	nop
             V0 = w[A0 + 0000];
             80043228	nop
@@ -11207,16 +10394,13 @@ int func39c38()
 
             L43254:	; 80043254
             S2 = A1;
-            80043258	lui    a1, $8008
-            8004325C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043278	beq    v0, zero, L43298 [$80043298]
-            8004327C	lui    v0, $8008
             80043280	jal    func52da0 [$80052da0]
             80043284	nop
             80043288	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11225,7 +10409,7 @@ int func39c38()
             A1 = V0;
 
             L43298:	; 80043298
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8004329C	nop
             V0 = w[A0 + 0000];
             800432A4	nop
@@ -11244,13 +10428,11 @@ int func39c38()
             A0 = S2;
             A2 = 0;
             800432D8	lui    v0, $8006
-            800432DC	lui    v1, $8008
             V0 = w[V0 + 794c];
-            800432E4	lui    t0, $8008
             T1 = w[V0 + 001c];
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
-            V1 = w[T0 + b6f4];
+            [0x8007b6f8] = w(V0);
+            V1 = w[0x8007b6f4];
             A3 = A2;
             800432FC	j      L43904 [$80043904]
             [SP + 0010] = w(0);        }
@@ -11261,7 +10443,6 @@ int func39c38()
             8004330C	nop
             V0 = V0 & 0001;
             80043314	beq    v0, zero, L43334 [$80043334]
-            80043318	lui    v0, $8008
             8004331C	jal    func52da0 [$80052da0]
             80043320	nop
             80043324	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11270,7 +10451,7 @@ int func39c38()
             A1 = V0;
 
             L43334:	; 80043334
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80043338	nop
             V0 = w[A0 + 0000];
             80043340	nop
@@ -11287,16 +10468,13 @@ int func39c38()
 
             L4336c:	; 8004336C
             S2 = A1;
-            80043370	lui    a1, $8008
-            80043374	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043390	beq    v0, zero, L433b0 [$800433b0]
-            80043394	lui    v0, $8008
             80043398	jal    func52da0 [$80052da0]
             8004339C	nop
             800433A0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11305,7 +10483,7 @@ int func39c38()
             A1 = V0;
 
             L433b0:	; 800433B0
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             800433B4	nop
             V0 = w[A0 + 0000];
             800433BC	nop
@@ -11322,16 +10500,13 @@ int func39c38()
 
             L433e8:	; 800433E8
             S3 = A1;
-            800433EC	lui    a1, $8008
-            800433F0	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8004340C	beq    v0, zero, L4342c [$8004342c]
-            80043410	lui    v0, $8008
             80043414	jal    func52da0 [$80052da0]
             80043418	nop
             8004341C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11340,7 +10515,7 @@ int func39c38()
             A2 = V0;
 
             L4342c:	; 8004342C
-            A1 = w[V0 + b70c];
+            A1 = w[0x8007b70c];
             80043430	nop
             V0 = w[A1 + 0000];
             80043438	nop
@@ -11362,13 +10537,11 @@ int func39c38()
             A0 = S2;
             A1 = S3;
             80043478	lui    v0, $8006
-            8004347C	lui    v1, $8008
             V0 = w[V0 + 794c];
-            80043484	lui    t0, $8008
             T1 = w[V0 + 001c];
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
-            V1 = w[T0 + b6f4];
+            [0x8007b6f8] = w(V0);
+            V1 = w[0x8007b6f4];
             A3 = 0;
             8004349C	j      L43904 [$80043904]
             [SP + 0010] = w(0);        }
@@ -11379,7 +10552,6 @@ int func39c38()
             800434AC	nop
             V0 = V0 & 0001;
             800434B4	beq    v0, zero, L434d4 [$800434d4]
-            800434B8	lui    v0, $8008
             800434BC	jal    func52da0 [$80052da0]
             800434C0	nop
             800434C4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11388,7 +10560,7 @@ int func39c38()
             A1 = V0;
 
             L434d4:	; 800434D4
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             800434D8	nop
             V0 = w[A0 + 0000];
             800434E0	nop
@@ -11405,16 +10577,13 @@ int func39c38()
 
             L4350c:	; 8004350C
             S2 = A1;
-            80043510	lui    a1, $8008
-            80043514	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043530	beq    v0, zero, L43550 [$80043550]
-            80043534	lui    v0, $8008
             80043538	jal    func52da0 [$80052da0]
             8004353C	nop
             80043540	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11423,7 +10592,7 @@ int func39c38()
             A1 = V0;
 
             L43550:	; 80043550
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80043554	nop
             V0 = w[A0 + 0000];
             8004355C	nop
@@ -11440,16 +10609,13 @@ int func39c38()
 
             L43588:	; 80043588
             S3 = A1;
-            8004358C	lui    a1, $8008
-            80043590	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800435AC	beq    v0, zero, L435cc [$800435cc]
-            800435B0	lui    v0, $8008
             800435B4	jal    func52da0 [$80052da0]
             800435B8	nop
             800435BC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11458,7 +10624,7 @@ int func39c38()
             A2 = V0;
 
             L435cc:	; 800435CC
-            A1 = w[V0 + b70c];
+            A1 = w[0x8007b70c];
             800435D0	nop
             V0 = w[A1 + 0000];
             800435D8	nop
@@ -11477,13 +10643,11 @@ int func39c38()
             A2 = A2 | V1;
 
             L43610:	; 80043610
-            80043610	lui    a1, $8008
-            80043614	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043630	beq    v0, zero, L43650 [$80043650]
             S5 = A2;
@@ -11507,13 +10671,11 @@ int func39c38()
             A0 = S2;
             A1 = S3;
             80043678	lui    v0, $8006
-            8004367C	lui    v1, $8008
             V0 = w[V0 + 794c];
-            80043684	lui    t0, $8008
             T1 = w[V0 + 001c];
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
-            V1 = w[T0 + b6f4];
+            [0x8007b6f8] = w(V0);
+            V1 = w[0x8007b6f4];
             A2 = S5;
             8004369C	j      L43904 [$80043904]
             [SP + 0010] = w(0);        }
@@ -11524,7 +10686,6 @@ int func39c38()
             800436AC	nop
             V0 = V0 & 0001;
             800436B4	beq    v0, zero, L436d4 [$800436d4]
-            800436B8	lui    v0, $8008
             800436BC	jal    func52da0 [$80052da0]
             800436C0	nop
             800436C4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11533,7 +10694,7 @@ int func39c38()
             A1 = V0;
 
             L436d4:	; 800436D4
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             800436D8	nop
             V0 = w[A0 + 0000];
             800436E0	nop
@@ -11550,16 +10711,13 @@ int func39c38()
 
             L4370c:	; 8004370C
             S2 = A1;
-            80043710	lui    a1, $8008
-            80043714	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043730	beq    v0, zero, L43750 [$80043750]
-            80043734	lui    v0, $8008
             80043738	jal    func52da0 [$80052da0]
             8004373C	nop
             80043740	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11568,7 +10726,7 @@ int func39c38()
             A1 = V0;
 
             L43750:	; 80043750
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80043754	nop
             V0 = w[A0 + 0000];
             8004375C	nop
@@ -11585,16 +10743,13 @@ int func39c38()
 
             L43788:	; 80043788
             S3 = A1;
-            8004378C	lui    a1, $8008
-            80043790	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800437AC	beq    v0, zero, L437cc [$800437cc]
-            800437B0	lui    v0, $8008
             800437B4	jal    func52da0 [$80052da0]
             800437B8	nop
             800437BC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11603,7 +10758,7 @@ int func39c38()
             A2 = V0;
 
             L437cc:	; 800437CC
-            A1 = w[V0 + b70c];
+            A1 = w[0x8007b70c];
             800437D0	nop
             V0 = w[A1 + 0000];
             800437D8	nop
@@ -11622,13 +10777,11 @@ int func39c38()
             A2 = A2 | V1;
 
             L43810:	; 80043810
-            80043810	lui    a1, $8008
-            80043814	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043830	beq    v0, zero, L43850 [$80043850]
             S5 = A2;
@@ -11649,13 +10802,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L43870:	; 80043870
-            80043870	lui    a1, $8008
-            80043874	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043890	beq    v0, zero, L438b0 [$800438b0]
             S1 = A3;
@@ -11681,19 +10832,17 @@ int func39c38()
             A2 = S5;
             A3 = S1;
             V0 = w[0x8006794c];
-            800438E8	lui    v1, $8008
             T1 = w[V0 + 001c];
             V0 = 0001;
             [SP + 0010] = w(T0);
-            800438F8	lui    t0, $8008
-            [V1 + b6f8] = w(V0);
-            V1 = w[T0 + b6f4];
+            [0x8007b6f8] = w(V0);
+            V1 = w[0x8007b6f4];
 
             L43904:	; 80043904
             V0 = w[T1 + 083c];
             V1 = V1 >> 01;
             8004390C	jalr   v0 ra
-            [T0 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             return 0;        }
 
         case 0x89:
@@ -11702,7 +10851,6 @@ int func39c38()
             80043924	nop
             V0 = V0 & 0001;
             8004392C	beq    v0, zero, L4394c [$8004394c]
-            80043930	lui    v0, $8008
             80043934	jal    func52da0 [$80052da0]
             80043938	nop
             8004393C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11711,7 +10859,7 @@ int func39c38()
             A1 = V0;
 
             L4394c:	; 8004394C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80043950	nop
             V0 = w[A0 + 0000];
             80043958	nop
@@ -11728,16 +10876,13 @@ int func39c38()
 
             L43984:	; 80043984
             S2 = A1;
-            80043988	lui    a1, $8008
-            8004398C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800439A8	beq    v0, zero, L439c8 [$800439c8]
-            800439AC	lui    v0, $8008
             800439B0	jal    func52da0 [$80052da0]
             800439B4	nop
             800439B8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11746,7 +10891,7 @@ int func39c38()
             A1 = V0;
 
             L439c8:	; 800439C8
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             800439CC	nop
             V0 = w[A0 + 0000];
             800439D4	nop
@@ -11763,16 +10908,13 @@ int func39c38()
 
             L43a00:	; 80043A00
             S3 = A1;
-            80043A04	lui    a1, $8008
-            80043A08	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043A24	beq    v0, zero, L43a44 [$80043a44]
-            80043A28	lui    v0, $8008
             80043A2C	jal    func52da0 [$80052da0]
             80043A30	nop
             80043A34	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11781,7 +10923,7 @@ int func39c38()
             A2 = V0;
 
             L43a44:	; 80043A44
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80043A48	nop
             V0 = w[A0 + 0000];
             80043A50	nop
@@ -11804,20 +10946,17 @@ int func39c38()
             A2 = A2 << 10;
             A2 = A2 >> 10;
             A3 = SP + 0030;
-            80043A98	lui    v1, $8008
             V0 = 0001;
-            80043AA0	lui    s0, $8008
-            [V1 + b6f8] = w(V0);
-            V0 = w[S0 + b6f4];
+            [0x8007b6f8] = w(V0);
+            V0 = w[0x8007b6f4];
             V1 = SP + 0031;
             [SP + 0010] = w(V1);
             V0 = V0 >> 01;
             80043AB8	jal    funcb1a20 [$800b1a20]
-            [S0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V1 = bu[SP + 0030];
             [0x8007ae38] = w(V1);
-            80043ACC	lui    v1, $8008
-            V0 = w[S0 + b6f4];
+            V0 = w[0x8007b6f4];
             80043AD4	nop
             V0 = V0 & 0001;
             80043ADC	beq    v0, zero, L43afc [$80043afc]
@@ -11842,23 +10981,20 @@ int func39c38()
             V0 = bu[SP + 0031];
             80043B20	nop
             80043B24	mult   v0, a0
-            80043B28	lui    v1, $8008
-            80043B2C	lui    a1, $8008
             V0 = 0001;
-            80043B34	lui    a0, $8008
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             80043B3C	mflo   t3
             V0 = T3 >> 07;
             [S0 + 0000] = w(V0);
-            V0 = w[A0 + b6f4];
-            V1 = w[A1 + ae3c];
+            V0 = w[0x8007b6f4];
+            V1 = w[0x8007ae3c];
             V0 = V0 >> 01;
             V1 = V1 < 0080;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
 
             if (V1 == 0)
             {
-                [A1 + ae3c] = w(0x7f);
+                [0x8007ae3c] = w(0x7f);
             }
 
             return 0;        }
@@ -11877,7 +11013,6 @@ int func39c38()
             [SP + 0010] = w(V0);
             V1 = bu[SP + 0032];
             [0x8007ae38] = w(V1);
-            80043BA0	lui    v1, $8008
             V0 = w[0x8007b6f4];
             80043BAC	nop
             V0 = V0 & 0001;
@@ -11903,23 +11038,20 @@ int func39c38()
             V0 = bu[SP + 0033];
             80043BF8	nop
             80043BFC	mult   v0, a0
-            80043C00	lui    v1, $8008
-            80043C04	lui    a1, $8008
             V0 = 0001;
-            80043C0C	lui    a0, $8008
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             80043C14	mflo   t3
             V0 = T3 >> 07;
             [S0 + 0000] = w(V0);
-            V0 = w[A0 + b6f4];
-            V1 = w[A1 + ae3c];
+            V0 = w[0x8007b6f4];
+            V1 = w[0x8007ae3c];
             V0 = V0 >> 01;
             V1 = V1 < 0080;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
 
             if (V1 == 0)
             {
-                [A1 + ae3c] = w(0x7f);
+                [0x8007ae3c] = w(0x7f);
             }
 
             return 0;        }
@@ -11930,7 +11062,6 @@ int func39c38()
             80043C4C	nop
             V0 = V0 & 0001;
             80043C54	beq    v0, zero, L43c74 [$80043c74]
-            80043C58	lui    v0, $8008
             80043C5C	jal    func52da0 [$80052da0]
             80043C60	nop
             80043C64	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11939,7 +11070,7 @@ int func39c38()
             A0 = V0;
 
             L43c74:	; 80043C74
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80043C78	nop
             V0 = w[V1 + 0000];
             80043C80	nop
@@ -11949,16 +11080,13 @@ int func39c38()
 
             L43c90:	; 80043C90
             S2 = A0;
-            80043C94	lui    a1, $8008
-            80043C98	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043CB4	beq    v0, zero, L43cd4 [$80043cd4]
-            80043CB8	lui    v0, $8008
             80043CBC	jal    func52da0 [$80052da0]
             80043CC0	nop
             80043CC4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11967,7 +11095,7 @@ int func39c38()
             A0 = V0;
 
             L43cd4:	; 80043CD4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80043CD8	nop
             V0 = w[V1 + 0000];
             80043CE0	nop
@@ -11977,16 +11105,13 @@ int func39c38()
 
             L43cf0:	; 80043CF0
             S3 = A0;
-            80043CF4	lui    a1, $8008
-            80043CF8	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043D14	beq    v0, zero, L43d34 [$80043d34]
-            80043D18	lui    v0, $8008
             80043D1C	jal    func52da0 [$80052da0]
             80043D20	nop
             80043D24	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -11995,7 +11120,7 @@ int func39c38()
             A2 = V0;
 
             L43d34:	; 80043D34
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80043D38	nop
             V0 = w[A0 + 0000];
             80043D40	nop
@@ -12011,13 +11136,11 @@ int func39c38()
             A2 = V0 >> 10;
 
             L43d6c:	; 80043D6C
-            80043D6C	lui    a1, $8008
-            80043D70	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043D8C	beq    v0, zero, L43dac [$80043dac]
             S5 = A2;
@@ -12045,18 +11168,15 @@ int func39c38()
             A3 = V0 >> 10;
 
             L43de8:	; 80043DE8
-            80043DE8	lui    a1, $8008
-            80043DEC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043E08	bne    v0, zero, L43fc8 [$80043fc8]
             S1 = A3;
-            80043E10	j      L43fe4 [$80043fe4]
-            80043E14	lui    v0, $8008        }
+            80043E10	j      L43fe4 [$80043fe4]        }
 
         case 0xda:
         {
@@ -12064,7 +11184,6 @@ int func39c38()
             80043E20	nop
             V0 = V0 & 0001;
             80043E28	beq    v0, zero, L43e48 [$80043e48]
-            80043E2C	lui    v0, $8008
             80043E30	jal    func52da0 [$80052da0]
             80043E34	nop
             80043E38	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12073,7 +11192,7 @@ int func39c38()
             A0 = V0;
 
             L43e48:	; 80043E48
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80043E4C	nop
             V0 = w[V1 + 0000];
             80043E54	nop
@@ -12083,16 +11202,13 @@ int func39c38()
 
             L43e64:	; 80043E64
             S2 = A0;
-            80043E68	lui    a1, $8008
-            80043E6C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043E88	beq    v0, zero, L43ea8 [$80043ea8]
-            80043E8C	lui    v0, $8008
             80043E90	jal    func52da0 [$80052da0]
             80043E94	nop
             80043E98	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12101,7 +11217,7 @@ int func39c38()
             A0 = V0;
 
             L43ea8:	; 80043EA8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80043EAC	nop
             V0 = w[V1 + 0000];
             80043EB4	nop
@@ -12111,16 +11227,13 @@ int func39c38()
 
             L43ec4:	; 80043EC4
             S3 = A0;
-            80043EC8	lui    a1, $8008
-            80043ECC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043EE8	beq    v0, zero, L43f08 [$80043f08]
-            80043EEC	lui    v0, $8008
             80043EF0	jal    func52da0 [$80052da0]
             80043EF4	nop
             80043EF8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12129,7 +11242,7 @@ int func39c38()
             A2 = V0;
 
             L43f08:	; 80043F08
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80043F0C	nop
             V0 = w[V1 + 0000];
             80043F14	nop
@@ -12138,13 +11251,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L43f24:	; 80043F24
-            80043F24	lui    a1, $8008
-            80043F28	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043F44	beq    v0, zero, L43f64 [$80043f64]
             S5 = A2;
@@ -12172,13 +11283,11 @@ int func39c38()
             A3 = V0 >> 10;
 
             L43fa0:	; 80043FA0
-            80043FA0	lui    a1, $8008
-            80043FA4	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80043FC0	beq    v0, zero, L43fe0 [$80043fe0]
             S1 = A3;
@@ -12192,10 +11301,9 @@ int func39c38()
             T2 = V0;
 
             L43fe0:	; 80043FE0
-            80043FE0	lui    v0, $8008
 
             L43fe4:	; 80043FE4
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80043FE8	nop
             V0 = w[A0 + 0000];
             80043FF0	nop
@@ -12215,15 +11323,13 @@ int func39c38()
             A1 = S3;
             A2 = S5;
             A3 = S1;
-            8004402C	lui    t1, $8008
-            80044030	lui    t0, $8008
-            V1 = w[T1 + b6f4];
+            V1 = w[0x8007b6f4];
             V0 = 0001;
-            [T0 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             [SP + 0010] = w(T2);
             V1 = V1 >> V0;
             80044048	jal    funcafac0 [$800afac0]
-            [T1 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             return 0;        }
 
         case 0x75:
@@ -12232,7 +11338,6 @@ int func39c38()
             80044060	nop
             V0 = V0 & 0001;
             80044068	beq    v0, zero, L44088 [$80044088]
-            8004406C	lui    v0, $8008
             80044070	jal    func52da0 [$80052da0]
             80044074	nop
             80044078	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12241,7 +11346,7 @@ int func39c38()
             A0 = V0;
 
             L44088:	; 80044088
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8004408C	nop
             V0 = w[V1 + 0000];
             80044094	nop
@@ -12251,16 +11356,13 @@ int func39c38()
 
             L440a4:	; 800440A4
             S2 = A0;
-            800440A8	lui    a1, $8008
-            800440AC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800440C8	beq    v0, zero, L440e8 [$800440e8]
-            800440CC	lui    v0, $8008
             800440D0	jal    func52da0 [$80052da0]
             800440D4	nop
             800440D8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12269,7 +11371,7 @@ int func39c38()
             A1 = V0;
 
             L440e8:	; 800440E8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800440EC	nop
             V0 = w[V1 + 0000];
             800440F4	nop
@@ -12279,14 +11381,12 @@ int func39c38()
 
             L44104:	; 80044104
             A0 = S2;
-            80044108	lui    a3, $8008
-            8004410C	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80044120	jal    func32120 [$80032120]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             80044128	jal    func4a9e8 [$8004a9e8]
             8004412C	nop
             return 0x1;        }
@@ -12297,7 +11397,6 @@ int func39c38()
             80044140	nop
             V0 = V0 & 0001;
             80044148	beq    v0, zero, L44168 [$80044168]
-            8004414C	lui    v0, $8008
             80044150	jal    func52da0 [$80052da0]
             80044154	nop
             80044158	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12306,7 +11405,7 @@ int func39c38()
             A1 = V0;
 
             L44168:	; 80044168
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8004416C	nop
             V0 = w[A0 + 0000];
             80044174	nop
@@ -12326,14 +11425,12 @@ int func39c38()
             A0 = S2 >> 0e;
             A0 = A0 & 0003;
             A1 = S2 & 3fff;
-            800441B0	lui    a3, $8008
-            800441B4	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             800441C8	jal    funcb5004 [$800b5004]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0x1;        }
 
         case 0xaa:
@@ -12358,7 +11455,6 @@ int func39c38()
             8004421C	nop
             V0 = V0 & 0001;
             80044224	beq    v0, zero, L44244 [$80044244]
-            80044228	lui    v0, $8008
             8004422C	jal    func52da0 [$80052da0]
             80044230	nop
             80044234	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12367,7 +11463,7 @@ int func39c38()
             A1 = V0;
 
             L44244:	; 80044244
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80044248	nop
             V0 = w[A0 + 0000];
             80044250	nop
@@ -12384,16 +11480,13 @@ int func39c38()
 
             L4427c:	; 8004427C
             S2 = A1;
-            80044280	lui    a1, $8008
-            80044284	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800442A0	beq    v0, zero, L442c0 [$800442c0]
-            800442A4	lui    v0, $8008
             800442A8	jal    func52da0 [$80052da0]
             800442AC	nop
             800442B0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12402,7 +11495,7 @@ int func39c38()
             A0 = V0;
 
             L442c0:	; 800442C0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800442C4	nop
             V0 = w[V1 + 0000];
             800442CC	nop
@@ -12412,13 +11505,11 @@ int func39c38()
 
             L442dc:	; 800442DC
             S3 = A0;
-            800442E0	lui    a1, $8008
-            800442E4	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = S2 < 0100;
             80044300	beq    v0, zero, L44318 [$80044318]
             A0 = S2;
@@ -12450,7 +11541,6 @@ int func39c38()
             80044364	nop
             V0 = V0 & 0001;
             8004436C	beq    v0, zero, L4438c [$8004438c]
-            80044370	lui    v0, $8008
             80044374	jal    func52da0 [$80052da0]
             80044378	nop
             8004437C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12459,7 +11549,7 @@ int func39c38()
             A1 = V0;
 
             L4438c:	; 8004438C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80044390	nop
             V0 = w[A0 + 0000];
             80044398	nop
@@ -12476,16 +11566,13 @@ int func39c38()
 
             L443c4:	; 800443C4
             S2 = A1;
-            800443C8	lui    a1, $8008
-            800443CC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800443E8	beq    v0, zero, L44408 [$80044408]
-            800443EC	lui    v0, $8008
             800443F0	jal    func52da0 [$80052da0]
             800443F4	nop
             800443F8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12494,7 +11581,7 @@ int func39c38()
             A0 = V0;
 
             L44408:	; 80044408
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8004440C	nop
             V0 = w[V1 + 0000];
             80044414	nop
@@ -12504,13 +11591,11 @@ int func39c38()
 
             L44424:	; 80044424
             S3 = A0;
-            80044428	lui    a1, $8008
-            8004442C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = S2 < 0100;
             80044448	beq    v0, zero, L44460 [$80044460]
             A0 = S2;
@@ -12532,7 +11617,6 @@ int func39c38()
             80044484	nop
             V0 = V0 & 0001;
             8004448C	beq    v0, zero, L444ac [$800444ac]
-            80044490	lui    v0, $8008
             80044494	jal    func52da0 [$80052da0]
             80044498	nop
             8004449C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12541,7 +11625,7 @@ int func39c38()
             A2 = V0;
 
             L444ac:	; 800444AC
-            A1 = w[V0 + b70c];
+            A1 = w[0x8007b70c];
             800444B0	nop
             V0 = w[A1 + 0000];
             800444B8	nop
@@ -12561,16 +11645,14 @@ int func39c38()
 
             L444f0:	; 800444F0
             T0 = 98967f;
-            800444F8	lui    v1, $8008
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             A3 = w[0x8006794c];
-            8004450C	lui    a0, $8008
             A1 = w[A3 + 001c];
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = w[A1 + 0560];
             V0 = V0 >> 01;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V1 = V1 + A2;
             [A1 + 0560] = w(V1);
             V1 = T0 < V1;
@@ -12588,7 +11670,6 @@ int func39c38()
             8004454C	nop
             V0 = V0 & 0001;
             80044554	beq    v0, zero, L44574 [$80044574]
-            80044558	lui    v0, $8008
             8004455C	jal    func52da0 [$80052da0]
             80044560	nop
             80044564	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12597,7 +11678,7 @@ int func39c38()
             A3 = V0;
 
             L44574:	; 80044574
-            A1 = w[V0 + b70c];
+            A1 = w[0x8007b70c];
             80044578	nop
             V0 = w[A1 + 0000];
             80044580	nop
@@ -12617,16 +11698,14 @@ int func39c38()
 
             L445b8:	; 800445B8
             A1 = 98967f;
-            800445C0	lui    v1, $8008
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             T0 = w[0x8006794c];
-            800445D4	lui    a0, $8008
             A2 = w[T0 + 001c];
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = w[A2 + 0560];
             V0 = V0 >> 01;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V1 = V1 - A3;
             A1 = A1 < V1;
             [A2 + 0560] = w(V1);
@@ -12645,7 +11724,6 @@ int func39c38()
             80044610	nop
             V0 = V0 & 0001;
             80044618	beq    v0, zero, L44638 [$80044638]
-            8004461C	lui    v0, $8008
             80044620	jal    func52da0 [$80052da0]
             80044624	nop
             80044628	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12654,7 +11732,7 @@ int func39c38()
             A1 = V0;
 
             L44638:	; 80044638
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8004463C	nop
             V0 = w[A0 + 0000];
             80044644	nop
@@ -12675,13 +11753,11 @@ int func39c38()
             V0 = V0 & 00e0;
             S2 = S2 | V0;
             S0 = 0;
-            80044684	lui    a1, $8008
-            80044688	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
 
             loop446a0:	; 800446A0
             800446A0	jal    func33c0c [$80033c0c]
@@ -12712,7 +11788,6 @@ int func39c38()
             800446F0	nop
             V0 = V0 & 0001;
             800446F8	beq    v0, zero, L44718 [$80044718]
-            800446FC	lui    v0, $8008
             80044700	jal    func52da0 [$80052da0]
             80044704	nop
             80044708	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12721,7 +11796,7 @@ int func39c38()
             A0 = V0;
 
             L44718:	; 80044718
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8004471C	nop
             V0 = w[V1 + 0000];
             80044724	nop
@@ -12731,15 +11806,13 @@ int func39c38()
 
             L44734:	; 80044734
             A3 = A0;
-            80044738	lui    a1, $8008
-            8004473C	lui    v1, $8008
-            A0 = w[A1 + b6f4];
+            A0 = w[0x8007b6f4];
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             A0 = A0 >> V0;
             V0 = A3 < 0009;
             80044754	bne    v0, zero, L44760 [$80044760]
-            [A1 + b6f4] = w(A0);
+            [0x8007b6f4] = w(A0);
             8004475C	addiu  a3, a3, $fffc (=-$4)
 
             L44760:	; 80044760
@@ -12764,16 +11837,13 @@ int func39c38()
 
             L447a4:	; 800447A4
             S3 = A0;
-            800447A8	lui    a1, $8008
-            800447AC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800447C8	beq    v0, zero, L447e8 [$800447e8]
-            800447CC	lui    v0, $8008
             800447D0	jal    func52da0 [$80052da0]
             800447D4	nop
             800447D8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12782,7 +11852,7 @@ int func39c38()
             A2 = V0;
 
             L447e8:	; 800447E8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800447EC	nop
             V0 = w[V1 + 0000];
             800447F4	nop
@@ -12792,15 +11862,13 @@ int func39c38()
 
             L44804:	; 80044804
             S5 = A2;
-            80044808	lui    a1, $8008
-            8004480C	lui    v1, $8008
-            A0 = w[A1 + b6f4];
+            A0 = w[0x8007b6f4];
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             A0 = A0 >> V0;
             V0 = S2 < 0009;
             80044824	beq    v0, zero, L44964 [$80044964]
-            [A1 + b6f4] = w(A0);
+            [0x8007b6f4] = w(A0);
             8004482C	lui    v1, $8006
             V0 = S2 << 03;
             V0 = V0 + S2;
@@ -12811,7 +11879,6 @@ int func39c38()
             S0 = V1 + V0;
             V0 = A0 & 0001;
             80044850	beq    v0, zero, L44870 [$80044870]
-            80044854	lui    v0, $8008
             80044858	jal    func52da0 [$80052da0]
             8004485C	nop
             80044860	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12820,7 +11887,7 @@ int func39c38()
             A3 = V0;
 
             L44870:	; 80044870
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80044874	nop
             V0 = w[V1 + 0000];
             8004487C	nop
@@ -12830,24 +11897,21 @@ int func39c38()
 
             L4488c:	; 8004488C
             S1 = A3;
-            80044890	lui    a1, $8008
-            80044894	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = 00ff;
             800448B0	beq    s1, v0, L448bc [$800448bc]
             800448B4	nop
             [S0 + 000a] = b(S1);
 
             L448bc:	; 800448BC
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             800448C0	nop
             V0 = V0 & 0001;
             800448C8	beq    v0, zero, L448e8 [$800448e8]
-            800448CC	lui    v0, $8008
             800448D0	jal    func52da0 [$80052da0]
             800448D4	nop
             800448D8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12856,7 +11920,7 @@ int func39c38()
             A3 = V0;
 
             L448e8:	; 800448E8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800448EC	nop
             V0 = w[V1 + 0000];
             800448F4	nop
@@ -12866,13 +11930,11 @@ int func39c38()
 
             L44904:	; 80044904
             S1 = A3;
-            80044908	lui    a1, $8008
-            8004490C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = 00ff;
             80044928	beq    s1, v0, L4494c [$8004494c]
             8004492C	lui    v0, $fffe
@@ -12894,56 +11956,48 @@ int func39c38()
             L44964:	; 80044964
             V0 = A0 & 0001;
             80044968	beq    v0, zero, L44988 [$80044988]
-            8004496C	lui    v0, $8008
             80044970	jal    func52da0 [$80052da0]
             80044974	nop
             80044978	jal    system_read_from_stack_command_not_from_script [$80052d40]
             8004497C	nop
             80044980	j      L449a4 [$800449a4]
-            80044984	lui    a1, $8008
 
             L44988:	; 80044988
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8004498C	nop
             V0 = w[V1 + 0000];
             80044994	nop
             V0 = V0 + 0001;
             [V1 + 0000] = w(V0);
-            800449A0	lui    a1, $8008
 
             L449a4:	; 800449A4
-            800449A4	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             800449C0	beq    v0, zero, L449e0 [$800449e0]
-            800449C4	lui    v0, $8008
             800449C8	jal    func52da0 [$80052da0]
             800449CC	nop
             800449D0	jal    system_read_from_stack_command_not_from_script [$80052d40]
             800449D4	nop
             800449D8	j      L449fc [$800449fc]
-            800449DC	lui    a1, $8008
 
             L449e0:	; 800449E0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800449E4	nop
             V0 = w[V1 + 0000];
             800449EC	nop
             V0 = V0 + 0001;
             [V1 + 0000] = w(V0);
-            800449F8	lui    a1, $8008
 
             L449fc:	; 800449FC
-            800449FC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
 
             return 0;        }
 
@@ -12953,7 +12007,6 @@ int func39c38()
             80044A20	nop
             V0 = V0 & 0001;
             80044A28	beq    v0, zero, L44a48 [$80044a48]
-            80044A2C	lui    v0, $8008
             80044A30	jal    func52da0 [$80052da0]
             80044A34	nop
             80044A38	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -12962,7 +12015,7 @@ int func39c38()
             A0 = V0;
 
             L44a48:	; 80044A48
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80044A4C	nop
             V0 = w[V1 + 0000];
             80044A54	nop
@@ -12972,13 +12025,11 @@ int func39c38()
 
             L44a64:	; 80044A64
             A3 = A0;
-            80044A68	lui    a1, $8008
-            80044A6C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = A3 < 0009;
             80044A88	bne    v0, zero, L44a98 [$80044a98]
             S2 = A3;
@@ -13020,7 +12071,7 @@ int func39c38()
                 80044B00	addiu  s4, v0, $e63c (=-$19c4)
                 80044B04	lui    v0, $8008
                 S3 = 0001;
-                V1 = w[V0 + aecc];
+                V1 = w[0x8007aecc];
                 80044B10	addiu  v0, zero, $ffff (=-$1)
                 S2 = V1 + 16e4;
                 [V1 + 16e4] = w(V0);
@@ -13051,7 +12102,7 @@ int func39c38()
                     V0 = S1 & 0001;
                     80044B64	beq    v0, zero, L44b84 [$80044b84]
                     V0 = S0 + A0;
-                    V1 = bu[A1 + adfc];
+                    V1 = bu[0x8007adfc];
                     V0 = bu[V0 + 0000];
                     80044B74	addiu  v1, v1, $fff7 (=-$9)
                     V0 = V0 + V1;
@@ -13073,7 +12124,6 @@ int func39c38()
             80044BA0	nop
             V0 = V0 & 0001;
             80044BA8	beq    v0, zero, L44bc8 [$80044bc8]
-            80044BAC	lui    v0, $8008
             80044BB0	jal    func52da0 [$80052da0]
             S2 = 0;
             80044BB8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -13082,7 +12132,7 @@ int func39c38()
             A0 = V0;
 
             L44bc8:	; 80044BC8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80044BCC	nop
             V0 = w[V1 + 0000];
             80044BD4	nop
@@ -13093,16 +12143,14 @@ int func39c38()
             S0 = 0008;
 
             L44bec:	; 80044BEC
-            80044BEC	lui    v1, $8008
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             [0x8007ae70] = w(A0);
-            80044C00	lui    a0, $8008
             V1 = w[0x8006794c];
-            V0 = w[A0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = w[V1 + 001c];
             V0 = V0 >> 01;
-            [A0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V1 = V1 + 0480;
 
             loop44c20:	; 80044C20
@@ -13118,7 +12166,6 @@ int func39c38()
             80044C48	nop
             V0 = V0 & 0001;
             80044C50	beq    v0, zero, L44c70 [$80044c70]
-            80044C54	lui    v0, $8008
             80044C58	jal    func52da0 [$80052da0]
             80044C5C	nop
             80044C60	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -13127,7 +12174,7 @@ int func39c38()
             A1 = V0;
 
             L44c70:	; 80044C70
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80044C74	nop
             V0 = w[A0 + 0000];
             80044C7C	nop
@@ -13145,15 +12192,12 @@ int func39c38()
             L44ca8:	; 80044CA8
             S3 = A1;
             S0 = 0;
-            80044CB0	lui    v0, $8008
             80044CB4	addiu  a2, v0, $ae70 (=-$5190)
-            80044CB8	lui    a1, $8008
-            80044CBC	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
 
             loop44cd4:	; 80044CD4
             V0 = S0 + A2;
@@ -13167,7 +12211,6 @@ int func39c38()
             80044CF4	lui    a3, $8006
             A2 = 0001;
             A1 = 00ff;
-            80044D00	lui    v0, $8008
             80044D04	addiu  a0, v0, $ae70 (=-$5190)
 
             loop44d08:	; 80044D08
@@ -13199,7 +12242,6 @@ int func39c38()
             A0 = A0 + 0001;
             S3 = 0;
             S0 = S3;
-            80044D68	lui    v0, $8008
             80044D6C	addiu  v1, v0, $ae70 (=-$5190)
 
             loop44d70:	; 80044D70
@@ -13222,7 +12264,6 @@ int func39c38()
             L44da4:	; 80044DA4
             V0 = S3 < 0008;
             80044DA8	beq    v0, zero, L44dd0 [$80044dd0]
-            80044DAC	lui    v0, $8008
             80044DB0	addiu  a0, v0, $ae70 (=-$5190)
             V1 = 00ff;
             V0 = S3 + A0;
@@ -13236,7 +12277,6 @@ int func39c38()
 
             L44dd0:	; 80044DD0
             A0 = 0003;
-            80044DD4	lui    a1, $8008
             80044DD8	jal    func32120 [$80032120]
             80044DDC	addiu  a1, a1, $ae70 (=-$5190)
             return 0x1;        }
@@ -13247,9 +12287,8 @@ int func39c38()
             S0 = S1;
             80044DF0	lui    v0, $8007
             80044DF4	addiu  s4, v0, $e63c (=-$19c4)
-            80044DF8	lui    v0, $8008
             S3 = 0001;
-            V1 = w[V0 + aecc];
+            V1 = w[0x8007aecc];
             80044E04	addiu  v0, zero, $ffff (=-$1)
             S2 = V1 + 16e4;
             [V1 + 16e4] = w(V0);
@@ -13280,7 +12319,7 @@ int func39c38()
                     V0 = S1 & 0001;
                     80044E58	beq    v0, zero, L44e78 [$80044e78]
                     V0 = S0 + A0;
-                    V1 = bu[A1 + adfc];
+                    V1 = bu[0x8007adfc];
                     V0 = bu[V0 + 0000];
                     80044E68	addiu  v1, v1, $fff7 (=-$9)
                     V0 = V0 + V1;
@@ -13301,7 +12340,6 @@ int func39c38()
             80044E94	nop
             V0 = V0 & 0001;
             80044E9C	beq    v0, zero, L44ebc [$80044ebc]
-            80044EA0	lui    v0, $8008
             80044EA4	jal    func52da0 [$80052da0]
             80044EA8	nop
             80044EAC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -13310,7 +12348,7 @@ int func39c38()
             A0 = V0;
 
             L44ebc:	; 80044EBC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80044EC0	nop
             V0 = w[V1 + 0000];
             80044EC8	nop
@@ -13320,15 +12358,13 @@ int func39c38()
 
             L44ed8:	; 80044ED8
             A3 = A0;
-            80044EDC	lui    a1, $8008
-            80044EE0	lui    v1, $8008
-            A0 = w[A1 + b6f4];
+            A0 = w[0x8007b6f4];
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             A0 = A0 >> V0;
             V0 = A3 < 0009;
             80044EF8	bne    v0, zero, L44f04 [$80044f04]
-            [A1 + b6f4] = w(A0);
+            [0x8007b6f4] = w(A0);
             80044F00	addiu  a3, a3, $fffc (=-$4)
 
             L44f04:	; 80044F04
@@ -13355,7 +12391,7 @@ int func39c38()
                 A1 = V0;
 
                 L44f54:	; 80044F54
-                A0 = w[V0 + b70c];
+                A0 = w[0x8007b70c];
                 80044F58	nop
                 V0 = w[A0 + 0000];
                 80044F60	nop
@@ -13374,11 +12410,11 @@ int func39c38()
                 S2 = A1;
                 80044F90	lui    v1, $8008
                 V0 = 0001;
-                [V1 + b6f8] = w(V0);
+                [0x8007b6f8] = w(V0);
                 V0 = w[0x8007b6f4];
                 A0 = hu[S0 + 0018];
                 V0 = V0 >> 01;
-                [V1 + b6f4] = w(V0);
+                [0x8007b6f4] = w(V0);
                 V0 = A0 < S2;
                 80044FB4	beq    v0, zero, L44fc0 [$80044fc0]
                 80044FB8	nop
@@ -13396,7 +12432,6 @@ int func39c38()
             80044FD0	nop
             V0 = V0 & 0001;
             80044FD8	beq    v0, zero, L44ff8 [$80044ff8]
-            80044FDC	lui    v0, $8008
             80044FE0	jal    func52da0 [$80052da0]
             80044FE4	nop
             80044FE8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -13405,7 +12440,7 @@ int func39c38()
             A0 = V0;
 
             L44ff8:	; 80044FF8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80044FFC	nop
             V0 = w[V1 + 0000];
             80045004	nop
@@ -13415,14 +12450,12 @@ int func39c38()
 
             L45014:	; 80045014
             A3 = A0;
-            80045018	lui    a1, $8008
-            8004501C	lui    v1, $8008
-            A0 = w[A1 + b6f4];
+            A0 = w[0x8007b6f4];
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             A0 = A0 >> V0;
             V0 = A3 < 0009;
-            [A1 + b6f4] = w(A0);
+            [0x8007b6f4] = w(A0);
             80045034	bne    v0, zero, L45040 [$80045040]
 
             8004503C	addiu  a3, a3, $fffc (=-$4)
@@ -13451,7 +12484,7 @@ int func39c38()
                 A1 = V0;
 
                 L45090:	; 80045090
-                A0 = w[V0 + b70c];
+                A0 = w[0x8007b70c];
                 80045094	nop
                 V0 = w[A0 + 0000];
                 8004509C	nop
@@ -13470,11 +12503,11 @@ int func39c38()
                 S2 = A1;
                 800450CC	lui    v1, $8008
                 V0 = 0001;
-                [V1 + b6f8] = w(V0);
+                [0x8007b6f8] = w(V0);
                 V0 = w[0x8007b6f4];
                 A0 = h[S0 + 001a];
                 V0 = V0 >> 01;
-                [V1 + b6f4] = w(V0);
+                [0x8007b6f4] = w(V0);
                 V0 = A0 < S2;
                 800450F0	beq    v0, zero, L450fc [$800450fc]
                 800450F4	nop
@@ -13492,7 +12525,6 @@ int func39c38()
             8004510C	nop
             V0 = V0 & 0001;
             80045114	beq    v0, zero, L45134 [$80045134]
-            80045118	lui    v0, $8008
             8004511C	jal    func52da0 [$80052da0]
             80045120	nop
             80045124	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -13501,7 +12533,7 @@ int func39c38()
             A0 = V0;
 
             L45134:	; 80045134
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80045138	nop
             V0 = w[V1 + 0000];
             80045140	nop
@@ -13511,15 +12543,13 @@ int func39c38()
 
             L45150:	; 80045150
             A3 = A0;
-            80045154	lui    a1, $8008
-            80045158	lui    v1, $8008
-            A0 = w[A1 + b6f4];
+            A0 = w[0x8007b6f4];
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             A0 = A0 >> V0;
             V0 = A3 < 0009;
             80045170	bne    v0, zero, L4517c [$8004517c]
-            [A1 + b6f4] = w(A0);
+            [0x8007b6f4] = w(A0);
             80045178	addiu  a3, a3, $fffc (=-$4)
 
             L4517c:	; 8004517C
@@ -13544,14 +12574,12 @@ int func39c38()
 
             L451c0:	; 800451C0
             A0 = S2;
-            800451C4	lui    a3, $8008
-            800451C8	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             800451DC	jal    func3470c [$8003470c]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xf4:
@@ -13560,7 +12588,6 @@ int func39c38()
             800451F4	nop
             V0 = V0 & 0001;
             800451FC	beq    v0, zero, L4521c [$8004521c]
-            80045200	lui    v0, $8008
             80045204	jal    func52da0 [$80052da0]
             80045208	nop
             8004520C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -13569,7 +12596,7 @@ int func39c38()
             A0 = V0;
 
             L4521c:	; 8004521C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80045220	nop
             V0 = w[V1 + 0000];
             80045228	nop
@@ -13579,15 +12606,13 @@ int func39c38()
 
             L45238:	; 80045238
             A3 = A0;
-            8004523C	lui    a1, $8008
-            80045240	lui    v1, $8008
-            A0 = w[A1 + b6f4];
+            A0 = w[0x8007b6f4];
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             A0 = A0 >> V0;
             V0 = A3 < 0009;
             80045258	bne    v0, zero, L45264 [$80045264]
-            [A1 + b6f4] = w(A0);
+            [0x8007b6f4] = w(A0);
             80045260	addiu  a3, a3, $fffc (=-$4)
 
             L45264:	; 80045264
@@ -13612,14 +12637,12 @@ int func39c38()
 
             L452a8:	; 800452A8
             A0 = S2;
-            800452AC	lui    a3, $8008
-            800452B0	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             800452C4	jal    func34220 [$80034220]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xd9:
@@ -13628,7 +12651,6 @@ int func39c38()
             800452DC	nop
             V0 = V0 & 0001;
             800452E4	beq    v0, zero, L45304 [$80045304]
-            800452E8	lui    v0, $8008
             800452EC	jal    func52da0 [$80052da0]
             800452F0	nop
             800452F4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -13637,7 +12659,7 @@ int func39c38()
             A0 = V0;
 
             L45304:	; 80045304
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80045308	nop
             V0 = w[V1 + 0000];
             80045310	nop
@@ -13647,15 +12669,13 @@ int func39c38()
 
             L45320:	; 80045320
             A3 = A0;
-            80045324	lui    a1, $8008
-            80045328	lui    v1, $8008
-            A0 = w[A1 + b6f4];
+            A0 = w[0x8007b6f4];
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             A0 = A0 >> V0;
             V0 = A3 < 0009;
             80045340	bne    v0, zero, L4534c [$8004534c]
-            [A1 + b6f4] = w(A0);
+            [0x8007b6f4] = w(A0);
             80045348	addiu  a3, a3, $fffc (=-$4)
 
             L4534c:	; 8004534C
@@ -13680,15 +12700,13 @@ int func39c38()
 
             L45390:	; 80045390
             A1 = A1 & 00ff;
-            80045394	lui    a2, $8008
-            80045398	lui    a0, $8008
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             A0 = S2 << 03;
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             A0 = A0 + S2;
             V0 = V0 >> V1;
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = w[0x8006794c];
             A0 = A0 << 04;
             V0 = w[V0 + 001c];
@@ -13703,7 +12721,6 @@ int func39c38()
             800453E4	nop
             V0 = V0 & 0001;
             800453EC	beq    v0, zero, L4540c [$8004540c]
-            800453F0	lui    v0, $8008
             800453F4	jal    func52da0 [$80052da0]
             800453F8	nop
             800453FC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -13712,7 +12729,7 @@ int func39c38()
             A0 = V0;
 
             L4540c:	; 8004540C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80045410	nop
             V0 = w[V1 + 0000];
             80045418	nop
@@ -13722,14 +12739,12 @@ int func39c38()
 
             L45428:	; 80045428
             A3 = A0;
-            8004542C	lui    a1, $8008
-            80045430	lui    v1, $8008
-            A0 = w[A1 + b6f4];
+            A0 = w[0x8007b6f4];
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             A0 = A0 >> V0;
             V0 = A3 < 0009;
-            [A1 + b6f4] = w(A0);
+            [0x8007b6f4] = w(A0);
             80045448	bne    v0, zero, L45454 [$80045454]
 
             80045450	addiu  a3, a3, $fffc (=-$4)
@@ -13750,7 +12765,7 @@ int func39c38()
                 A2 = V0;
 
                 L45484:	; 80045484
-                V1 = w[V0 + b70c];
+                V1 = w[0x8007b70c];
                 80045488	nop
                 V0 = w[V1 + 0000];
                 80045490	nop
@@ -13761,12 +12776,12 @@ int func39c38()
                 L454a0:	; 800454A0
                 800454A0	lui    a1, $8008
                 800454A4	lui    a0, $8008
-                V0 = w[A1 + b6f4];
+                V0 = w[0x8007b6f4];
                 V1 = 0001;
-                [A0 + b6f8] = w(V1);
+                [0x8007b6f8] = w(V1);
                 V0 = V0 >> V1;
                 800454B8	lui    v1, $8006
-                [A1 + b6f4] = w(V0);
+                [0x8007b6f4] = w(V0);
                 V0 = S2 << 03;
                 V1 = w[V1 + 794c];
                 V0 = V0 + S2;
@@ -13805,7 +12820,6 @@ int func39c38()
             80045530	nop
             V0 = V0 & 0001;
             80045538	beq    v0, zero, L45558 [$80045558]
-            8004553C	lui    v0, $8008
             80045540	jal    func52da0 [$80052da0]
             80045544	nop
             80045548	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -13814,7 +12828,7 @@ int func39c38()
             A1 = V0;
 
             L45558:	; 80045558
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8004555C	nop
             V0 = w[A0 + 0000];
             80045564	nop
@@ -13831,16 +12845,13 @@ int func39c38()
 
             L45590:	; 80045590
             A0 = A1;
-            80045594	lui    a2, $8008
-            80045598	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             800455AC	jal    func4f058 [$8004f058]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V1 = V0;
-            800455B8	lui    v0, $8008
             800455BC	addiu  a0, v0, $ae90 (=-$5170)
             A1 = A0 + 000f;
             V0 = A0 < A1;
@@ -13861,7 +12872,6 @@ int func39c38()
             V1 = 00ff;
             [A0 + 0000] = b(V1);
             A0 = w[0x8006794c];
-            80045600	lui    v1, $8008
             A0 = w[A0 + 001c];
             80045608	addiu  v1, v1, $ae90 (=-$5170)
             [A0 + 080c] = w(V1);
@@ -13870,9 +12880,8 @@ int func39c38()
         case 0xb1:
         {
             80045614	lui    v0, $8006
-            80045618	lui    v1, $8008
             V0 = w[V0 + 794c];
-            V1 = w[V1 + ae8c];
+            V1 = w[0x8007ae8c];
             A0 = w[V0 + 001c];
             [A0 + 080c] = w(V1);
             return 0;        }
@@ -13883,7 +12892,7 @@ int func39c38()
             8004563C	nop
             V0 = V0 & 0001;
             80045644	beq    v0, zero, L45664 [$80045664]
-            80045648	lui    v0, $8008
+
             8004564C	jal    func52da0 [$80052da0]
             80045650	nop
             80045654	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -13892,7 +12901,7 @@ int func39c38()
             A1 = V0;
 
             L45664:	; 80045664
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80045668	nop
             V0 = w[A0 + 0000];
             80045670	nop
@@ -13909,14 +12918,12 @@ int func39c38()
 
             L4569c:	; 8004569C
             A0 = A1;
-            800456A0	lui    a2, $8008
-            800456A4	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             800456B8	jal    func2412c [$8002412c]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x8d:
@@ -13925,7 +12932,6 @@ int func39c38()
             800456D0	nop
             V0 = V0 & 0001;
             800456D8	beq    v0, zero, L456f8 [$800456f8]
-            800456DC	lui    v0, $8008
             800456E0	jal    func52da0 [$80052da0]
             800456E4	nop
             800456E8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -13934,7 +12940,7 @@ int func39c38()
             A0 = V0;
 
             L456f8:	; 800456F8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800456FC	nop
             V0 = w[V1 + 0000];
             80045704	nop
@@ -13944,14 +12950,12 @@ int func39c38()
 
             L45714:	; 80045714
             A0 = A0 & 00ff;
-            80045718	lui    a2, $8008
-            8004571C	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80045730	jal    func240b0 [$800240b0]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0x7d:
@@ -13960,7 +12964,6 @@ int func39c38()
             80045748	nop
             V0 = V0 & 0001;
             80045750	beq    v0, zero, L45770 [$80045770]
-            80045754	lui    v0, $8008
             80045758	jal    func52da0 [$80052da0]
             8004575C	nop
             80045760	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -13969,7 +12972,7 @@ int func39c38()
             A0 = V0;
 
             L45770:	; 80045770
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80045774	nop
             V0 = w[V1 + 0000];
             8004577C	nop
@@ -13979,14 +12982,12 @@ int func39c38()
 
             L4578c:	; 8004578C
             A0 = A0 & 00ff;
-            80045790	lui    a2, $8008
-            80045794	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             800457A8	jal    func240f8 [$800240f8]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xec:
@@ -13995,7 +12996,6 @@ int func39c38()
             800457C0	nop
             V0 = V0 & 0001;
             800457C8	beq    v0, zero, L457e8 [$800457e8]
-            800457CC	lui    v0, $8008
             800457D0	jal    func52da0 [$80052da0]
             800457D4	nop
             800457D8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14004,7 +13004,7 @@ int func39c38()
             A0 = V0;
 
             L457e8:	; 800457E8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800457EC	nop
             V0 = w[V1 + 0000];
             800457F4	nop
@@ -14014,16 +13014,13 @@ int func39c38()
 
             L45804:	; 80045804
             S2 = A0;
-            80045808	lui    a1, $8008
-            8004580C	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80045828	beq    v0, zero, L45848 [$80045848]
-            8004582C	lui    v0, $8008
             80045830	jal    func52da0 [$80052da0]
             80045834	nop
             80045838	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14032,7 +13029,7 @@ int func39c38()
             A0 = V0;
 
             L45848:	; 80045848
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             8004584C	nop
             V0 = w[V1 + 0000];
             80045854	nop
@@ -14043,19 +13040,16 @@ int func39c38()
             L45864:	; 80045864
             S3 = A0;
             A0 = S2 & 0001;
-            8004586C	lui    s0, $8008
-            80045870	lui    a1, $8008
-            V0 = w[S0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80045884	jal    func2f8bc [$8002f8bc]
-            [S0 + b6f4] = w(V0);
-            V0 = w[S0 + b6f4];
+            [0x8007b6f4] = w(V0);
+            V0 = w[0x8007b6f4];
             80045890	nop
             V0 = V0 & 0001;
             80045898	beq    v0, zero, L458b8 [$800458b8]
-            8004589C	lui    v0, $8008
             800458A0	jal    func52da0 [$80052da0]
             800458A4	nop
             800458A8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14064,7 +13058,7 @@ int func39c38()
             A1 = V0;
 
             L458b8:	; 800458B8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800458BC	nop
             V0 = w[V1 + 0000];
             800458C4	nop
@@ -14077,19 +13071,16 @@ int func39c38()
             A0 = A0 - A1;
             A0 = A0 << 04;
             A0 = A0 & fff0;
-            800458E4	lui    s0, $8008
-            800458E8	lui    a1, $8008
-            V0 = w[S0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             800458FC	jal    func2f93c [$8002f93c]
-            [S0 + b6f4] = w(V0);
-            V0 = w[S0 + b6f4];
+            [0x8007b6f4] = w(V0);
+            V0 = w[0x8007b6f4];
             80045908	nop
             V0 = V0 & 0001;
             80045910	beq    v0, zero, L45930 [$80045930]
-            80045914	lui    v0, $8008
             80045918	jal    func52da0 [$80052da0]
             8004591C	nop
             80045920	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14098,7 +13089,7 @@ int func39c38()
             A2 = V0;
 
             L45930:	; 80045930
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80045934	nop
             V0 = w[V1 + 0000];
             8004593C	nop
@@ -14107,13 +13098,11 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L4594c:	; 8004594C
-            8004594C	lui    a1, $8008
-            80045950	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8004596C	beq    v0, zero, L4598c [$8004598c]
             S5 = A2;
@@ -14136,19 +13125,16 @@ int func39c38()
             L459ac:	; 800459AC
             S1 = A3;
             A0 = 0001;
-            800459B4	lui    s0, $8008
-            800459B8	lui    a1, $8008
-            V0 = w[S0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = A0;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> A0;
             800459CC	jal    func2f8e4 [$8002f8e4]
-            [S0 + b6f4] = w(V0);
-            V0 = w[S0 + b6f4];
+            [0x8007b6f4] = w(V0);
+            V0 = w[0x8007b6f4];
             800459D8	nop
             V0 = V0 & 0001;
             800459E0	beq    v0, zero, L45a00 [$80045a00]
-            800459E4	lui    v0, $8008
             800459E8	jal    func52da0 [$80052da0]
             800459EC	nop
             800459F0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14157,7 +13143,7 @@ int func39c38()
             T0 = V0;
 
             L45a00:	; 80045A00
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80045A04	nop
             V0 = w[V1 + 0000];
             80045A0C	nop
@@ -14176,14 +13162,12 @@ int func39c38()
             A3 = S5 | A3;
             V0 = T0 << 10;
             A3 = A3 | V0;
-            80045A44	lui    t1, $8008
-            80045A48	lui    t0, $8008
-            V0 = w[T1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [T0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80045A5C	jal    func320b8 [$800320b8]
-            [T1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xa9:
@@ -14207,7 +13191,6 @@ int func39c38()
             80045ABC	nop
             V0 = V0 & 0001;
             80045AC4	beq    v0, zero, L45ae4 [$80045ae4]
-            80045AC8	lui    v0, $8008
             80045ACC	jal    func52da0 [$80052da0]
             80045AD0	nop
             80045AD4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14216,7 +13199,7 @@ int func39c38()
             A0 = V0;
 
             L45ae4:	; 80045AE4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80045AE8	nop
             V0 = w[V1 + 0000];
             80045AF0	nop
@@ -14226,16 +13209,13 @@ int func39c38()
 
             L45b00:	; 80045B00
             S2 = A0;
-            80045B04	lui    a1, $8008
-            80045B08	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80045B24	beq    v0, zero, L45b44 [$80045b44]
-            80045B28	lui    v0, $8008
             80045B2C	jal    func52da0 [$80052da0]
             80045B30	nop
             80045B34	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14244,7 +13224,7 @@ int func39c38()
             A1 = V0;
 
             L45b44:	; 80045B44
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80045B48	nop
             V0 = w[A0 + 0000];
             80045B50	nop
@@ -14261,16 +13241,13 @@ int func39c38()
 
             L45b7c:	; 80045B7C
             S3 = A1;
-            80045B80	lui    a1, $8008
-            80045B84	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80045BA0	beq    v0, zero, L45bc0 [$80045bc0]
-            80045BA4	lui    v0, $8008
             80045BA8	jal    func52da0 [$80052da0]
             80045BAC	nop
             80045BB0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14279,7 +13256,7 @@ int func39c38()
             A2 = V0;
 
             L45bc0:	; 80045BC0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80045BC4	nop
             V0 = w[V1 + 0000];
             80045BCC	nop
@@ -14290,14 +13267,12 @@ int func39c38()
             L45bdc:	; 80045BDC
             A0 = S2;
             A1 = S3;
-            80045BE4	lui    t0, $8008
-            80045BE8	lui    a3, $8008
-            V0 = w[T0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A3 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80045BFC	jal    funcad944 [$800ad944]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xb7:
@@ -14344,7 +13319,6 @@ int func39c38()
             80045CAC	nop
             V0 = V0 & 0001;
             80045CB4	beq    v0, zero, L45cd4 [$80045cd4]
-            80045CB8	lui    v0, $8008
             80045CBC	jal    func52da0 [$80052da0]
             80045CC0	nop
             80045CC4	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14353,7 +13327,7 @@ int func39c38()
             A0 = V0;
 
             L45cd4:	; 80045CD4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80045CD8	nop
             V0 = w[V1 + 0000];
             80045CE0	nop
@@ -14363,16 +13337,13 @@ int func39c38()
 
             L45cf0:	; 80045CF0
             S2 = A0;
-            80045CF4	lui    a1, $8008
-            80045CF8	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80045D14	beq    v0, zero, L45d34 [$80045d34]
-            80045D18	lui    v0, $8008
             80045D1C	jal    func52da0 [$80052da0]
             80045D20	nop
             80045D24	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14381,7 +13352,7 @@ int func39c38()
             A1 = V0;
 
             L45d34:	; 80045D34
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80045D38	nop
             V0 = w[A0 + 0000];
             80045D40	nop
@@ -14398,14 +13369,12 @@ int func39c38()
 
             L45d6c:	; 80045D6C
             A0 = S2;
-            80045D70	lui    a3, $8008
-            80045D74	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80045D88	jal    funcb73f8 [$800b73f8]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xd1:
@@ -14420,7 +13389,6 @@ int func39c38()
             80045DB0	nop
             V0 = V0 & 0001;
             80045DB8	beq    v0, zero, L45dd8 [$80045dd8]
-            80045DBC	lui    v0, $8008
             80045DC0	jal    func52da0 [$80052da0]
             80045DC4	nop
             80045DC8	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14429,7 +13397,7 @@ int func39c38()
             A0 = V0;
 
             L45dd8:	; 80045DD8
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80045DDC	nop
             V0 = w[V1 + 0000];
             80045DE4	nop
@@ -14438,14 +13406,12 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L45df4:	; 80045DF4
-            80045DF4	lui    a2, $8008
-            80045DF8	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80045E0C	jal    func54fb8 [$80054fb8]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xf7:
@@ -14454,7 +13420,6 @@ int func39c38()
             80045E24	nop
             V0 = V0 & 0001;
             80045E2C	beq    v0, zero, L45e4c [$80045e4c]
-            80045E30	lui    v0, $8008
             80045E34	jal    func52da0 [$80052da0]
             80045E38	nop
             80045E3C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14463,7 +13428,7 @@ int func39c38()
             A0 = V0;
 
             L45e4c:	; 80045E4C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80045E50	nop
             V0 = w[V1 + 0000];
             80045E58	nop
@@ -14472,14 +13437,12 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L45e68:	; 80045E68
-            80045E68	lui    a2, $8008
-            80045E6C	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80045E80	jal    func54fe0 [$80054fe0]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xf8:
@@ -14488,7 +13451,6 @@ int func39c38()
             80045E98	nop
             V0 = V0 & 0001;
             80045EA0	beq    v0, zero, L45ec0 [$80045ec0]
-            80045EA4	lui    v0, $8008
             80045EA8	jal    func52da0 [$80052da0]
             80045EAC	nop
             80045EB0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14497,7 +13459,7 @@ int func39c38()
             A0 = V0;
 
             L45ec0:	; 80045EC0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80045EC4	nop
             V0 = w[V1 + 0000];
             80045ECC	nop
@@ -14507,16 +13469,13 @@ int func39c38()
 
             L45edc:	; 80045EDC
             S2 = A0;
-            80045EE0	lui    a1, $8008
-            80045EE4	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80045F00	beq    v0, zero, L45f20 [$80045f20]
-            80045F04	lui    v0, $8008
             80045F08	jal    func52da0 [$80052da0]
             80045F0C	nop
             80045F10	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14525,7 +13484,7 @@ int func39c38()
             A0 = V0;
 
             L45f20:	; 80045F20
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80045F24	nop
             V0 = w[V1 + 0000];
             80045F2C	nop
@@ -14535,16 +13494,13 @@ int func39c38()
 
             L45f3c:	; 80045F3C
             S3 = A0;
-            80045F40	lui    a1, $8008
-            80045F44	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80045F60	beq    v0, zero, L45f80 [$80045f80]
-            80045F64	lui    v0, $8008
             80045F68	jal    func52da0 [$80052da0]
             80045F6C	nop
             80045F70	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14553,7 +13509,7 @@ int func39c38()
             A2 = V0;
 
             L45f80:	; 80045F80
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80045F84	nop
             V0 = w[V1 + 0000];
             80045F8C	nop
@@ -14564,14 +13520,12 @@ int func39c38()
             L45f9c:	; 80045F9C
             A0 = S2;
             A1 = S3;
-            80045FA4	lui    t0, $8008
-            80045FA8	lui    a3, $8008
-            V0 = w[T0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A3 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80045FBC	jal    func54e88 [$80054e88]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xf9:
@@ -14580,7 +13534,7 @@ int func39c38()
             80045FD4	nop
             V0 = V0 & 0001;
             80045FDC	beq    v0, zero, L45ffc [$80045ffc]
-            80045FE0	lui    v0, $8008
+
             80045FE4	jal    func52da0 [$80052da0]
             80045FE8	nop
             80045FEC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14589,7 +13543,7 @@ int func39c38()
             A0 = V0;
 
             L45ffc:	; 80045FFC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80046000	nop
             V0 = w[V1 + 0000];
             80046008	nop
@@ -14599,16 +13553,14 @@ int func39c38()
 
             L46018:	; 80046018
             S2 = A0;
-            8004601C	lui    a1, $8008
-            80046020	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8004603C	beq    v0, zero, L4605c [$8004605c]
-            80046040	lui    v0, $8008
+
             80046044	jal    func52da0 [$80052da0]
             80046048	nop
             8004604C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14617,7 +13569,7 @@ int func39c38()
             A0 = V0;
 
             L4605c:	; 8004605C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80046060	nop
             V0 = w[V1 + 0000];
             80046068	nop
@@ -14627,16 +13579,14 @@ int func39c38()
 
             L46078:	; 80046078
             S3 = A0;
-            8004607C	lui    a1, $8008
-            80046080	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8004609C	beq    v0, zero, L460bc [$800460bc]
-            800460A0	lui    v0, $8008
+
             800460A4	jal    func52da0 [$80052da0]
             800460A8	nop
             800460AC	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14645,7 +13595,7 @@ int func39c38()
             A2 = V0;
 
             L460bc:	; 800460BC
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800460C0	nop
             V0 = w[V1 + 0000];
             800460C8	nop
@@ -14656,14 +13606,12 @@ int func39c38()
             L460d8:	; 800460D8
             A0 = S2;
             A1 = S3;
-            800460E0	lui    t0, $8008
-            800460E4	lui    a3, $8008
-            V0 = w[T0 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A3 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             800460F8	jal    func55060 [$80055060]
-            [T0 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xfa:
@@ -14672,7 +13620,7 @@ int func39c38()
             80046110	nop
             V0 = V0 & 0001;
             80046118	beq    v0, zero, L46138 [$80046138]
-            8004611C	lui    v0, $8008
+
             80046120	jal    func52da0 [$80052da0]
             80046124	nop
             80046128	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14681,7 +13629,7 @@ int func39c38()
             A1 = V0;
 
             L46138:	; 80046138
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             8004613C	nop
             V0 = w[A0 + 0000];
             80046144	nop
@@ -14699,14 +13647,12 @@ int func39c38()
             L46170:	; 80046170
             A0 = A1 << 10;
             A0 = A0 >> 10;
-            80046178	lui    a2, $8008
-            8004617C	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80046190	jal    func550c0 [$800550c0]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xfb:
@@ -14715,7 +13661,6 @@ int func39c38()
             800461A8	nop
             V0 = V0 & 0001;
             800461B0	beq    v0, zero, L461d0 [$800461d0]
-            800461B4	lui    v0, $8008
             800461B8	jal    func52da0 [$80052da0]
             800461BC	nop
             800461C0	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14724,7 +13669,7 @@ int func39c38()
             A0 = V0;
 
             L461d0:	; 800461D0
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800461D4	nop
             V0 = w[V1 + 0000];
             800461DC	nop
@@ -14733,14 +13678,12 @@ int func39c38()
             [V1 + 0000] = w(V0);
 
             L461ec:	; 800461EC
-            800461EC	lui    a2, $8008
-            800461F0	lui    a1, $8008
-            V0 = w[A2 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A1 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             80046204	jal    func550d0 [$800550d0]
-            [A2 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xfc:
@@ -14749,7 +13692,6 @@ int func39c38()
             8004621C	nop
             V0 = V0 & 0001;
             80046224	beq    v0, zero, L46244 [$80046244]
-            80046228	lui    v0, $8008
             8004622C	jal    func52da0 [$80052da0]
             80046230	nop
             80046234	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14758,7 +13700,7 @@ int func39c38()
             A0 = V0;
 
             L46244:	; 80046244
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80046248	nop
             V0 = w[V1 + 0000];
             80046250	nop
@@ -14768,16 +13710,13 @@ int func39c38()
 
             L46260:	; 80046260
             S2 = A0;
-            80046264	lui    a1, $8008
-            80046268	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             80046284	beq    v0, zero, L462a4 [$800462a4]
-            80046288	lui    v0, $8008
             8004628C	jal    func52da0 [$80052da0]
             80046290	nop
             80046294	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14786,7 +13725,7 @@ int func39c38()
             A1 = V0;
 
             L462a4:	; 800462A4
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             800462A8	nop
             V0 = w[V1 + 0000];
             800462B0	nop
@@ -14796,14 +13735,12 @@ int func39c38()
 
             L462c0:	; 800462C0
             A0 = S2;
-            800462C4	lui    a3, $8008
-            800462C8	lui    a2, $8008
-            V0 = w[A3 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A2 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
             800462DC	jal    func550f0 [$800550f0]
-            [A3 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             return 0;        }
 
         case 0xfd:
@@ -14812,7 +13749,6 @@ int func39c38()
             800462F4	nop
             V0 = V0 & 0001;
             800462FC	beq    v0, zero, L4631c [$8004631c]
-            80046300	lui    v0, $8008
             80046304	jal    func52da0 [$80052da0]
             80046308	nop
             8004630C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14821,7 +13757,7 @@ int func39c38()
             A0 = V0;
 
             L4631c:	; 8004631C
-            V1 = w[V0 + b70c];
+            V1 = w[0x8007b70c];
             80046320	nop
             V0 = w[V1 + 0000];
             80046328	nop
@@ -14831,16 +13767,13 @@ int func39c38()
 
             L46338:	; 80046338
             S2 = A0;
-            8004633C	lui    a1, $8008
-            80046340	lui    a0, $8008
-            V0 = w[A1 + b6f4];
+            V0 = w[0x8007b6f4];
             V1 = 0001;
-            [A0 + b6f8] = w(V1);
+            [0x8007b6f8] = w(V1);
             V0 = V0 >> V1;
-            [A1 + b6f4] = w(V0);
+            [0x8007b6f4] = w(V0);
             V0 = V0 & V1;
             8004635C	beq    v0, zero, L4637c [$8004637c]
-            80046360	lui    v0, $8008
             80046364	jal    func52da0 [$80052da0]
             80046368	nop
             8004636C	jal    system_read_from_stack_command_not_from_script [$80052d40]
@@ -14849,7 +13782,7 @@ int func39c38()
             A1 = V0;
 
             L4637c:	; 8004637C
-            A0 = w[V0 + b70c];
+            A0 = w[0x8007b70c];
             80046380	nop
             V0 = w[A0 + 0000];
             80046388	nop
@@ -14867,31 +13800,28 @@ int func39c38()
             L463b4:	; 800463B4
             A0 = S2 & 00ff;
             A1 = A1 & ffff;
-            800463BC	lui    v1, $8008
             V0 = 0001;
-            [V1 + b6f8] = w(V0);
+            [0x8007b6f8] = w(V0);
             V0 = w[0x8006794c];
-            800463D0	lui    a2, $8008
             V0 = w[V0 + 001c];
-            V1 = w[A2 + b6f4];
+            V1 = w[0x8007b6f4];
             V0 = w[V0 + 08bc];
             V1 = V1 >> 01;
             800463E4	jalr   v0 ra
-            [A2 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             return 0;        }
 
         case 0xff:
         {
             A2 = ffff0100;
-            800463FC	lui    a1, $8008
             A0 = w[0x8007b70c];
-            V1 = w[A1 + b6f4];
+            V1 = w[0x8007b6f4];
             V0 = w[A0 + 0000];
             A3 = V1 | ff00;
             V1 = bu[V0 + 0000];
             V0 = V0 + 0001;
             [A0 + 0000] = w(V0);
-            [A1 + b6f4] = w(V1);
+            [0x8007b6f4] = w(V1);
             V1 = A3 + A2;
 
             switch (V1)
@@ -14910,7 +13840,7 @@ int func39c38()
                     A0 = V0;
 
                     L46480:	; 80046480
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046484	nop
                     V0 = w[V1 + 0000];
                     8004648C	nop
@@ -14922,11 +13852,11 @@ int func39c38()
                     S2 = A0;
                     800464A0	lui    a1, $8008
                     800464A4	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     800464C0	beq    v0, zero, L464e0 [$800464e0]
                     800464C4	lui    v0, $8008
@@ -14938,7 +13868,7 @@ int func39c38()
                     A1 = V0;
 
                     L464e0:	; 800464E0
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     800464E4	nop
                     V0 = w[V1 + 0000];
                     800464EC	nop
@@ -14950,12 +13880,12 @@ int func39c38()
                     A0 = S2;
                     80046500	lui    a3, $8008
                     80046504	lui    a2, $8008
-                    V0 = w[A3 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A2 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     80046518	jal    funcc7f34 [$800c7f34]
-                    [A3 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -14974,7 +13904,7 @@ int func39c38()
                     A0 = V0;
 
                     L46558:	; 80046558
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     8004655C	nop
                     V0 = w[V1 + 0000];
                     80046564	nop
@@ -14986,11 +13916,11 @@ int func39c38()
                     S2 = A0;
                     80046578	lui    a1, $8008
                     8004657C	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     80046598	beq    v0, zero, L465b8 [$800465b8]
                     8004659C	lui    v0, $8008
@@ -15002,7 +13932,7 @@ int func39c38()
                     A1 = V0;
 
                     L465b8:	; 800465B8
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     800465BC	nop
                     V0 = w[V1 + 0000];
                     800465C4	nop
@@ -15014,12 +13944,12 @@ int func39c38()
                     A0 = S2;
                     800465D8	lui    a3, $8008
                     800465DC	lui    a2, $8008
-                    V0 = w[A3 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A2 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     800465F0	jal    funcc7f7c [$800c7f7c]
-                    [A3 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -15038,7 +13968,7 @@ int func39c38()
                     A0 = V0;
 
                     L46630:	; 80046630
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046634	nop
                     V0 = w[V1 + 0000];
                     8004663C	nop
@@ -15050,11 +13980,11 @@ int func39c38()
                     S2 = A0;
                     80046650	lui    a1, $8008
                     80046654	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     80046670	beq    v0, zero, L46690 [$80046690]
                     80046674	lui    v0, $8008
@@ -15066,7 +13996,7 @@ int func39c38()
                     A1 = V0;
 
                     L46690:	; 80046690
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046694	nop
                     V0 = w[V1 + 0000];
                     8004669C	nop
@@ -15078,12 +14008,12 @@ int func39c38()
                     A0 = S2;
                     800466B0	lui    a3, $8008
                     800466B4	lui    a2, $8008
-                    V0 = w[A3 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A2 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     800466C8	jal    funcc7fbc [$800c7fbc]
-                    [A3 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -15102,7 +14032,7 @@ int func39c38()
                     A0 = V0;
 
                     L46708:	; 80046708
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     8004670C	nop
                     V0 = w[V1 + 0000];
                     80046714	nop
@@ -15114,11 +14044,11 @@ int func39c38()
                     S2 = A0;
                     80046728	lui    a1, $8008
                     8004672C	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     80046748	beq    v0, zero, L46768 [$80046768]
                     8004674C	lui    v0, $8008
@@ -15130,7 +14060,7 @@ int func39c38()
                     A1 = V0;
 
                     L46768:	; 80046768
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     8004676C	nop
                     V0 = w[V1 + 0000];
                     80046774	nop
@@ -15142,12 +14072,12 @@ int func39c38()
                     A0 = S2;
                     80046788	lui    a3, $8008
                     8004678C	lui    a2, $8008
-                    V0 = w[A3 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A2 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     800467A0	jal    funcc8010 [$800c8010]
-                    [A3 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -15166,7 +14096,7 @@ int func39c38()
                     A0 = V0;
 
                     L467e0:	; 800467E0
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     800467E4	nop
                     V0 = w[V1 + 0000];
                     800467EC	nop
@@ -15178,11 +14108,11 @@ int func39c38()
                     S2 = A0;
                     80046800	lui    a1, $8008
                     80046804	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     80046820	beq    v0, zero, L46840 [$80046840]
                     80046824	lui    v0, $8008
@@ -15194,7 +14124,7 @@ int func39c38()
                     A1 = V0;
 
                     L46840:	; 80046840
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046844	nop
                     V0 = w[V1 + 0000];
                     8004684C	nop
@@ -15206,12 +14136,12 @@ int func39c38()
                     A0 = S2;
                     80046860	lui    a3, $8008
                     80046864	lui    a2, $8008
-                    V0 = w[A3 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A2 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     80046878	jal    funcc8044 [$800c8044]
-                    [A3 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -15230,7 +14160,7 @@ int func39c38()
                     A0 = V0;
 
                     L468b8:	; 800468B8
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     800468BC	nop
                     V0 = w[V1 + 0000];
                     800468C4	nop
@@ -15242,11 +14172,11 @@ int func39c38()
                     S2 = A0;
                     800468D8	lui    a1, $8008
                     800468DC	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     800468F8	beq    v0, zero, L46918 [$80046918]
                     800468FC	lui    v0, $8008
@@ -15258,7 +14188,7 @@ int func39c38()
                     A1 = V0;
 
                     L46918:	; 80046918
-                    A0 = w[V0 + b70c];
+                    A0 = w[0x8007b70c];
                     8004691C	nop
                     V0 = w[A0 + 0000];
                     80046924	nop
@@ -15279,12 +14209,12 @@ int func39c38()
                     A1 = A1 >> 10;
                     8004695C	lui    a3, $8008
                     80046960	lui    a2, $8008
-                    V0 = w[A3 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A2 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     80046974	jal    funcc8068 [$800c8068]
-                    [A3 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -15303,7 +14233,7 @@ int func39c38()
                     A0 = V0;
 
                     L469b4:	; 800469B4
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     800469B8	nop
                     V0 = w[V1 + 0000];
                     800469C0	nop
@@ -15315,11 +14245,11 @@ int func39c38()
                     S2 = A0;
                     800469D4	lui    a1, $8008
                     800469D8	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     800469F4	beq    v0, zero, L46a14 [$80046a14]
                     800469F8	lui    v0, $8008
@@ -15331,7 +14261,7 @@ int func39c38()
                     A1 = V0;
 
                     L46a14:	; 80046A14
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046A18	nop
                     V0 = w[V1 + 0000];
                     80046A20	nop
@@ -15343,12 +14273,12 @@ int func39c38()
                     A0 = S2;
                     80046A34	lui    a3, $8008
                     80046A38	lui    a2, $8008
-                    V0 = w[A3 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A2 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     80046A4C	jal    funcc808c [$800c808c]
-                    [A3 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -15367,7 +14297,7 @@ int func39c38()
                     A0 = V0;
 
                     L46a8c:	; 80046A8C
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046A90	nop
                     V0 = w[V1 + 0000];
                     80046A98	nop
@@ -15379,11 +14309,11 @@ int func39c38()
                     S2 = A0;
                     80046AAC	lui    a1, $8008
                     80046AB0	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     80046ACC	beq    v0, zero, L46aec [$80046aec]
                     80046AD0	lui    v0, $8008
@@ -15395,7 +14325,7 @@ int func39c38()
                     A1 = V0;
 
                     L46aec:	; 80046AEC
-                    A0 = w[V0 + b70c];
+                    A0 = w[0x8007b70c];
                     80046AF0	nop
                     V0 = w[A0 + 0000];
                     80046AF8	nop
@@ -15414,11 +14344,11 @@ int func39c38()
                     S3 = A1;
                     80046B28	lui    a1, $8008
                     80046B2C	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     80046B48	beq    v0, zero, L46b68 [$80046b68]
                     80046B4C	lui    v0, $8008
@@ -15430,7 +14360,7 @@ int func39c38()
                     A2 = V0;
 
                     L46b68:	; 80046B68
-                    A0 = w[V0 + b70c];
+                    A0 = w[0x8007b70c];
                     80046B6C	nop
                     V0 = w[A0 + 0000];
                     80046B74	nop
@@ -15453,12 +14383,12 @@ int func39c38()
                     A2 = A2 >> 10;
                     80046BB4	lui    t0, $8008
                     80046BB8	lui    a3, $8008
-                    V0 = w[T0 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A3 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     80046BCC	jal    funcc80b0 [$800c80b0]
-                    [T0 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -15477,7 +14407,7 @@ int func39c38()
                     A0 = V0;
 
                     L46c0c:	; 80046C0C
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046C10	nop
                     V0 = w[V1 + 0000];
                     80046C18	nop
@@ -15489,11 +14419,11 @@ int func39c38()
                     S2 = A0;
                     80046C2C	lui    a1, $8008
                     80046C30	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     80046C4C	beq    v0, zero, L46c6c [$80046c6c]
                     80046C50	lui    v0, $8008
@@ -15505,7 +14435,7 @@ int func39c38()
                     A1 = V0;
 
                     L46c6c:	; 80046C6C
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046C70	nop
                     V0 = w[V1 + 0000];
                     80046C78	nop
@@ -15517,12 +14447,12 @@ int func39c38()
                     A0 = S2;
                     80046C8C	lui    a3, $8008
                     80046C90	lui    a2, $8008
-                    V0 = w[A3 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A2 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     80046CA4	jal    funcc80e4 [$800c80e4]
-                    [A3 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -15541,7 +14471,7 @@ int func39c38()
                     A0 = V0;
 
                     L46ce4:	; 80046CE4
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046CE8	nop
                     V0 = w[V1 + 0000];
                     80046CF0	nop
@@ -15553,11 +14483,11 @@ int func39c38()
                     S2 = A0;
                     80046D04	lui    a1, $8008
                     80046D08	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     80046D24	beq    v0, zero, L46d44 [$80046d44]
                     80046D28	lui    v0, $8008
@@ -15569,7 +14499,7 @@ int func39c38()
                     A1 = V0;
 
                     L46d44:	; 80046D44
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046D48	nop
                     V0 = w[V1 + 0000];
                     80046D50	nop
@@ -15581,12 +14511,12 @@ int func39c38()
                     A0 = S2;
                     80046D64	lui    a3, $8008
                     80046D68	lui    a2, $8008
-                    V0 = w[A3 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A2 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     80046D7C	jal    funcc7af8 [$800c7af8]
-                    [A3 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -15605,7 +14535,7 @@ int func39c38()
                     A0 = V0;
 
                     L46dbc:	; 80046DBC
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046DC0	nop
                     V0 = w[V1 + 0000];
                     80046DC8	nop
@@ -15617,11 +14547,11 @@ int func39c38()
                     S2 = A0;
                     80046DDC	lui    a1, $8008
                     80046DE0	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     80046DFC	beq    v0, zero, L46e1c [$80046e1c]
                     80046E00	lui    v0, $8008
@@ -15633,7 +14563,7 @@ int func39c38()
                     A1 = V0;
 
                     L46e1c:	; 80046E1C
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046E20	nop
                     V0 = w[V1 + 0000];
                     80046E28	nop
@@ -15645,12 +14575,12 @@ int func39c38()
                     A0 = S2;
                     80046E3C	lui    a3, $8008
                     80046E40	lui    a2, $8008
-                    V0 = w[A3 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A2 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     80046E54	jal    funcc6408 [$800c6408]
-                    [A3 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -15669,7 +14599,7 @@ int func39c38()
                     A0 = V0;
 
                     L46e94:	; 80046E94
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046E98	nop
                     V0 = w[V1 + 0000];
                     80046EA0	nop
@@ -15681,11 +14611,11 @@ int func39c38()
                     S2 = A0;
                     80046EB4	lui    a1, $8008
                     80046EB8	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     80046ED4	beq    v0, zero, L46ef4 [$80046ef4]
                     80046ED8	lui    v0, $8008
@@ -15697,7 +14627,7 @@ int func39c38()
                     A1 = V0;
 
                     L46ef4:	; 80046EF4
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046EF8	nop
                     V0 = w[V1 + 0000];
                     80046F00	nop
@@ -15709,12 +14639,12 @@ int func39c38()
                     A0 = S2;
                     80046F14	lui    a3, $8008
                     80046F18	lui    a2, $8008
-                    V0 = w[A3 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A2 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     80046F2C	jal    funcc7b68 [$800c7b68]
-                    [A3 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -15733,7 +14663,7 @@ int func39c38()
                     A0 = V0;
 
                     L46f6c:	; 80046F6C
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046F70	nop
                     V0 = w[V1 + 0000];
                     80046F78	nop
@@ -15745,11 +14675,11 @@ int func39c38()
                     S2 = A0;
                     80046F8C	lui    a1, $8008
                     80046F90	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     80046FAC	beq    v0, zero, L46fcc [$80046fcc]
                     80046FB0	lui    v0, $8008
@@ -15761,7 +14691,7 @@ int func39c38()
                     A1 = V0;
 
                     L46fcc:	; 80046FCC
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80046FD0	nop
                     V0 = w[V1 + 0000];
                     80046FD8	nop
@@ -15773,14 +14703,14 @@ int func39c38()
                     A0 = S2;
                     80046FEC	lui    a3, $8008
                     80046FF0	lui    a2, $8008
-                    V0 = w[A3 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A2 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
 
                     func47000:	; 80047000
                     V0 = V0 >> V1;
                     80047004	jal    funcc7cdc [$800c7cdc]
-                    [A3 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -15799,7 +14729,7 @@ int func39c38()
                     A0 = V0;
 
                     L47044:	; 80047044
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80047048	nop
                     V0 = w[V1 + 0000];
                     80047050	nop
@@ -15811,11 +14741,11 @@ int func39c38()
                     S2 = A0;
                     80047064	lui    a1, $8008
                     80047068	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     80047084	beq    v0, zero, L470a4 [$800470a4]
                     80047088	lui    v0, $8008
@@ -15827,7 +14757,7 @@ int func39c38()
                     A1 = V0;
 
                     L470a4:	; 800470A4
-                    A0 = w[V0 + b70c];
+                    A0 = w[0x8007b70c];
                     800470A8	nop
                     V0 = w[A0 + 0000];
                     800470B0	nop
@@ -15848,12 +14778,12 @@ int func39c38()
                     A1 = A1 >> 10;
                     800470E8	lui    a3, $8008
                     800470EC	lui    a2, $8008
-                    V0 = w[A3 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A2 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     80047100	jal    funcc7bc4 [$800c7bc4]
-                    [A3 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -15872,7 +14802,7 @@ int func39c38()
                     A0 = V0;
 
                     L47140:	; 80047140
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80047144	nop
                     V0 = w[V1 + 0000];
                     8004714C	nop
@@ -15884,11 +14814,11 @@ int func39c38()
                     S2 = A0;
                     80047160	lui    a1, $8008
                     80047164	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     80047180	beq    v0, zero, L471a0 [$800471a0]
                     80047184	lui    v0, $8008
@@ -15900,7 +14830,7 @@ int func39c38()
                     A1 = V0;
 
                     L471a0:	; 800471A0
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     800471A4	nop
                     V0 = w[V1 + 0000];
                     800471AC	nop
@@ -15932,7 +14862,7 @@ int func39c38()
                     A0 = V0;
 
                     L47218:	; 80047218
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     8004721C	nop
                     V0 = w[V1 + 0000];
                     80047224	nop
@@ -15944,11 +14874,11 @@ int func39c38()
                     S2 = A0;
                     80047238	lui    a1, $8008
                     8004723C	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     80047258	beq    v0, zero, L47278 [$80047278]
                     8004725C	lui    v0, $8008
@@ -15960,7 +14890,7 @@ int func39c38()
                     A0 = V0;
 
                     L47278:	; 80047278
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     8004727C	nop
                     V0 = w[V1 + 0000];
                     80047284	nop
@@ -15972,11 +14902,11 @@ int func39c38()
                     S3 = A0;
                     80047298	lui    a1, $8008
                     8004729C	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     800472B8	beq    v0, zero, L472d8 [$800472d8]
                     800472BC	lui    v0, $8008
@@ -15988,7 +14918,7 @@ int func39c38()
                     A2 = V0;
 
                     L472d8:	; 800472D8
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     800472DC	nop
                     V0 = w[V1 + 0000];
                     800472E4	nop
@@ -16001,12 +14931,12 @@ int func39c38()
                     A1 = S3;
                     800472FC	lui    t0, $8008
                     80047300	lui    a3, $8008
-                    V0 = w[T0 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A3 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     80047314	jal    funcc7c70 [$800c7c70]
-                    [T0 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -16025,7 +14955,7 @@ int func39c38()
                     A0 = V0;
 
                     L47354:	; 80047354
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80047358	nop
                     V0 = w[V1 + 0000];
                     80047360	nop
@@ -16037,11 +14967,11 @@ int func39c38()
                     S2 = A0;
                     80047374	lui    a1, $8008
                     80047378	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     80047394	beq    v0, zero, L473b4 [$800473b4]
                     80047398	lui    v0, $8008
@@ -16053,7 +14983,7 @@ int func39c38()
                     A0 = V0;
 
                     L473b4:	; 800473B4
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     800473B8	nop
                     V0 = w[V1 + 0000];
                     800473C0	nop
@@ -16065,11 +14995,11 @@ int func39c38()
                     S3 = A0;
                     800473D4	lui    a1, $8008
                     800473D8	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     800473F4	beq    v0, zero, L47414 [$80047414]
                     800473F8	lui    v0, $8008
@@ -16081,7 +15011,7 @@ int func39c38()
                     A2 = V0;
 
                     L47414:	; 80047414
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80047418	nop
                     V0 = w[V1 + 0000];
                     80047420	nop
@@ -16094,12 +15024,12 @@ int func39c38()
                     A1 = S3;
                     80047438	lui    t0, $8008
                     8004743C	lui    a3, $8008
-                    V0 = w[T0 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A3 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     80047450	jal    funcc7d30 [$800c7d30]
-                    [T0 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
 
@@ -16118,7 +15048,7 @@ int func39c38()
                     A0 = V0;
 
                     L47490:	; 80047490
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     80047494	nop
                     V0 = w[V1 + 0000];
                     8004749C	nop
@@ -16130,11 +15060,11 @@ int func39c38()
                     S2 = A0;
                     800474B0	lui    a1, $8008
                     800474B4	lui    a0, $8008
-                    V0 = w[A1 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A0 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
-                    [A1 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     V0 = V0 & V1;
                     800474D0	beq    v0, zero, L474f0 [$800474f0]
                     800474D4	lui    v0, $8008
@@ -16146,7 +15076,7 @@ int func39c38()
                     A1 = V0;
 
                     L474f0:	; 800474F0
-                    V1 = w[V0 + b70c];
+                    V1 = w[0x8007b70c];
                     800474F4	nop
                     V0 = w[V1 + 0000];
                     800474FC	nop
@@ -16158,12 +15088,12 @@ int func39c38()
                     A0 = S2;
                     80047510	lui    a3, $8008
                     80047514	lui    a2, $8008
-                    V0 = w[A3 + b6f4];
+                    V0 = w[0x8007b6f4];
                     V1 = 0001;
-                    [A2 + b6f8] = w(V1);
+                    [0x8007b6f8] = w(V1);
                     V0 = V0 >> V1;
                     80047528	jal    funcc7df0 [$800c7df0]
-                    [A3 + b6f4] = w(V0);
+                    [0x8007b6f4] = w(V0);
                     return 0;
                 }
             }
