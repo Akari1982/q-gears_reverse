@@ -307,63 +307,49 @@ int func39c38()
 
         case 0x16:
         {
-            V0 = w[0x8007b6f4];
-            8003A0A8	nop
-            V0 = V0 & 0001;
-            8003A0B0	beq    v0, zero, L3a0d0 [$8003a0d0]
-            8003A0B8	jal    func52da0 [$80052da0]
-            8003A0BC	nop
-            8003A0C0	jal    system_read_from_stack_command_not_from_script [$80052d40]
-            8003A0C4	nop
-            8003A0C8	j      L3a0ec [$8003a0ec]
-            A0 = V0;
+            if (w[0x8007b6f4] & 0x1)
+            {
+                func52da0();
+                priority = system_read_from_stack_command_not_from_script();
+            }
+            else
+            {
+                V1 = w[0x8007b70c];
+                V0 = w[V1];
+                priority = bu[V0];
+                [V1] = w(V0 + 0x1);
+            }
 
-            L3a0d0:	; 8003A0D0
-            V1 = w[0x8007b70c];
-            8003A0D4	nop
-            V0 = w[V1 + 0000];
-            8003A0DC	nop
-            A0 = bu[V0 + 0000];
-            V0 = V0 + 0001;
-            [V1 + 0000] = w(V0);
+            [0x8007b6f4] = w(w[0x8007b6f4] >> 0x1);
+            [0x8007b6f8] = w(0x1);
 
-            L3a0ec:	; 8003A0EC
-            S2 = A0;
             V1 = w[0x8007aecc];
-            V0 = 0001;
-            [0x8007b6f8] = w(V0);
-            V0 = w[0x8007b6f4];
-            A2 = w[V1 + 16d8];
+            A2 = w[V1 + 0x16d8];
             A0 = w[0x8007b70c];
-            V0 = V0 >> 01;
-            [0x8007b6f4] = w(V0);
-            V1 = bu[A0 + 000a];
-            V0 = bu[A0 + 0009];
-            V1 = V1 << 02;
-            V0 = V0 << 02;
-            V0 = V0 + A0;
-            V1 = V1 + V0;
-            V1 = bu[V1 + ffff];
-            8003A13C	beq    a2, zero, L3a16c [$8003a16c]
-            8003A140	nop
+            V1 = bu[A0 + 0xa];
+            V0 = bu[A0 + 0x9];
+            V1 = bu[A0 + V1 * 0x4 + V0 * 0x4 - 0x1];
 
-            loop3a144:	; 8003A144
-            V0 = w[A2 + 0004];
-            8003A148	nop
-            V0 = bu[V0 + 0007];
-            8003A150	nop
-            8003A154	beq    v0, v1, L3a16c [$8003a16c]
-            8003A158	nop
-            A2 = w[A2 + 0000];
-            8003A160	nop
-            8003A164	bne    a2, zero, loop3a144 [$8003a144]
-            8003A168	nop
+            while (A2 != 0)
+            {
+                V0 = w[A2 + 0x4];
+                V0 = bu[V0 + 0x7];
+                if (V0 == V1) break;
 
-            L3a16c:	; 8003A16C
-            8003A16C	beq    a2, zero, L3a34c [$8003a34c]
-            A0 = 0;
-            A0 = w[A2 + 0004];
-            8003A178	j      L3a350 [$8003a350]
+                A2 = w[A2];
+            }
+
+            entity_struct = (A2 != 0) ? w[A2 + 0x4] : 0;
+
+            V1 = w[0x8007b70c];
+            V0 = w[V1];
+
+            script_id = bu[V0];
+            [V1] = w(V0 + 0x1);
+
+            system_event_script_run(entity_struct, priority, script_id, 0);
+
+            return 0;
         }
 
         case 0x18:
@@ -6697,27 +6683,19 @@ int func39c38()
 
         case 0xde:
         {
-            V0 = w[0x8007b6f4];
-            8003FBD4	nop
-            V0 = V0 & 0001;
-            8003FBDC	beq    v0, zero, L3fbfc [$8003fbfc]
-            8003FBE4	jal    func52da0 [$80052da0]
-            8003FBE8	nop
-            8003FBEC	jal    system_read_from_stack_command_not_from_script [$80052d40]
-            8003FBF0	nop
-            8003FBF4	j      L3fc18 [$8003fc18]
-            A0 = V0;
+            if (w[0x8007b6f4] & 0x1)
+            {
+                func52da0();
+                A0 = system_read_from_stack_command_not_from_script();
+            }
+            else
+            {
+                V1 = w[0x8007b70c];
+                V0 = w[V1];
+                A0 = bu[V0];
+                [V1] = w(V0 + 0x1);
+            }
 
-            L3fbfc:	; 8003FBFC
-            V1 = w[0x8007b70c];
-            8003FC00	nop
-            V0 = w[V1 + 0000];
-            8003FC08	nop
-            A0 = bu[V0 + 0000];
-            V0 = V0 + 0001;
-            [V1 + 0000] = w(V0);
-
-            L3fc18:	; 8003FC18
             A3 = A0;
             A0 = w[0x8007b6f4];
             V0 = 0001;
