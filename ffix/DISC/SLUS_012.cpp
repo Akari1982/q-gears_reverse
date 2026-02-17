@@ -17377,7 +17377,7 @@ u8 func2f8d4()
 // func2f8e4()
 
 V0 = w[0x80077c78 + 0x1c];
-if (A0 == 0) A0 = 1;
+if (A0 == 0) A0 = 0x1;
 [0x80077c78 + 0x1c] = w(A0);
 
 return V0;
