@@ -1,45 +1,61 @@
-////////////////////////////////
-// func36650
-A1 = w[0x8007aecc];
-A3 = w[A1 + 15d0];
-A2 = 0;
-if (A3 != 0)
+int func36650()
 {
-    // insert as first
-    if (w[A3 + 0] >= A1 + 50 + A0 * 4)
+    A1 = w[0x8007aecc];
+    A3 = w[A1 + 0x15d0];
+    A2 = 0;
+    if (A3 != 0)
     {
-        A2 = w[A1 + 15d4];
-        [A1 + 15d0] = w(A2);
-        [A1 + 15d4] = w(w[A2 + 8]);
-        [A2 + 0] = w(A1 + 50);
-        [A2 + 4] = w(A1 + 50 + A0 * 4);
-        [A2 + 8] = w(A3);
-    }
-    else
-    {
-        A1 = w[A3 + 8];
-        if (A1 != 0)
+        // insert as first
+        if (w[A3 + 0] >= A1 + 50 + A0 * 4)
         {
-            loop366c4:	; 800366C4
-                if (w[A1 + 0] >= w[A3 + 4] + A0 * 4)
-                {
-                    break;
-                }
-
-                A3 = A1;
-                A1 = w[A3 + 8];
-            800366E8	bne    a1, zero, loop366c4 [$800366c4]
-
-            // insert in middle
+            A2 = w[A1 + 15d4];
+            [A1 + 15d0] = w(A2);
+            [A1 + 15d4] = w(w[A2 + 8]);
+            [A2 + 0] = w(A1 + 50);
+            [A2 + 4] = w(A1 + 50 + A0 * 4);
+            [A2 + 8] = w(A3);
+        }
+        else
+        {
+            A1 = w[A3 + 8];
             if (A1 != 0)
             {
-                V1 = w[0x8007aecc];
-                A2 = w[V1 + 15d4];
-                [V1 + 15d4] = w(w[A2 + 8]);
-                [A2 + 8] = w(w[A3 + 8]);
-                [A3 + 8] = w(A2);
-                [A2 + 0] = w(w[A3 + 4]);
-                [A2 + 4] = w(w[A3 + 4] + A0 * 4);
+                loop366c4:	; 800366C4
+                    if (w[A1 + 0] >= w[A3 + 4] + A0 * 4)
+                    {
+                        break;
+                    }
+
+                    A3 = A1;
+                    A1 = w[A3 + 8];
+                800366E8	bne    a1, zero, loop366c4 [$800366c4]
+
+                // insert in middle
+                if (A1 != 0)
+                {
+                    V1 = w[0x8007aecc];
+                    A2 = w[V1 + 15d4];
+                    [V1 + 15d4] = w(w[A2 + 8]);
+                    [A2 + 8] = w(w[A3 + 8]);
+                    [A3 + 8] = w(A2);
+                    [A2 + 0] = w(w[A3 + 4]);
+                    [A2 + 4] = w(w[A3 + 4] + A0 * 4);
+                }
+                // insert as last
+                else
+                {
+                    V1 = w[A3 + 4];
+                    A1 = w[0x8007aecc];
+                    if (A1 + 1450 >= V1 + A0 * 4)
+                    {
+                        A2 = w[A1 + 15d4];
+                        [A1 + 15d4] = w(w[A2 + 8]);
+                        [A3 + 8] = w(A2);
+                        [A2 + 0] = w(w[A3 + 4]);
+                        [A2 + 4] = w(w[A3 + 4] + A0 * 4);
+                        [A2 + 8] = w(0);
+                    }
+                }
             }
             // insert as last
             else
@@ -57,46 +73,30 @@ if (A3 != 0)
                 }
             }
         }
-        // insert as last
-        else
+    }
+    // if no script running
+    // insert as first
+    else
+    {
+        if (A0 < 501)
         {
-            V1 = w[A3 + 4];
-            A1 = w[0x8007aecc];
-            if (A1 + 1450 >= V1 + A0 * 4)
-            {
-                A2 = w[A1 + 15d4];
-                [A1 + 15d4] = w(w[A2 + 8]);
-                [A3 + 8] = w(A2);
-                [A2 + 0] = w(w[A3 + 4]);
-                [A2 + 4] = w(w[A3 + 4] + A0 * 4);
-                [A2 + 8] = w(0);
-            }
+            A2 = w[A1 + 0x15d4];
+            [A1 + 0x15d0] = w(A2); // set first element in list
+            [A1 + 0x15d4] = w(w[A2 + 0x8]); // set last element in list
+
+            [A2 + 0] = w(A1 + 0x50);
+            [A2 + 4] = w(A1 + 0x50 + A0 * 4);
+            [A2 + 8] = w(0); // link to next element
         }
     }
-}
-// if no script running
-// insert as first
-else
-{
-    if (A0 < 501)
+
+    if (A2 != 0)
     {
-        A2 = w[A1 + 15d4];
-        [A1 + 15d0] = w(A2); // set first element in list
-        [A1 + 15d4] = w(w[A2 + 8]); // set last element in list
-
-        [A2 + 0] = w(A1 + 50);
-        [A2 + 4] = w(A1 + 50 + A0 * 4);
-        [A2 + 8] = w(0); // link to next element
+        return w[A2 + 0];
     }
-}
 
-if (A2 != 0)
-{
-    return w[A2 + 0];
+    return 0;
 }
-
-return 0;
-////////////////////////////////
 
 
 
