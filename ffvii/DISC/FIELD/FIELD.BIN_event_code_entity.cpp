@@ -900,250 +900,39 @@ int field_event_opcode_34_pdira()
 
 int field_event_set_dir_by_actor_id(u8 actor_id_dst)
 {
-    A2 = bu[0x800722c4];
-    AT = 0x8007eb98 + A2;
-    V1 = bu[AT + 0000];
-    A1 = 00ff;
-    800C8290	beq    v1, a1, Lc82bc [$800c82bc]
-    800C8294	nop
-    V0 = A0 << 10;
-    A3 = V0 >> 10;
-    AT = 0x8007eb98 + A3;
-    V0 = bu[AT + 0000];
-    800C82B0	nop
-    800C82B4	bne    v0, a1, Lc82d8 [$800c82d8]
-    800C82B8	nop
+    actor_id_cur = bu[0x800722c4];
+    entities_data = w[0x8009c544];
 
-    Lc82bc:	; 800C82BC
-    V0 = 0x800831fc;
-    A0 = A2 << 01;
-    A0 = A0 + V0;
-    V1 = hu[A0 + 0000];
-    800C82D0	j      Lc84fc [$800c84fc]
-    V0 = 0;
+    u8 entity_cur = bu[0x8007eb98 + actor_id_cur];
+    u8 entity_dst = bu[0x8007eb98 + actor_id_dst];
 
-    Lc82d8:	; 800C82D8
-    V0 = V1 << 05;
-    V0 = V0 + V1;
-    A1 = w[0x8009c544];
-    V0 = V0 << 02;
-    V0 = V0 + A1;
-    V0 = w[V0 + 000c];
-    800C82F4	nop
-    T0 = V0 >> 0c;
-    [SP + 0010] = w(T0);
-    AT = 0x8007eb98 + A2;
-    V1 = bu[AT + 0000];
-    800C8310	nop
-    V0 = V1 << 05;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
-    V0 = V0 + A1;
-    V0 = w[V0 + 0010];
-    800C8328	nop
-    T1 = V0 >> 0c;
-    [SP + 0014] = w(T1);
-    AT = 0x8007eb98 + A2;
-    V1 = bu[AT + 0000];
-    800C8344	nop
-    V0 = V1 << 05;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
-    V0 = V0 + A1;
-    V0 = w[V0 + 0014];
-    800C835C	nop
-    V0 = V0 >> 0c;
-    [SP + 0018] = w(V0);
-    AT = 0x8007eb98 + A3;
-    V1 = bu[AT + 0000];
-    800C8378	nop
-    V0 = V1 << 05;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
-    V0 = V0 + A1;
-    A0 = w[V0 + 000c];
-    800C8390	nop
-    A0 = A0 >> 0c;
-    [SP + 0020] = w(A0);
-    AT = 0x8007eb98 + A3;
-    V1 = bu[AT + 0000];
-    800C83AC	nop
-    V0 = V1 << 05;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
-    V0 = V0 + A1;
-    V0 = w[V0 + 0010];
-    800C83C4	nop
-    A2 = V0 >> 0c;
-    [SP + 0024] = w(A2);
-    AT = 0x8007eb98 + A3;
-    V1 = bu[AT + 0000];
-    V0 = V1 << 05;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
-    V0 = V0 + A1;
-    V0 = w[V0 + 0014];
-    800C83F8	nop
-    V0 = V0 >> 0c;
-    800C8400	bne    t0, a0, Lc8418 [$800c8418]
-    [SP + 0028] = w(V0);
-    800C8408	bne    t1, a2, Lc841c [$800c841c]
-    A0 = SP + 0010;
-    V0 = T0 + 0001;
-    [SP + 0010] = w(V0);
-
-    Lc8418:	; 800C8418
-    A0 = SP + 0010;
-
-    Lc841c:	; 800C841C
-    A1 = SP + 0020;
-    800C8420	jal    funca8640 [$800a8640]
-    A2 = SP + 0030;
-    V1 = bu[0x800722c4];
-    AT = 0x8007eb98 + V1;
-    A0 = bu[AT + 0000];
-    800C8444	nop
-    V1 = A0 << 05;
-    V1 = V1 + A0;
-    A0 = w[0x8009c544];
-    V1 = V1 << 02;
-    V1 = V1 + A0;
-    [V1 + 0038] = b(V0);
-    V0 = bu[0x800722c4];
-    AT = 0x8007eb98 + V0;
-    V1 = bu[AT + 0000];
-    800C8480	nop
-    V0 = V1 << 05;
-    V0 = V0 + V1;
-    V1 = w[0x8009c544];
-    V0 = V0 << 02;
-    V0 = V0 + V1;
-    [V0 + 003b] = b(0);
-    V0 = bu[0x800722c4];
-    AT = 0x8007eb98 + V0;
-    V1 = bu[AT + 0000];
-    800C84BC	nop
-    V0 = V1 << 05;
-    V0 = V0 + V1;
-    V1 = w[0x8009c544];
-    V0 = V0 << 02;
-    V0 = V0 + V1;
-    [V0 + 003a] = b(0);
-    A0 = bu[0x800722c4];
-    V0 = 0x800831fc;
-    A0 = A0 << 01;
-    A0 = A0 + V0;
-    V1 = hu[A0 + 0000];
-    V0 = 0001;
-
-    Lc84fc:	; 800C84FC
-    V1 = V1 + 0002;
-    [A0 + 0000] = h(V1);
-
-
-
-
-
-    A0 - entity to get
-
-    // if current entity not visible entity
-    A2 = bu[0x800722C4];
-    V1 = bu[0x8007EB98 + A2];
-    if (V1 == FF)
+    if ((entity_cur == 0xff) || (entity_dst = 0xff))
     {
-        V1 = hu[0x800831FC + A2 * 2];
-        V1 = V1 + 2;
-        [0x800831FC + A2 * 2] = h(V1);
+        [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x2);
 
         return 0;
     }
 
-    // if entity to which we want set direction not visible entity
-    A3 = A0;
-    V0 = bu[0x8007EB98 + A3];
-    if (V0 == FF)
-    {
-        V1 = hu[0x800831FC + A2 * 2];
-        V1 = V1 + 2;
-        [0x800831FC + A2 * 2] = h(V1);
+    [SP + 0x10] = w(entities_data[entity_cur].pos_x >> 0xc);
+    [SP + 0x14] = w(entities_data[entity_cur].pos_y >> 0xc);
+    [SP + 0x18] = w(entities_data[entity_cur].pos_z >> 0xc);
 
-        return 0;
+    [SP + 0x20] = w(entities_data[entity_dst].pos_x >> 0xc);
+    [SP + 0x24] = w(entities_data[entity_dst].pos_y >> 0xc);
+    [SP + 0x28] = w(entities_data[entity_dst].pos_z >> 0xc);
+
+    if ((w[SP + 0x10] == w[SP + 0x20]) && (w[SP + 0x14] == w[SP + 0x24]))
+    {
+        [SP + 0x10] = w(w[SP + 0x10] + 0x1);
     }
 
-    A1 = w[0x8009C544];
+    entities_data[entity_cur].dir = field_entity_dir_by_vec(SP + 0x10, SP + 0x20, SP + 0x30);
+    entities_data[entity_cur].turn_step = 0;
+    entities_data[entity_cur].turn_type = 0;
 
-    V1 = bu[0x8007EB98 + A2];
-    V0 = w[A1 + V1 * 84 + 0C];
-    T0 = V0 >> 0C;
-    [SP + 10] = w(T0);
+    [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x2);
 
-    V1 = bu[0x8007EB98 + A2];
-    V0 = w[A1 + V1 * 84 + 10];
-    T1 = V0 >> 0C;
-    [SP + 14] = w(T1);
-
-    V1 = bu[0x8007EB98 + A2];
-    V0 = w[A1 + V1 * 84 + 14];
-    V0 = V0 >> 0C;
-    [SP + 18] = w(V0);
-
-
-
-    V1 = bu[0x8007EB98 + A3];
-    V0 = V1 * 84;
-    A0 = w[A1 + V0 + 0C];
-    A0 = A0 >> 0C;
-    [SP + 20] = w(A0);
-
-    V1 = bu[0x8007EB98 + A3];
-    V0 = V1 * 84;
-    V0 = w[A1 + V0 + 10];
-    A2 = V0 >> 0C;
-    [SP + 24] = w(A2);
-
-    V1 = bu[0x8007EB98 + A3];
-    V0 = V1 * 84;
-    V0 = w[A1 + V0 + 14];
-    V0 = V0 >> 0C;
-    [SP + 28] = w(V0);
-
-    if (T0 == A0 && T1 == A2) // if X1 == X2 && Y1 = Y2
-    {
-        V0 = T0 + 1;
-        [SP + 10] = V0;
-    }
-
-    A0 = SP + 10;
-    A1 = SP + 20;
-    A2 = SP + 30;
-
-    field_entity_dir_by_vec();
-
-    V1 = bu[0x800722C4];
-    A0 = bu[0x8007EB98 + V1];
-    V1 = A0 * 84;
-    A0 = w[0x8009C544];
-    [V1 + A0 + 38] = b(V0);
-
-    V0 = bu[0x800722C4];
-    V1 = bu[0x8007EB98 + V0];
-    V0 = V1 * 84;
-    V1 = w[0x8009C544];
-    [V1 + A0 + 3B] = b(0);
-
-    V0 = bu[0x800722C4];
-    V1 = bu[0x8007EB98 + V0];
-    V0 = V1 * 84;
-    V1 = w[0x8009C544];
-    [V1 + A0 + 3A] = b(0);
-
-    // move pointer by 2
-    V1 = bu[0x800722C4];
-    V0 = hu[0x800831FC + V1 * 2];
-    V0 = V0 + 2;
-    [0x800831FC + V1 * 2] = h(V0);
-
-    return 1;
+    return 0x1;
 }
 
 
@@ -1415,7 +1204,7 @@ A0 = SP + 0010;
 
 Lc89d4:	; 800C89D4
 A1 = SP + 0020;
-800C89D8	jal    funca8640 [$800a8640]
+800C89D8	jal    field_entity_dir_by_vec [$800a8640]
 A2 = SP + 0030;
 A1 = bu[0x800722c4];
 AT = 0x8007eb98 + A1;
