@@ -216,7 +216,7 @@
 800C7D5C funcc7d5c
 800C814C field_event_opcode_b6_dira
 800C81C0 field_event_opcode_34_pdira
-800C826C set_direction_to_current_entity_by_entity_id
+800C826C field_event_set_dir_by_actor_id
 800C8514 field_event_opcode_ab_tura
 800C8588 field_event_opcode_35_ptura
 800C8634 funcc8634

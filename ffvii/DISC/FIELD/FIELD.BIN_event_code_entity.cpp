@@ -748,751 +748,403 @@ int field_event_opcode_c2_lader()
 
 int field_event_opcode_2a_pmova()
 {
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
     if (bu[0x8009d820] & 0x3) field_debug_event_opcode("pmova", 0x1);
 
-    V0 = bu[0x800722c4];
-    V0 = V0 << 01;
-    800C7C74	lui    at, $8008
-    AT = AT + 31fc;
-    AT = AT + V0;
-    V1 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    800C7C8C	nop
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0001];
-    800C7C98	nop
-    800C7C9C	lui    at, $800a
-    800C7CA0	addiu  at, at, $d391 (=-$2c6f)
-    AT = AT + V0;
-    A0 = bu[AT + 0000];
-    V0 = 00ff;
-    800C7CB0	bne    a0, v0, Lc7cc0 [$800c7cc0]
-    800C7CB4	nop
-    800C7CB8	j      Lc7cd0 [$800c7cd0]
-    A0 = 00ff;
+    V0 = bu[events_data + script_cur + 0x1];
 
-    Lc7cc0:	; 800C7CC0
-    800C7CC0	lui    at, $800a
-    800C7CC4	addiu  at, at, $ad30 (=-$52d0)
-    AT = AT + A0;
-    A0 = bu[AT + 0000];
+    char_id = bu[0x8009c6e4 + 0xcad + V0];
+    actor_id = (char_id == 0xff) ? 0xff : bu[0x8009ad30 + char_id];
 
-    Lc7cd0:	; 800C7CD0
-    800C7CD0	jal    funcc7d5c [$800c7d5c]
+    return funcc7d5c(actor_id);
 }
 
 
 
 int field_event_opcode_aa_mova()
 {
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
     if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mova", 0x1);
 
-    V0 = bu[0x800722c4];
-    800C7D18	nop
-    V0 = V0 << 01;
-    AT = 0x800831fc;
-    AT = AT + V0;
-    V1 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    800C7D38	nop
-    V0 = V0 + V1;
-    A0 = bu[V0 + 0001];
-    800C7D44	jal    funcc7d5c [$800c7d5c]
-
-
-
-
-    V0 = bu[0x800722C4];
-    V1 = hu[0x800831FC + V0 * 2];
-    V0 = w[0x8009C6DC];
-    A0 = bu[V0 + V1 + 1];
-    funcc7d5c;
-
-    return V0;
+    return funcc7d5c(bu[events_data + script_cur + 0x1]);
 }
 
 
 
-int funcc7d5c()
+int funcc7d5c(u8 actor_id_dst)
 {
-    A1 = bu[0x800722c4];
-    AT = 0x8007eb98 + A1;
-    V0 = bu[AT + 0000];
-    V1 = 00ff;
-    800C7D7C	beq    v0, v1, Lc7da0 [$800c7da0]
-    A3 = A0 & 00ff;
-    AT = 0x8007eb98 + A3;
-    A0 = bu[AT + 0000];
-    800C7D94	nop
-    800C7D98	bne    a0, v1, Lc7db0 [$800c7db0]
-    V1 = V0 << 05;
+    field_struct = w[0x8009c6e0];
+    actor_id_cur = bu[0x800722c4];
+    entities_data = w[0x8009c544];
+    dat_block7 = w[0x8008357c];
 
-    Lc7da0:	; 800C7DA0
-    V0 = 0x800831fc;
-    800C7DA8	j      Lc80b0 [$800c80b0]
-    A0 = A1 << 01;
+    u8 entity_cur = bu[0x8007eb98 + actor_id_cur];
+    u8 entity_dst = bu[0x8007eb98 + actor_id_dst];
 
-    Lc7db0:	; 800C7DB0
-    V1 = V1 + V0;
-    V1 = V1 << 02;
-    V0 = A0 << 05;
-    V0 = V0 + A0;
-    A0 = w[0x8009c544];
-    V0 = V0 << 02;
-    V0 = V0 + A0;
-    V0 = hu[V0 + 006c];
-    V1 = V1 + A0;
-    [V1 + 0068] = h(V0);
-    AT = 0x8007eb98 + A1;
-    V1 = bu[AT + 0000];
-    800C7DEC	nop
-    V0 = V1 << 05;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
-    V0 = V0 + A0;
-    [V0 + 0037] = b(0);
-    A2 = bu[0x800722c4];
-    AT = 0x8007eb98 + A3;
-    A0 = bu[AT + 0000];
-    AT = 0x8007eb98 + A2;
-    V0 = bu[AT + 0000];
-    A1 = w[0x8009c544];
-    V1 = V0 << 05;
-    V1 = V1 + V0;
-    V1 = V1 << 02;
-    V0 = A0 << 05;
-    V0 = V0 + A0;
-    V0 = V0 << 02;
-    V0 = V0 + A1;
-    V0 = w[V0 + 000c];
-    V1 = V1 + A1;
-    [V1 + 0078] = w(V0);
-    AT = 0x8007eb98 + A2;
-    V0 = bu[AT + 0000];
-    AT = 0x8007eb98 + A3;
-    A0 = bu[AT + 0000];
-    V1 = V0 << 05;
-    V1 = V1 + V0;
-    V1 = V1 << 02;
-    V0 = A0 << 05;
-    V0 = V0 + A0;
-    V0 = V0 << 02;
-    V0 = V0 + A1;
-    V0 = w[V0 + 0010];
-    V1 = V1 + A1;
-    [V1 + 007c] = w(V0);
-    AT = 0x8007eb98 + A2;
-    V1 = bu[AT + 0000];
-    800C7EB4	nop
-    V0 = V1 << 05;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
-    A1 = V0 + A1;
-    V1 = bu[A1 + 005d];
-    V0 = 0001;
-    800C7ED0	bne    v1, v0, Lc80c8 [$800c80c8]
-    800C7ED4	nop
-    A2 = h[A1 + 006a];
-    800C7EDC	nop
-    800C7EE0	beq    a2, v1, Lc7ef8 [$800c7ef8]
-    V0 = 0002;
-    800C7EE8	beq    a2, v0, Lc8068 [$800c8068]
-    800C7EEC	nop
-    800C7EF0	j      Lc80c8 [$800c80c8]
-    800C7EF4	nop
-
-    Lc7ef8:	; 800C7EF8
-    V0 = w[0x8009c6e0];
-    800C7F00	nop
-    V1 = h[V0 + 0010];
-    A0 = hu[A1 + 0070];
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 < A0;
-    800C7F18	beq    v0, zero, Lc7f38 [$800c7f38]
-    V0 = 0002;
-    V1 = bu[A1 + 005e];
-    800C7F24	nop
-    800C7F28	beq    v1, v0, Lc8030 [$800c8030]
-    V0 = 0002;
-    800C7F30	j      Lc7f4c [$800c7f4c]
-    [A1 + 005e] = b(V0);
-
-    Lc7f38:	; 800C7F38
-    V0 = bu[A1 + 005e];
-    800C7F3C	nop
-    800C7F40	beq    v0, a2, Lc8030 [$800c8030]
-    V0 = 0001;
-    [A1 + 005e] = b(V0);
-
-    Lc7f4c:	; 800C7F4C
-    A0 = bu[0x800722c4];
-    AT = 0x8007eb98 + A0;
-    V1 = bu[AT + 0000];
-    A2 = w[0x8009c544];
-    V0 = V1 << 05;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
-    V0 = V0 + A2;
-    V1 = 0010;
-    [V0 + 0060] = h(V1);
-    AT = 0x8007eb98 + A0;
-    V1 = bu[AT + 0000];
-    800C7F98	nop
-    V0 = V1 << 05;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
-    V0 = V0 + A2;
-    [V0 + 0062] = h(0);
-    AT = 0x8007eb98 + A0;
-    A0 = bu[AT + 0000];
-    V1 = w[0x8008357c];
-    V0 = A0 << 03;
-    V0 = V0 + V1;
-    A1 = bu[V0 + 0004];
-    V1 = g_field_models;
-    V0 = A1 << 03;
-    V0 = V0 + A1;
-    V1 = w[V1 + 0004];
-    V0 = V0 << 02;
-    V0 = V0 + V1;
-    V1 = A0 << 05;
-    V1 = V1 + A0;
-    V1 = V1 << 02;
-    A1 = hu[V0 + 001a];
-    A0 = w[V0 + 001c];
-    AT = 0x80074f02;
-    AT = AT + V1;
-    V0 = bu[AT + 0000];
-    A1 = A1 + A0;
-    V0 = V0 << 04;
-    V0 = V0 + A1;
-    V0 = hu[V0 + 0000];
-    V1 = V1 + A2;
-    800C8028	addiu  v0, v0, $ffff (=-$1)
-    [V1 + 0064] = h(V0);
-
-    Lc8030:	; 800C8030
-    V1 = bu[0x800722c4];
-    AT = 0x8007eb98 + V1;
-    A0 = bu[AT + 0000];
-    V1 = 0001;
-    AT = 0x800756e8;
-    AT = AT + A0;
-    [AT + 0000] = b(V1);
-    800C8060	j      Lc8144 [$800c8144]
-    V0 = 0001;
-
-    Lc8068:	; 800C8068
-    [A1 + 005d] = b(0);
-    V0 = bu[0x800722c4];
-    AT = 0x8007eb98 + V0;
-    V0 = bu[AT + 0000];
-    800C8088	nop
-    AT = 0x800756e8;
-    AT = AT + V0;
-    [AT + 0000] = b(0);
-    A0 = bu[0x800722c4];
-    V0 = 0x800831fc;
-    A0 = A0 << 01;
-
-    Lc80b0:	; 800C80B0
-    A0 = A0 + V0;
-    V1 = hu[A0 + 0000];
-    V0 = 0;
-    V1 = V1 + 0002;
-    800C80C0	j      Lc8144 [$800c8144]
-    [A0 + 0000] = h(V1);
-
-    Lc80c8:	; 800C80C8
-    V0 = bu[0x800722c4];
-    AT = 0x8007eb98 + V0;
-    V1 = bu[AT + 0000];
-    800C80E4	nop
-    V0 = V1 << 05;
-    V0 = V0 + V1;
-    V1 = w[0x8009c544];
-    V0 = V0 << 02;
-    V0 = V0 + V1;
-    V1 = 0001;
-    [V0 + 005d] = b(V1);
-    V0 = bu[0x800722c4];
-    AT = 0x8007eb98 + V0;
-    A0 = bu[AT + 0000];
-    V0 = 0001;
-    V1 = A0 << 05;
-    V1 = V1 + A0;
-    A0 = w[0x8009c544];
-    V1 = V1 << 02;
-    V1 = V1 + A0;
-    [V1 + 006a] = h(0);
-
-    Lc8144:	; 800C8144
-
-
-
-
-
-    A1 = bu[0x800722C4];
-    V0 = bu[0x8007EB98 + A1];
-    A3 = A0;
-    A0 = bu[0x8007EB98 + A3];
-
-    if (V0 == FF || A0 == FF)
+    if ((entity_cur == 0xff) || (entity_dst = 0xff))
     {
-        V1 = hu[0x800831FC + A1 * 2];
-        V1 = V1 + 2;
-        [0x800831FC + A1 * 2] = h(V1);
+        [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x2);
+
         return 0;
     }
 
-    V1 = V0 * 84;
-    V0 = A0 * 84;
-    A0 = w[0x8009C544];
-    V0 = V0 + A0;
-    V0 = hu[V0 + 6C]; // solid
-    [V1 + 68] = h(V0);
-    V1 = V1 + A0;
-    V1 = bu[0x8007EB98 + A1];
-    V0 = V1 * 84;
-    V0 = V0 + A0;
-    [V0 + 37] = b(0);
+    entities_data[entity_cur].action_arg = entities_data[entity_dst].solid_range;
+    entities_data[entity_cur].dir_lock = 0;
 
-    A2 = bu[0x800722c4];
-    A1 = w[0x8009c544];
+    entities_data[entity_cur].move_end_x = entities_data[entity_dst].pos_x;
+    entities_data[entity_cur].move_end_y = entities_data[entity_dst].pos_y;
 
-    A0 = bu[0x8007eb98 + A3];
-    V0 = bu[0x8007eb98 + A2];
-    [A1 + V0 * 84 + 78] = w(w[A1 + A0 * 84 + c]);
-    [A1 + V0 * 84 + 7c] = w(w[A1 + A0 * 84 + 10]);
-
-    V1 = bu[A1 + V0 * 84 + 5d];
-    if (V1 == 1)
+    if (entities_data[entity_cur].action != 0x1)
     {
-        A2 = [A1 + V0 * 84 + 6a];
-        if (A2 == 1)
-        {
-            V0 = w[0x8009c6e0];
-            V1 = h[V0 + 10];
-            A0 = hu[A1 + 70];
-            V0 = V1 * 3;
-            V0 = V0 < A0;
+        entities_data[entity_cur].action = 0x1;
+        entities_data[entity_cur].action_state = 0;
 
-            800C7F18	beq    v0, zero, Lc7f38 [$800c7f38]
-            V0 = 0002;
-            V1 = bu[A1 + 005e];
-            800C7F24	nop
-            800C7F28	beq    v1, v0, Lc8030 [$800c8030]
-            V0 = 0002;
-            800C7F30	j      Lc7f4c [$800c7f4c]
-            [A1 + 005e] = b(V0);
-        }
-        else if (A2 == 2)
-        {
-            [A1 + V0 * 84 + 5d] = b(0);
-            V0 = bu[0x800722c4];
-            V0 = bu[0x8007eb98 + V0];
-            [0x800756e8 + V0] = b(0);
+        return 0x1;
+    }
 
-            A0 = bu[0x800722c4];
-            [0x800831fc + A0 * 2] = h(hu[0x800831fc + A0 * 2] + 2);
+    action_state = entities_data[entity_cur].action_state;
+    if (action_state != 0x1)
+    {
+        if (action_state == 0x2)
+        {
+            entities_data[entity_cur].action = 0;
+            [0x800756e8 + entity_cur] = b(0);
+
+            [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x2);
+
             return 0;
         }
 
-        800C7EF0	j      Lc80c8 [$800c80c8]
-
-        Lc7f38:	; 800C7F38
-        V0 = bu[A1 + 005e];
-        800C7F3C	nop
-        if (V0 != A2)
+        entities_data[entity_cur].action = 0x1;
+        entities_data[entity_cur].action_state = 0;
+    }
+    else
+    {
+        if ((field_struct->scale * 0x3) < entities_data[entity_cur].move_speed)
         {
-            800C7F40	beq    v0, a2, Lc8030 [$800c8030]
-            V0 = 0001;
-            [A1 + 005e] = b(V0);
+            if (entities_data[entity_cur].anim_id == 0x2)
+            {
+                [0x800756e8 + entity_cur] = b(0x1);
 
-            Lc7f4c:	; 800C7F4C
-            A0 = bu[0x800722c4];
-            V1 = bu[0x8007eb98 + A0];
-            A2 = w[0x8009c544];
-            V0 = A2 + V1 * 84;
-            [V0 + 60] = h(10);
-            [V0 + 62] = h(0);
+                return 0x1;
+            }
 
-            A0 = V1;
+            entities_data[entity_cur].anim_id = 0x2;
+        }
+        else
+        {
+            if (entities_data[entity_cur].anim_id == 0x1)
+            {
+                [0x800756e8 + entity_cur] = b(0x1);
 
-            V1 = w[0x8008357c];
-            V0 = V1 + A0 * 8;
-            A1 = bu[V0 + 4];
+                return 0x1;
+            }
 
-
-            V0 = A1 << 03;
-            V0 = V0 + A1;
-            V1 = w[g_field_models + 0x4];
-            V0 = V0 << 02;
-            V0 = V0 + V1;
-            V1 = A0 << 05;
-            V1 = V1 + A0;
-            V1 = V1 << 02;
-            A1 = hu[V0 + 001a];
-            A0 = w[V0 + 001c];
-            800C8004	lui    at, $8007
-            AT = AT + 4f02;
-            AT = AT + V1;
-            V0 = bu[AT + 0000];
-            A1 = A1 + A0;
-            V0 = V0 << 04;
-            V0 = V0 + A1;
-            V0 = hu[V0 + 0000];
-            V1 = V1 + A2;
-            800C8028	addiu  v0, v0, $ffff (=-$1)
-            [V1 + 0064] = h(V0);
+            entities_data[entity_cur].anim_id = 0x1;
         }
 
-        Lc8030:	; 800C8030
-        V1 = bu[0x800722c4];
-        A0 = bu[0x8007eb98 + V1];
-        [0x800756e8 + A0] = b(1);
-        return 1;
+        entities_data[entity_cur].anim_speed = 0x10;
+        entities_data[entity_cur].anim_frame = 0;
+
+        model_id = bu[dat_block7 + entity_cur * 0x8 + 0x4];
+        models_data = w[g_field_models + 0x4];
+        A1 = hu[models_data + model_id * 0x24 + 0x1a];
+        A0 = w[models_data + model_id * 0x24 + 0x1c];
+        anim_id = entities_data[entity_cur].anim_id;
+        entities_data[entity_cur].anim_frames_n = hu[A0 + A1 + anim_id * 0x10 + 0x0] - 0x1;
+
+        [0x800756e8 + entity_cur] = b(0x1);
     }
 
-    Lc80c8:	; 800C80C8
-    V0 = bu[0x800722c4];
-    V1 = bu[0x8007eb98 + V0];
-    V0 = w[0x8009c544];
-    V0 = V0 + V1 * 84;
-    [V0 + 5d] = b(1);
-    [V0 + 6a] = b(0);
-    return 1;
+    return 0x1;
 }
 
 
 
 int field_event_opcode_b6_dira()
 {
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
     if (bu[0x8009d820] & 0x3) field_debug_event_opcode("dira", 0x1);
 
-    V0 = bu[0x800722c4];
-    800C817C	nop
-    V0 = V0 << 01;
-    AT = 0x800831fc;
-    AT = AT + V0;
-    V1 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    800C819C	nop
-    V0 = V0 + V1;
-    A0 = bu[V0 + 0001];
-    800C81A8	jal    funcc826c [$800c826c]
-    800C81AC	nop
-    RA = w[SP + 0010];
-    SP = SP + 0018;
-    800C81B8	jr     ra 
-    800C81BC	nop
-
-
-
-
-    V0 = bu[0x800722C4];
-    V1 = hu[0x800831FC + V0 * 2];
-    V0 = w[0x8009C6DC];
-    A0 = bu[V0 + V1 + 1]; // entity id
-
-    set_direction_to_actor_id_cur_by_entity_id
-
-    return V0;
+    return field_event_set_dir_by_actor_id(bu[events_data + script_cur + 0x1]);
 }
 
 
 
 int field_event_opcode_34_pdira()
 {
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
     if (bu[0x8009d820] & 0x3) field_debug_event_opcode("pdira", 0x1);
 
-    V0 = bu[0x800722c4];
-    800C81F0	nop
-    V0 = V0 << 01;
-    AT = 0x800831fc;
-    AT = AT + V0;
-    V1 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    800C8210	nop
+    V0 = bu[events_data + script_cur + 0x1];
+
+    char_id = bu[0x8009c6e4 + 0xcad + V0];
+    actor_id = (char_id == 0xff) ? 0xff : bu[0x8009ad30 + char_id];
+
+    return field_event_set_dir_by_actor_id(actor_id);
+}
+
+
+
+int field_event_set_dir_by_actor_id(u8 actor_id_dst)
+{
+    A2 = bu[0x800722c4];
+    AT = 0x8007eb98 + A2;
+    V1 = bu[AT + 0000];
+    A1 = 00ff;
+    800C8290	beq    v1, a1, Lc82bc [$800c82bc]
+    800C8294	nop
+    V0 = A0 << 10;
+    A3 = V0 >> 10;
+    AT = 0x8007eb98 + A3;
+    V0 = bu[AT + 0000];
+    800C82B0	nop
+    800C82B4	bne    v0, a1, Lc82d8 [$800c82d8]
+    800C82B8	nop
+
+    Lc82bc:	; 800C82BC
+    V0 = 0x800831fc;
+    A0 = A2 << 01;
+    A0 = A0 + V0;
+    V1 = hu[A0 + 0000];
+    800C82D0	j      Lc84fc [$800c84fc]
+    V0 = 0;
+
+    Lc82d8:	; 800C82D8
+    V0 = V1 << 05;
     V0 = V0 + V1;
-    V0 = bu[V0 + 0001];
-    800C821C	nop
-    800C8220	lui    at, $800a
-    800C8224	addiu  at, at, $d391 (=-$2c6f)
-    AT = AT + V0;
+    A1 = w[0x8009c544];
+    V0 = V0 << 02;
+    V0 = V0 + A1;
+    V0 = w[V0 + 000c];
+    800C82F4	nop
+    T0 = V0 >> 0c;
+    [SP + 0010] = w(T0);
+    AT = 0x8007eb98 + A2;
+    V1 = bu[AT + 0000];
+    800C8310	nop
+    V0 = V1 << 05;
+    V0 = V0 + V1;
+    V0 = V0 << 02;
+    V0 = V0 + A1;
+    V0 = w[V0 + 0010];
+    800C8328	nop
+    T1 = V0 >> 0c;
+    [SP + 0014] = w(T1);
+    AT = 0x8007eb98 + A2;
+    V1 = bu[AT + 0000];
+    800C8344	nop
+    V0 = V1 << 05;
+    V0 = V0 + V1;
+    V0 = V0 << 02;
+    V0 = V0 + A1;
+    V0 = w[V0 + 0014];
+    800C835C	nop
+    V0 = V0 >> 0c;
+    [SP + 0018] = w(V0);
+    AT = 0x8007eb98 + A3;
+    V1 = bu[AT + 0000];
+    800C8378	nop
+    V0 = V1 << 05;
+    V0 = V0 + V1;
+    V0 = V0 << 02;
+    V0 = V0 + A1;
+    A0 = w[V0 + 000c];
+    800C8390	nop
+    A0 = A0 >> 0c;
+    [SP + 0020] = w(A0);
+    AT = 0x8007eb98 + A3;
+    V1 = bu[AT + 0000];
+    800C83AC	nop
+    V0 = V1 << 05;
+    V0 = V0 + V1;
+    V0 = V0 << 02;
+    V0 = V0 + A1;
+    V0 = w[V0 + 0010];
+    800C83C4	nop
+    A2 = V0 >> 0c;
+    [SP + 0024] = w(A2);
+    AT = 0x8007eb98 + A3;
+    V1 = bu[AT + 0000];
+    V0 = V1 << 05;
+    V0 = V0 + V1;
+    V0 = V0 << 02;
+    V0 = V0 + A1;
+    V0 = w[V0 + 0014];
+    800C83F8	nop
+    V0 = V0 >> 0c;
+    800C8400	bne    t0, a0, Lc8418 [$800c8418]
+    [SP + 0028] = w(V0);
+    800C8408	bne    t1, a2, Lc841c [$800c841c]
+    A0 = SP + 0010;
+    V0 = T0 + 0001;
+    [SP + 0010] = w(V0);
+
+    Lc8418:	; 800C8418
+    A0 = SP + 0010;
+
+    Lc841c:	; 800C841C
+    A1 = SP + 0020;
+    800C8420	jal    funca8640 [$800a8640]
+    A2 = SP + 0030;
+    V1 = bu[0x800722c4];
+    AT = 0x8007eb98 + V1;
     A0 = bu[AT + 0000];
-    V0 = 00ff;
-    800C8234	bne    a0, v0, Lc8244 [$800c8244]
-    800C8238	nop
-    800C823C	j      Lc8254 [$800c8254]
-    A0 = 00ff;
+    800C8444	nop
+    V1 = A0 << 05;
+    V1 = V1 + A0;
+    A0 = w[0x8009c544];
+    V1 = V1 << 02;
+    V1 = V1 + A0;
+    [V1 + 0038] = b(V0);
+    V0 = bu[0x800722c4];
+    AT = 0x8007eb98 + V0;
+    V1 = bu[AT + 0000];
+    800C8480	nop
+    V0 = V1 << 05;
+    V0 = V0 + V1;
+    V1 = w[0x8009c544];
+    V0 = V0 << 02;
+    V0 = V0 + V1;
+    [V0 + 003b] = b(0);
+    V0 = bu[0x800722c4];
+    AT = 0x8007eb98 + V0;
+    V1 = bu[AT + 0000];
+    800C84BC	nop
+    V0 = V1 << 05;
+    V0 = V0 + V1;
+    V1 = w[0x8009c544];
+    V0 = V0 << 02;
+    V0 = V0 + V1;
+    [V0 + 003a] = b(0);
+    A0 = bu[0x800722c4];
+    V0 = 0x800831fc;
+    A0 = A0 << 01;
+    A0 = A0 + V0;
+    V1 = hu[A0 + 0000];
+    V0 = 0001;
 
-    Lc8244:	; 800C8244
-    800C8244	lui    at, $800a
-    800C8248	addiu  at, at, $ad30 (=-$52d0)
-    AT = AT + A0;
-    A0 = bu[AT + 0000];
+    Lc84fc:	; 800C84FC
+    V1 = V1 + 0002;
+    [A0 + 0000] = h(V1);
 
-    Lc8254:	; 800C8254
-    800C8254	jal    funcc826c [$800c826c]
-    800C8258	nop
-    RA = w[SP + 0010];
-    SP = SP + 0018;
-    800C8264	jr     ra 
-    800C8268	nop
+
+
+
+
+    A0 - entity to get
+
+    // if current entity not visible entity
+    A2 = bu[0x800722C4];
+    V1 = bu[0x8007EB98 + A2];
+    if (V1 == FF)
+    {
+        V1 = hu[0x800831FC + A2 * 2];
+        V1 = V1 + 2;
+        [0x800831FC + A2 * 2] = h(V1);
+
+        return 0;
+    }
+
+    // if entity to which we want set direction not visible entity
+    A3 = A0;
+    V0 = bu[0x8007EB98 + A3];
+    if (V0 == FF)
+    {
+        V1 = hu[0x800831FC + A2 * 2];
+        V1 = V1 + 2;
+        [0x800831FC + A2 * 2] = h(V1);
+
+        return 0;
+    }
+
+    A1 = w[0x8009C544];
+
+    V1 = bu[0x8007EB98 + A2];
+    V0 = w[A1 + V1 * 84 + 0C];
+    T0 = V0 >> 0C;
+    [SP + 10] = w(T0);
+
+    V1 = bu[0x8007EB98 + A2];
+    V0 = w[A1 + V1 * 84 + 10];
+    T1 = V0 >> 0C;
+    [SP + 14] = w(T1);
+
+    V1 = bu[0x8007EB98 + A2];
+    V0 = w[A1 + V1 * 84 + 14];
+    V0 = V0 >> 0C;
+    [SP + 18] = w(V0);
+
+
+
+    V1 = bu[0x8007EB98 + A3];
+    V0 = V1 * 84;
+    A0 = w[A1 + V0 + 0C];
+    A0 = A0 >> 0C;
+    [SP + 20] = w(A0);
+
+    V1 = bu[0x8007EB98 + A3];
+    V0 = V1 * 84;
+    V0 = w[A1 + V0 + 10];
+    A2 = V0 >> 0C;
+    [SP + 24] = w(A2);
+
+    V1 = bu[0x8007EB98 + A3];
+    V0 = V1 * 84;
+    V0 = w[A1 + V0 + 14];
+    V0 = V0 >> 0C;
+    [SP + 28] = w(V0);
+
+    if (T0 == A0 && T1 == A2) // if X1 == X2 && Y1 = Y2
+    {
+        V0 = T0 + 1;
+        [SP + 10] = V0;
+    }
+
+    A0 = SP + 10;
+    A1 = SP + 20;
+    A2 = SP + 30;
+
+    field_entity_dir_by_vec();
+
+    V1 = bu[0x800722C4];
+    A0 = bu[0x8007EB98 + V1];
+    V1 = A0 * 84;
+    A0 = w[0x8009C544];
+    [V1 + A0 + 38] = b(V0);
+
+    V0 = bu[0x800722C4];
+    V1 = bu[0x8007EB98 + V0];
+    V0 = V1 * 84;
+    V1 = w[0x8009C544];
+    [V1 + A0 + 3B] = b(0);
+
+    V0 = bu[0x800722C4];
+    V1 = bu[0x8007EB98 + V0];
+    V0 = V1 * 84;
+    V1 = w[0x8009C544];
+    [V1 + A0 + 3A] = b(0);
+
+    // move pointer by 2
+    V1 = bu[0x800722C4];
+    V0 = hu[0x800831FC + V1 * 2];
+    V0 = V0 + 2;
+    [0x800831FC + V1 * 2] = h(V0);
+
+    return 1;
 }
-
-
-
-////////////////////////////////
-// set_direction_to_actor_id_cur_by_entity_id
-
-A2 = bu[0x800722c4];
-AT = 0x8007eb98 + A2;
-V1 = bu[AT + 0000];
-A1 = 00ff;
-800C8290	beq    v1, a1, Lc82bc [$800c82bc]
-800C8294	nop
-V0 = A0 << 10;
-A3 = V0 >> 10;
-AT = 0x8007eb98 + A3;
-V0 = bu[AT + 0000];
-800C82B0	nop
-800C82B4	bne    v0, a1, Lc82d8 [$800c82d8]
-800C82B8	nop
-
-Lc82bc:	; 800C82BC
-V0 = 0x800831fc;
-A0 = A2 << 01;
-A0 = A0 + V0;
-V1 = hu[A0 + 0000];
-800C82D0	j      Lc84fc [$800c84fc]
-V0 = 0;
-
-Lc82d8:	; 800C82D8
-V0 = V1 << 05;
-V0 = V0 + V1;
-A1 = w[0x8009c544];
-V0 = V0 << 02;
-V0 = V0 + A1;
-V0 = w[V0 + 000c];
-800C82F4	nop
-T0 = V0 >> 0c;
-[SP + 0010] = w(T0);
-AT = 0x8007eb98 + A2;
-V1 = bu[AT + 0000];
-800C8310	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + A1;
-V0 = w[V0 + 0010];
-800C8328	nop
-T1 = V0 >> 0c;
-[SP + 0014] = w(T1);
-AT = 0x8007eb98 + A2;
-V1 = bu[AT + 0000];
-800C8344	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + A1;
-V0 = w[V0 + 0014];
-800C835C	nop
-V0 = V0 >> 0c;
-[SP + 0018] = w(V0);
-AT = 0x8007eb98 + A3;
-V1 = bu[AT + 0000];
-800C8378	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + A1;
-A0 = w[V0 + 000c];
-800C8390	nop
-A0 = A0 >> 0c;
-[SP + 0020] = w(A0);
-AT = 0x8007eb98 + A3;
-V1 = bu[AT + 0000];
-800C83AC	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + A1;
-V0 = w[V0 + 0010];
-800C83C4	nop
-A2 = V0 >> 0c;
-[SP + 0024] = w(A2);
-AT = 0x8007eb98 + A3;
-V1 = bu[AT + 0000];
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + A1;
-V0 = w[V0 + 0014];
-800C83F8	nop
-V0 = V0 >> 0c;
-800C8400	bne    t0, a0, Lc8418 [$800c8418]
-[SP + 0028] = w(V0);
-800C8408	bne    t1, a2, Lc841c [$800c841c]
-A0 = SP + 0010;
-V0 = T0 + 0001;
-[SP + 0010] = w(V0);
-
-Lc8418:	; 800C8418
-A0 = SP + 0010;
-
-Lc841c:	; 800C841C
-A1 = SP + 0020;
-800C8420	jal    funca8640 [$800a8640]
-A2 = SP + 0030;
-V1 = bu[0x800722c4];
-AT = 0x8007eb98 + V1;
-A0 = bu[AT + 0000];
-800C8444	nop
-V1 = A0 << 05;
-V1 = V1 + A0;
-A0 = w[0x8009c544];
-V1 = V1 << 02;
-V1 = V1 + A0;
-[V1 + 0038] = b(V0);
-V0 = bu[0x800722c4];
-AT = 0x8007eb98 + V0;
-V1 = bu[AT + 0000];
-800C8480	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[0x8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-[V0 + 003b] = b(0);
-V0 = bu[0x800722c4];
-AT = 0x8007eb98 + V0;
-V1 = bu[AT + 0000];
-800C84BC	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[0x8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-[V0 + 003a] = b(0);
-A0 = bu[0x800722c4];
-V0 = 0x800831fc;
-A0 = A0 << 01;
-A0 = A0 + V0;
-V1 = hu[A0 + 0000];
-V0 = 0001;
-
-Lc84fc:	; 800C84FC
-V1 = V1 + 0002;
-[A0 + 0000] = h(V1);
-
-
-
-
-
-A0 - entity to get
-
-// if current entity not visible entity
-A2 = bu[0x800722C4];
-V1 = bu[0x8007EB98 + A2];
-if (V1 == FF)
-{
-    V1 = hu[0x800831FC + A2 * 2];
-    V1 = V1 + 2;
-    [0x800831FC + A2 * 2] = h(V1);
-
-    return 0;
-}
-
-// if entity to which we want set direction not visible entity
-A3 = A0;
-V0 = bu[0x8007EB98 + A3];
-if (V0 == FF)
-{
-    V1 = hu[0x800831FC + A2 * 2];
-    V1 = V1 + 2;
-    [0x800831FC + A2 * 2] = h(V1);
-
-    return 0;
-}
-
-A1 = w[0x8009C544];
-
-V1 = bu[0x8007EB98 + A2];
-V0 = w[A1 + V1 * 84 + 0C];
-T0 = V0 >> 0C;
-[SP + 10] = w(T0);
-
-V1 = bu[0x8007EB98 + A2];
-V0 = w[A1 + V1 * 84 + 10];
-T1 = V0 >> 0C;
-[SP + 14] = w(T1);
-
-V1 = bu[0x8007EB98 + A2];
-V0 = w[A1 + V1 * 84 + 14];
-V0 = V0 >> 0C;
-[SP + 18] = w(V0);
-
-
-
-V1 = bu[0x8007EB98 + A3];
-V0 = V1 * 84;
-A0 = w[A1 + V0 + 0C];
-A0 = A0 >> 0C;
-[SP + 20] = w(A0);
-
-V1 = bu[0x8007EB98 + A3];
-V0 = V1 * 84;
-V0 = w[A1 + V0 + 10];
-A2 = V0 >> 0C;
-[SP + 24] = w(A2);
-
-V1 = bu[0x8007EB98 + A3];
-V0 = V1 * 84;
-V0 = w[A1 + V0 + 14];
-V0 = V0 >> 0C;
-[SP + 28] = w(V0);
-
-if (T0 == A0 && T1 == A2) // if X1 == X2 && Y1 = Y2
-{
-    V0 = T0 + 1;
-    [SP + 10] = V0;
-}
-
-A0 = SP + 10;
-A1 = SP + 20;
-A2 = SP + 30;
-
-field_entity_dir_by_vec();
-
-V1 = bu[0x800722C4];
-A0 = bu[0x8007EB98 + V1];
-V1 = A0 * 84;
-A0 = w[0x8009C544];
-[V1 + A0 + 38] = b(V0);
-
-V0 = bu[0x800722C4];
-V1 = bu[0x8007EB98 + V0];
-V0 = V1 * 84;
-V1 = w[0x8009C544];
-[V1 + A0 + 3B] = b(0);
-
-V0 = bu[0x800722C4];
-V1 = bu[0x8007EB98 + V0];
-V0 = V1 * 84;
-V1 = w[0x8009C544];
-[V1 + A0 + 3A] = b(0);
-
-// move pointer by 2
-V1 = bu[0x800722C4];
-V0 = hu[0x800831FC + V1 * 2];
-V0 = V0 + 2;
-[0x800831FC + V1 * 2] = h(V0);
-
-return 1;
-////////////////////////////////
 
 
 
