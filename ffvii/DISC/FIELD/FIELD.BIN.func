@@ -221,8 +221,8 @@
 800C8588 field_event_opcode_35_ptura
 800C8634 funcc8634
 800C8B98 field_event_opcode_c3_ofst
-800C8F64 0xC4 OFSTW
-800C9080 0xDE TURNW
+800C8F64 field_event_opcode_c4_ofstw
+800C9080 field_event_opcode_de_turnw
 800C91D8 field_event_opcode_b5_turn
 800C955C 0xB4 TURNGEN
 800C9A20 field_event_opcode_b3_dir
