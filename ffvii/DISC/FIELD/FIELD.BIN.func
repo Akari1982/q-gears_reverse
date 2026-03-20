@@ -233,16 +233,16 @@
 800C9F78 field_event_opcode_b2_msped
 800CA074 field_event_opcode_bd_asped
 800CA158 field_event_opcode_b7_gtdir
-800CA254 0x73 PGTDR
-800CA394 0xB9 GETAI
-800CA490 0xB8 GETAXY
-800CA5D4 0xC1 AXYZI
-800CA77C 0x75 PXYZI
+800CA254 field_event_opcode_73_pgtdr
+800CA394 field_event_opcode_b9_getai
+800CA490 field_event_opcode_b8_getaxy
+800CA5D4 field_event_opcode_c1_axyzi
+800CA77C field_event_opcode_75_pxyzi
 800CA95C field_event_opcode_a4_visi
 800CAA24 field_event_opcode_7e_tlkon
 800CAAEC field_event_opcode_a5_xyzi
-800CAC98 0xA7 XYZ
-800CADFC 0xA6 XYI
+800CAC98 field_event_opcode_a7_xyz
+800CADFC field_event_opcode_a6_xyi
 800CAF60 0x40 MESSAGE
 800CB01C 0x43 MPNAM
 800CB0B8 0x48 ASK
