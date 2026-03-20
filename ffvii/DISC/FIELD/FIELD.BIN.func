@@ -224,15 +224,15 @@
 800C8F64 field_event_opcode_c4_ofstw
 800C9080 field_event_opcode_de_turnw
 800C91D8 field_event_opcode_b5_turn
-800C955C 0xB4 TURNGEN
+800C955C field_event_opcode_b4_turngen
 800C9A20 field_event_opcode_b3_dir
 800C9B88 field_event_opcode_c6_slidr
-800C9C84 0xD7 SLDR2
-800C9D80 0xC5 TALKR
-800C9E7C 0xD6 TLKR2
-800C9F78 0xB2 MSPED
-800CA074 0xBD ASPED
-800CA158 0xB7 GETDIR
+800C9C84 field_event_opcode_d7_sldr2
+800C9D80 field_event_opcode_c5_talkr
+800C9E7C field_event_opcode_d6_tlkr2
+800C9F78 field_event_opcode_b2_msped
+800CA074 field_event_opcode_bd_asped
+800CA158 field_event_opcode_b7_gtdir
 800CA254 0x73 PGTDR
 800CA394 0xB9 GETAI
 800CA490 0xB8 GETAXY
