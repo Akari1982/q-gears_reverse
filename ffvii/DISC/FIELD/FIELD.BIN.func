@@ -345,7 +345,7 @@
 800D1654 field_event_opcode_6b_fade
 800D184C field_event_opcode_25_nfade
 800D195C field_event_opcode_6c_fadew
-800D1A80 0x6D IDLCK
+800D1A80 field_event_opcode_6d_idlck
 800D1B94 0x56 GWCOL
 800D1C68 0x57 SWCOL
 800D1D3C 0x6E LSTMP
@@ -361,7 +361,7 @@
 800D2B60 0x5D CMTRA
 800D2C60 0x49 MENU
 800D2E94 0x4A MENU2
-800D2F3C 0x74 GETPC
+800D2F3C field_event_opcode_74_getpc
 800D3004 0x41 MPARA
 800D3124 0x42 MPRA2
 800D3264 0xD4 SIN
@@ -388,9 +388,9 @@
 800D4214 field_event_opcode_22_btmd2
 800D4300 field_event_opcode_23_btrlt
 800D4378 field_event_opcode_4b_btltb
-800D4420 0x26 BLINK
-800D44E8 0x28 KAWAI
-800D4780 0x29 KAWIW
+800D4420 field_event_opcode_26_blink
+800D44E8 field_event_opcode_28_kawai
+800D4780 field_event_opcode_29_kawiw
 800D4838 funcd4838
 800D4840 funcd4840
 800D4848 field_event_debug_error

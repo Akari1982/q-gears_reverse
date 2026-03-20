@@ -201,7 +201,7 @@ struct FieldEntity
                                 // 0x00 [][]     store 1 here in KAWAI opcode. Store 2 here if run_kawai function returns 1 (maybe end kawai)
                                 // 0x02 [][]     store 0 here in KAWAI opcode.
                                 // 0x04 [][][][] kawai settings. Offset to KAWAI opcode data in script (like offset to opcode + 3).
-                                // 0x08 []       blinking. 0 - on, 1 - off.
+    u8 blink_on;                // 0x08
                                 // 0x09 []       store 0 here in KAWAI opcode under some curcumstances.
     s32 pos_x;                  // 0x0c
     s32 pos_y;                  // 0x10

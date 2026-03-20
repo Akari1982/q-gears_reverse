@@ -61,9 +61,9 @@ for (int i = 0; i < entities_n; ++i)
     {
         model_id = bu[block7_data + i * 8 + 4];
 
-        [SP + 10] = h((g_field_entities[i].pos_x >> c) + hu[g_field_entities + i * 84 + 40]);     // model position X + model offset X
-        [SP + 12] = h((g_field_entities[i].pos_y >> c) + hu[g_field_entities + i * 84 + 46]);     // model position Y + model offset Y
-        [SP + 14] = h((g_field_entities[i].pos_z >> c) + hu[g_field_entities + i * 84 + 4c] - a); // model position Z + model offset Z
+        [SP + 10] = h((g_field_entities[i].pos_x >> c) + hu[g_field_entities + i * 0x84 + 0x40]);     // model position X + model offset X
+        [SP + 12] = h((g_field_entities[i].pos_y >> c) + hu[g_field_entities + i * 0x84 + 0x46]);     // model position Y + model offset Y
+        [SP + 14] = h((g_field_entities[i].pos_z >> c) + hu[g_field_entities + i * 0x84 + 0x4c] - a); // model position Z + model offset Z
 
         [model_data + model_id * 24 +  8] = w(h(SP + 10));
         [model_data + model_id * 24 +  c] = w(h(SP + 12));
@@ -73,7 +73,7 @@ for (int i = 0; i < entities_n; ++i)
 
         if (V0 < 0xf00)
         {
-            [model_data + model_id * 24 + 7] = b(bu[g_field_entities + i * 84 + 38]); // model direction
+            [model_data + model_id * 24 + 7] = b(bu[g_field_entities + i * 0x84 + 0x38]); // model direction
 
             V1 = b[model_data + model_id * 24 + 1]; // +1[] KAWAI byte in new structure
             if ((V1 == 4) || (V1 == 8) || (V1 == 9) || (V1 == b) || (V1 == c))
@@ -88,8 +88,8 @@ for (int i = 0; i < entities_n; ++i)
 
                 A0 = model_data + model_id * 24;
                 A1 = SP + 20;
-                A2 = bu[g_field_entities + i * 84 + 5e]; // animation id
-                A3 = h[g_field_entities + i * 84 + 62] / 10; // frame id
+                A2 = bu[g_field_entities + i * 0x84 + 0x5e]; // animation id
+                A3 = h[g_field_entities + i * 0x84 + 0x62] / 0x10; // frame id
                 field_model_animation_calculate_matrixes();
 
                 // set camera matrix as root bone transformation
@@ -110,8 +110,8 @@ for (int i = 0; i < entities_n; ++i)
 
                 A0 = model_data + model_id * 24;
                 A1 = w[0x80071e40]; // offset to camera section
-                A2 = bu[g_field_entities + i * 84 + 5e]; // animation id
-                A3 = hu[g_field_entities + i * 84 + 62] / 10; // frame id
+                A2 = bu[g_field_entities + i * 0x84 + 0x5e]; // animation id
+                A3 = hu[g_field_entities + i * 0x84 + 0x62] / 10; // frame id
                 field_model_animation_calculate_matrixes();
             }
         }
@@ -123,9 +123,9 @@ for (int i = 0; i < entities_n; ++i)
 {
     if (bu[block7_data + i * 8 + 4] != ff) // model enabled
     {
-        [SP + 10] = h(w[g_field_entities + i * 84 + c] >> c);
-        [SP + 12] = h(w[g_field_entities + i * 84 + 10] >> c);
-        [SP + 14] = h((w[g_field_entities + i * 84 + 14] >> c) - a);
+        [SP + 10] = h(w[g_field_entities + i * 0x84 + 0xc] >> 0xc);
+        [SP + 12] = h(w[g_field_entities + i * 0x84 + 0x10] >> 0xc);
+        [SP + 14] = h((w[g_field_entities + i * 0x84 + 0x14] >> 0xc) - 0xa);
 
         field_calculate_world_to_screen_pos(SP + 0x10, SP + 0x18); // return distance to screen
 

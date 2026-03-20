@@ -1795,18 +1795,17 @@ int field_event_opcode_a6_xyi();
 
 void field_set_1st_party_character_as_manual_model()
 {
-    V0 = bu[0x8009c6e4 + 0xcad];
-    if (V0 != 0xff) // if character exist
+    char_id = bu[0x8009c6e4 + 0xcad + 0x0];
+    if (char_id != 0xff)
     {
-        A0 = bu[0x8009ad30 + V0];
-        if (A0 != 0xff) // if entity exist
+        actor_id = bu[0x8009ad30 + char_id];
+        if (actor_id != 0xff)
         {
-            V0 = bu[0x8007eb98 + A0];
-            if (V1 != 0xff) // if model exist
+            entity_id = bu[0x8007eb98 + actor_id];
+            if (entity_id != 0xff)
             {
-                V1 = w[0x8009c6e0];
-                V0 = bu[0x8007eb98 + A0];
-                [V1 + 0x2a] = h(V0); // manual model id
+                field_struct = w[0x8009c6e0];
+                field_struct->player_id = entity_id;
             }
         }
     }
@@ -1855,6 +1854,7 @@ int field_event_opcode_a0_pc()
     entities_data[entity_cur].talk_off = 0x1;
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x2);
+
     return 0;
 }
 
@@ -1873,426 +1873,156 @@ int field_event_opcode_c7_solid()
 
     if (entity_cur != 0xff)
     {
-        [entities_data + entity_cur * 0x84 + 0x59] = b(bu[events_data + script_cur + 0x1]);
+        entities_data[entity_cur].solid_off = bu[events_data + script_cur + 0x1];
     }
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x2);
+
     return 0;
 }
 
 
 
-////////////////////////////////
-// 0x6D IDLCK
-
-if (bu[0x8009d820] & 0x3) field_debug_event_opcode("idlck", 0x3);
-
-V0 = bu[0x800722c4];
-800D1AB0	nop
-V0 = V0 << 01;
-AT = 0x800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800D1AD0	nop
-A2 = V0 + V1;
-V1 = bu[A2 + 0002];
-V0 = bu[A2 + 0001];
-V1 = V1 << 08;
-V0 = V0 | V1;
-V0 = V0 << 10;
-A0 = V0 >> 10;
-800D1AF0	bgez   a0, Ld1afc [$800d1afc]
-V0 = A0;
-V0 = A0 + 0007;
-
-Ld1afc:	; 800D1AFC
-A1 = V0 >> 03;
-V0 = A1 << 03;
-V1 = bu[A2 + 0003];
-800D1B08	nop
-800D1B0C	beq    v1, zero, Ld1b34 [$800d1b34]
-A2 = A0 - V0;
-V0 = w[0x8009c6e0];
-V1 = 0001;
-V0 = V0 + A1;
-A0 = bu[V0 + 00b2];
-V1 = V1 << A2;
-800D1B2C	j      Ld1b54 [$800d1b54]
-A0 = A0 | V1;
-
-Ld1b34:	; 800D1B34
-V1 = 0001;
-V0 = w[0x8009c6e0];
-V1 = V1 << A2;
-V0 = V0 + A1;
-A0 = bu[V0 + 00b2];
-V1 = 0 NOR V1;
-A0 = A0 & V1;
-
-Ld1b54:	; 800D1B54
-[V0 + 00b2] = b(A0);
-V0 = bu[0x800722c4];
-V1 = 0x800831fc;
-V0 = V0 << 01;
-V0 = V0 + V1;
-V1 = hu[V0 + 0000];
-800D1B74	nop
-V1 = V1 + 0004;
-[V0 + 0000] = h(V1);
-return 0;
-
-
-
-
-
-V0 = bu[0x800722C4];
-V1 = hu[0x800831FC + V0 * 2];
-V0 = w[0x8009C6DC];
-A2 = V0 + V1;
-V1 = bu[A2 + 2];
-V0 = bu[A2 + 1];
-V1 = V1 << 8;
-V0 = V0 | V1; // xxxxxxxx triangle id
-A0 = V0;
-A1 = V0 >> 3; // 000xxxxx
-V0 = A1 << 3; // xxxxx000
-V1 = bu[A2 + 3];
-
-A2 = A0 - V0; // 00000xxx
-
-if (V1 != 0)
+int field_event_opcode_74_getpc()
 {
-    V0 = w[0x8009C6E0];
-    V0 = V0 + A1;
-    V1 = 1 << A2;
-    A0 = [V0 + B2];
-    A0 = A0 | V1;
-}
-else
-{
-    V0 = w[0x8009C6E0];
-    V1 = 1 << A2;
-    V0 = V0 + A1;
-    A0 = [V0 + B2];
-    V1 = 0 NOR V1;
-    A0 = A0 & V1;
-}
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-[V0 + B2] = b(A0);
+    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("getpc", 0x3);
 
-// move pointer by 4
-V1 = bu[0x800722C4];
-V0 = hu[0x800831FC + V1 * 2];
-V0 = V0 + 4;
-[0x800831FC + V1 * 2] = h(V0);
-////////////////////////////////
+    party_id = bu[events_data + script_cur + 0x2];
 
-
-
-////////////////////////////////
-// 0x74 GETPC
-
-if (bu[0x8009d820] & 0x3) field_debug_event_opcode("getpc", 0x3);
-
-V0 = bu[0x800722c4];
-800D2F70	nop
-V0 = V0 << 01;
-800D2F78	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800D2F90	nop
-V0 = V0 + V1;
-V1 = bu[V0 + 0002];
-800D2F9C	lui    s0, $8008
-S0 = S0 + 31fc;
-V0 = V1 < 0003;
-800D2FA8	beq    v0, zero, Ld2fc8 [$800d2fc8]
-A0 = 0002;
-800D2FB0	lui    at, $800a
-800D2FB4	addiu  at, at, $cbdc (=-$3424)
-AT = AT + V1;
-A2 = bu[AT + 0000];
-800D2FC0	jal    field_event_write_memory_u8 [$800bf3ac]
-A1 = 0003;
-
-Ld2fc8:	; 800D2FC8
-V1 = bu[0x800722c4];
-800D2FD0	nop
-V1 = V1 << 01;
-V1 = V1 + S0;
-V0 = hu[V1 + 0000];
-800D2FE0	nop
-V0 = V0 + 0004;
-[V1 + 0000] = h(V0);
-return 0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0x26 BLINK
-
-if (bu[0x8009d820] & 0x3) field_debug_event_opcode("blink", 0x8);
-
-V1 = bu[0x800722c4];
-AT = 0x8007eb98 + V1;
-A0 = bu[AT + 0000];
-V0 = 00ff;
-800D4468	beq    a0, v0, Ld44ac [$800d44ac]
-V0 = A0 << 05;
-V0 = V0 + A0;
-V1 = V1 << 01;
-AT = 0x800831fc;
-AT = AT + V1;
-A0 = hu[AT + 0000];
-V1 = w[0x8009c6dc];
-V0 = V0 << 02;
-V1 = V1 + A0;
-A0 = w[0x8009c544];
-V1 = bu[V1 + 0001];
-V0 = V0 + A0;
-[V0 + 0008] = b(V1);
-
-Ld44ac:	; 800D44AC
-V0 = bu[0x800722c4];
-V1 = 0x800831fc;
-V0 = V0 << 01;
-V0 = V0 + V1;
-V1 = hu[V0 + 0000];
-800D44C8	nop
-V1 = V1 + 0002;
-[V0 + 0000] = h(V1);
-return 0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0x28 KAWAI
-
-if (bu[0x8009d820] & 0x3) field_debug_event_opcode("kawai", 0x8);
-
-A0 = bu[0x800722c4];
-A3 = 0x800831fc;
-V0 = A0 << 01;
-AT = 0x800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-AT = 0x8007eb98 + A0;
-A0 = bu[AT + 0000];
-A1 = V0 + V1;
-V0 = 00ff;
-T0 = bu[A1 + 0001];
-800D455C	beq    a0, v0, Ld4644 [$800d4644]
-V0 = A0 << 03;
-V1 = w[0x8008357c];
-800D456C	nop
-V0 = V0 + V1;
-V1 = bu[V0 + 0004];
-800D4578	nop
-V0 = V1 << 03;
-V0 = V0 + V1;
-V1 = g_field_models;
-A2 = bu[A1 + 0002];
-V1 = w[V1 + 0004];
-V0 = V0 << 02;
-V0 = V0 + V1;
-[V0 + 0001] = b(A2);
-A0 = bu[0x800722c4];
-AT = 0x8007eb98 + A0;
-V1 = bu[AT + 0000];
-A1 = w[0x8009c544];
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + A1;
-V1 = 0001;
-[V0 + 0000] = h(V1);
-AT = 0x8007eb98 + A0;
-V1 = bu[AT + 0000];
-S0 = A2;
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + A1;
-[V0 + 0002] = h(0);
-AT = 0x8007eb98 + A0;
-V1 = bu[AT + 0000];
-A0 = A0 << 01;
-A0 = A0 + A3;
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V1 = hu[A0 + 0000];
-A0 = w[0x8009c6dc];
-V0 = V0 + A1;
-V1 = V1 + A0;
-V1 = V1 + 0003;
-[V0 + 0004] = w(V1);
-
-Ld4644:	; 800D4644
-800D4644	bne    s0, zero, Ld4740 [$800d4740]
-800D4648	nop
-V0 = bu[0x800722c4];
-AT = 0x8007eb98 + V0;
-V1 = bu[AT + 0000];
-800D4668	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[0x8009c544];
-V0 = V0 << 02;
-A1 = V0 + V1;
-V1 = w[A1 + 0004];
-800D4688	nop
-A0 = bu[V1 + 0000];
-V0 = 0001;
-800D4694	bne    a0, v0, Ld4700 [$800d4700]
-800D4698	nop
-V0 = bu[V1 + 0001];
-800D46A0	nop
-800D46A4	bne    v0, a0, Ld4700 [$800d4700]
-800D46A8	nop
-V0 = bu[V1 + 0002];
-800D46B0	nop
-800D46B4	bne    v0, zero, Ld4700 [$800d4700]
-800D46B8	nop
-[A1 + 0008] = b(0);
-V0 = bu[0x800722c4];
-AT = 0x8007eb98 + V0;
-V1 = bu[AT + 0000];
-800D46DC	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[0x8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-800D46F8	j      Ld4740 [$800d4740]
-[V0 + 0009] = b(0);
-
-Ld4700:	; 800D4700
-V0 = bu[0x800722c4];
-AT = 0x8007eb98 + V0;
-V1 = bu[AT + 0000];
-800D471C	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[0x8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V1 = 0001;
-[V0 + 0008] = b(V1);
-
-Ld4740:	; 800D4740
-V0 = bu[0x800722c4];
-V1 = 0x800831fc;
-V0 = V0 << 01;
-V0 = V0 + V1;
-V1 = hu[V0 + 0000];
-800D475C	nop
-V1 = T0 + V1;
-[V0 + 0000] = h(V1);
-return 0;
-
-
-
-
-
-
-actor_id_cur = bu[0x800722c4];
-script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
-entities_data = w[0x8009c544];
-entity_id = bu[0x8007eb98 + actor_id_cur];
-
-size = bu[script + 1];
-
-if (entity_id != ff)
-{
-    dat_block7 = w[0x8008357c];
-    models_data = w[g_field_models + 0x4];
-    model_id = bu[dat_block7 + entity_id * 8 + 4];
-
-    [models_data + model_id * 24 + 1] = b(bu[script + 2]); // write kawai to new structure
-
-    [entities_data + entity_id * 84 + 0] = h(1);
-    [entities_data + entity_id * 84 + 2] = h(0);
-    [entities_data + entity_id * 84 + 4] = w(script + 3);
-
-    if (bu[script + 2] == 0)
+    if (party_id < 0x3)
     {
-        V1 = w[entities_data + entity_id * 84 + 4];
+        field_event_write_memory_u8(0x2, 0x3, bu[0x8009c6e4 + 0x4f8 + party_id]);
+    }
 
-        if ((bu[V1 + 0] == 1) && (bu[V1 + 1] == 1) && (bu[V1 + 2] == 0))
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x4);
+
+    return 0;
+}
+
+
+
+int field_event_opcode_26_blink()
+{
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    entities_data = w[0x8009c544];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
+    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("blink", 0x8);
+
+    u8 entity_cur = bu[0x8007eb98 + actor_id_cur];
+
+    if (entity_cur != 0xff)
+    {
+        entities_data[entity_cur].blink_on = bu[events_data + script_cur + 0x1];
+    }
+
+    [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x2);
+
+    return 0;
+}
+
+
+
+int field_event_opcode_28_kawai()
+{
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    entities_data = w[0x8009c544];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+    dat_block7 = w[0x8008357c];
+
+    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("kawai", 0x8);
+
+    u8 entity_cur = bu[0x8007eb98 + actor_id_cur];
+
+    size = bu[events_data + script_cur + 0x1];
+    if (entity_cur != 0xff)
+    {
+        model_id = bu[dat_block7 + entity_cur * 0x8 + 0x4];
+        models_data = w[g_field_models + 0x4];
+
+        A2 = bu[events_data + script_cur + 0x2];
+
+        [models_data + model_id * 0x24 + 0x1] = b(A2);
+        [entities_data + entity_cur * 0x84 + 0x0] = h(0x1);
+        S0 = A2;
+        [entities_data + entity_cur * 0x84 + 0x2] = h(0);
+        [entities_data + entity_cur * 0x84 + 0x4] = w(events_data + script_cur + 0x3);
+    }
+
+    if (S0 == 0)
+    {
+        V1 = w[entities_data + entity_cur * 0x84 + 0x4];
+
+        if ((bu[V1 + 0x0] == 0x1) && (bu[V1 + 0x1] == 0x1) && (bu[V1 + 0x2] == 0))
         {
-            [entities_data + entity_id * 84 + 8] = b(0);
-            [entities_data + entity_id * 84 + 9] = b(0);
+            entities_data[entity_cur].blink_on = 0;
+            [entities_data + entity_cur * 0x84 + 0x9] = b(0);
         }
         else
         {
-            [entities_data + entity_id * 84 + 8] = b(1);
+            entities_data[entity_cur].blink_on = 0x1;
         }
     }
+
+    [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + size);
+
+    return 0;
 }
 
-[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + size);
-
-return 0;
-////////////////////////////////
 
 
-
-////////////////////////////////
-// 0x29 KAWIW
-
-if (bu[0x8009d820] & 0x3) field_debug_event_opcode("kawiw", 0x0);
-
-A0 = bu[0x800722c4];
-AT = 0x8007eb98 + A0;
-V1 = bu[AT + 0000];
-V0 = 00ff;
-if (V1 != 0xff)
+int field_event_opcode_29_kawiw()
 {
-    V0 = V1 << 05;
-    V0 = V0 + V1;
-    V1 = w[0x8009c544];
-    V0 = V0 << 02;
-    A1 = V0 + V1;
-    V1 = h[A1 + 0000];
+    actor_id_cur = bu[0x800722c4];
+    entities_data = w[0x8009c544];
 
-    if (V1 == 0x1) return 0x1;
+    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("kawiw", 0x0);
 
-    [A1 + 0000] = h(0);
+    u8 entity_cur = bu[0x8007eb98 + actor_id_cur];
+
+    if (entity_cur != 0xff)
+    {
+        if (h[entities_data + entity_cur * 0x84 + 0x0] == 0x1) return 0x1;
+
+        [entities_data + entity_cur * 0x84 + 0x0 = 0;
+    }
+
+    [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x1);
+
+    return 0;
 }
 
-A0 = 0x800831fc + A0 * 0x2;
-V1 = hu[A0 + 0000];
-V1 = V1 + 0001;
-[A0 + 0000] = h(V1);
-
-return 0;
 
 
-
-
-
-actor_id_cur = bu[0x800722c4];
-entities_data = w[0x8009c544];
-entity_id = bu[0x8007eb98 + actor_id_cur];
-
-V1 = bu[0x8007EB98 + actor_id_cur];
-
-if (entity_id != ff)
+int field_event_opcode_6d_idlck()
 {
-    // wait if executed
-    if (h[entities_data + entity_id * 84 + 0] == 1) return 1;
+    field_struct = w[0x8009c6e0];
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    [entities_data + entity_id * 84 + 0] = h(0);
+    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("idlck", 0x3);
+
+    val = h[events_data + script_cur + 0x1];
+    val_byte = val / 0x8;
+    val_bit = val % 0x8;
+
+    if (bu[events_data + script_cur + 0x3] != 0)
+    {
+        [field_struct + val_byte + 0xb2] = b(bu[field_struct + val_byte + 0xb2] | (0x1 << val_bit));
+    }
+    else
+    {
+        [field_struct + val_byte + 0xb2] = b(bu[field_struct + val_byte + 0xb2] & ~(0x1 << val_bit));
+    }
+
+    [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x4);
+
+    return 0;
 }
-
-[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 1);
-
-return 0;
-////////////////////////////////
