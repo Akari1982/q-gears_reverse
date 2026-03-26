@@ -314,24 +314,24 @@
 800CE480 0xEF ADPAL2
 800CE6F4 0xEA MPPAL2
 800CE904 0xDF MPPAL
-800CEB20 field_set_1st_party_character_as_manual_model
+800CEB20 field_event_party_set_1st_party_char_as_pc
 800CEB94 field_event_opcode_a0_pc
-800CEE44 0xC8 PRTYP
-800CF028 0xC9 PRTYM
-800CF140 0xCA PRTYE
-800CF200 0x0A SPTYE
-800CF2BC 0x0B GTPYE
-800CF368 funccf368
-800CF4CC funccf4cc
-800CF5A0 field_copy_party_to_battle_party
-800CF60C field_copy_battle_party_to_party
-800CF66C funccf66c
-800CF6C0 funccf6c0
+800CEE44 field_event_opcode_c8_prtyp
+800CF028 field_event_opcode_c9_prtym
+800CF140 field_event_opcode_ca_prtye
+800CF200 field_event_opcode_0a_sptye
+800CF2BC field_event_opcode_0b_gptye
+800CF368 field_event_party_set_from_array
+800CF4CC field_event_party_compare
+800CF5A0 field_event_party_copy_to_battle_party
+800CF60C field_event_copy_battle_party_to_party
+800CF66C field_event_party_chars_remove
+800CF6C0 field_event_party_chars_add
 800CF718 field_event_opcode_cb_prtyq
 800CF874 field_event_opcode_cc_membq
-800CF9B8 0xCD MMBud
-800CFAF0 0xCE MMBLK
-800CFB84 0xCF MMBUK
+800CF9B8 field_event_opcode_cd_mmbud
+800CFAF0 field_event_opcode_ce_mmblk
+800CFB84 field_event_opcode_cf_mmbuk
 800CFC1C field_event_opcode_c7_solid
 800CFCE4 field_event_opcode_6a_vwoft
 800CFE78 field_event_opcode_08_join
@@ -350,15 +350,15 @@
 800D1C68 0x57 SWCOL
 800D1D3C 0x6E LSTMP
 800D1DB8 field_event_opcode_5e_shake
-800D1F20 0x58 STITM
-800D1FDC 0x59 DLITM
-800D2098 0x5A CKITM
+800D1F20 field_event_opcode_58_stitm
+800D1FDC field_event_opcode_59_dlitm
+800D2098 field_event_opcode_5a_ckitm
 800D2164 field_event_opcode_0f_spcal
 800D2794 field_event_opcode_2d_bgscr
 800D28A8 field_event_opcode_2c_bgdph
-800D298C 0x5B SMTRA
-800D2A70 0x5C DMTRA
-800D2B60 0x5D CMTRA
+800D298C field_event_opcode_5b_smtra
+800D2A70 field_event_opcode_5c_dmtra
+800D2B60 field_event_opcode_5d_cmtra
 800D2C60 0x49 MENU
 800D2E94 0x4A MENU2
 800D2F3C field_event_opcode_74_getpc
@@ -368,17 +368,15 @@
 800D3330 0xD5 COS
 800D33FC funcd33fc
 800D348C funcd348c
-800D3548 0x3E MHMMX
-800D368C 0x3C HMPMAX1
-800D368C 0x3D HMPMAX2
-800D368C 0x3F HMPMAX3
-800D3728 0x45 MPu
-800D3840 0x47 MPd
-800D3958 0x4D HPu
-800D3A70 0x4F HPd
-800D3B88 0x39 GOLDu
-800D3C18 0x3A GOLDd
-800D3CA8 0x3B CHGLD
+800D3548 field_event_opcode_e3_mhmmx
+800D368C field_event_opcode_3c_3d_3f_hmpmx
+800D3728 field_event_opcode_45_mpu
+800D3840 field_event_opcode_47_mpd
+800D3958 field_event_opcode_4d_hpu
+800D3A70 field_event_opcode_4f_hpd
+800D3B88 field_event_opcode_39_goldu
+800D3C18 field_event_opcode_3a_goldd
+800D3CA8 field_event_opcode_3b_chgld
 800D3D40 field_event_opcode_f7_chmph
 800D3DCC field_event_opcode_fe_chmst
 800D3E64 field_event_opcode_38_sttim

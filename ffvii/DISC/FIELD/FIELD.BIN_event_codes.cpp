@@ -2063,7 +2063,7 @@ int field_event_opcode_0f_spcal()
 
             for (int i = 0; i < 0x200; ++i)
             {
-                system_menu_inventory_remove_item(0xc600 | i);
+                system_menu_remove_item(0xc600 | i);
             }
 
             [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x2);
@@ -2121,7 +2121,7 @@ int field_event_opcode_0f_spcal()
 
             for (int i = 0; i < 0x200; ++i)
             {
-                func25380(0xc600 | i);
+                system_menu_add_item(0xc600 | i);
             }
 
             [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x2);
@@ -2135,7 +2135,7 @@ int field_event_opcode_0f_spcal()
 
             for (int i = 0; i < 0x50; ++i)
             {
-                func2542c(i);
+                system_menu_add_materia(i);
             }
 
             [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x2);
@@ -2311,7 +2311,7 @@ else
         [struct + 1] = b(0);
         [struct + 26] = h(0);
 
-        field_copy_battle_party_to_party();
+        field_event_copy_battle_party_to_party();
 
         return 0;
     }

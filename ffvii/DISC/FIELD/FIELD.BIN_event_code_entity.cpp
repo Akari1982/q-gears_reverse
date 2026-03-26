@@ -1793,26 +1793,6 @@ int field_event_opcode_a6_xyi();
 
 
 
-void field_set_1st_party_character_as_manual_model()
-{
-    char_id = bu[0x8009c6e4 + 0xcad + 0x0];
-    if (char_id != 0xff)
-    {
-        actor_id = bu[0x8009ad30 + char_id];
-        if (actor_id != 0xff)
-        {
-            entity_id = bu[0x8007eb98 + actor_id];
-            if (entity_id != 0xff)
-            {
-                field_struct = w[0x8009c6e0];
-                field_struct->player_id = entity_id;
-            }
-        }
-    }
-}
-
-
-
 int field_event_opcode_a0_pc()
 {
     field_struct = w[0x8009c6e0];

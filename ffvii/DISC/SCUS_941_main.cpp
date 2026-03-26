@@ -267,7 +267,7 @@ void system_field_run()
         }
     }
 
-    field_copy_battle_party_to_party();
+    field_event_copy_battle_party_to_party();
 
     field_main();
 }
@@ -641,7 +641,7 @@ void system_main()
                         case FIELD_CMD_PARTY_RESTORE: func24f80(g_field_control.arg); break; // ITEMMENU.MNU restore party and char equipment and materia
                     }
 
-                    field_copy_battle_party_to_party();
+                    field_event_copy_battle_party_to_party();
 
                     [0x8009abf4 + 0x26] = h(0x2);
                     g_gamestate_prev = GAME_STATE_MENU;
@@ -784,7 +784,7 @@ void system_main()
 
                     if (g_field_control.cmd != 0x19)
                     {
-                        field_copy_battle_party_to_party();
+                        field_event_copy_battle_party_to_party();
                     }
 
                     [0x8009abf4 + 0x26] = h(0x2);
