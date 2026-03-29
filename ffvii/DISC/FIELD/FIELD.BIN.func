@@ -244,7 +244,7 @@
 800CAC98 field_event_opcode_a7_xyz
 800CADFC field_event_opcode_a6_xyi
 800CAF60 0x40 MESSAGE
-800CB01C 0x43 MPNAM
+800CB01C field_event_opcode_43_mpnam
 800CB0B8 0x48 ASK
 800CB1CC 0x2E WCLS
 800CB28C 0x2F WSIZE

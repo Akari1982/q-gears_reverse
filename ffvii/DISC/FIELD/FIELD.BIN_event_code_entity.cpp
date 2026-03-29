@@ -16,6 +16,7 @@ int field_event_opcode_33_uc()
     }
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x2);
+
     return 0;
 }
 
@@ -37,6 +38,7 @@ int field_event_opcode_bf_cc()
     }
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x2);
+
     return 0;
 }
 
@@ -61,6 +63,7 @@ int field_event_opcode_a1_char()
     entities_data[entity_id].char_id = bu[events_data + script_cur + 0x1];
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x2);
+
     return 0;
 }
 
@@ -88,6 +91,7 @@ int field_event_opcode_a2_dfanm()
     }
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x3);
+
     return 0x1;
 }
 
@@ -117,6 +121,7 @@ int field_event_opcode_dc_ccanm()
     }
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x4);
+
     return 0;
 }
 
@@ -186,6 +191,7 @@ int field_event_opcode_a3_ae_anime()
     }
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x3);
+
     return 0;
 }
 
@@ -231,6 +237,7 @@ int field_event_opcode_af_ba_anim()
     }
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x3);
+
     return 0;
 }
 
@@ -292,6 +299,7 @@ int field_event_opcode_b0_bb_canim()
     }
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x5);
+
     return 0;
 }
 
@@ -353,6 +361,7 @@ int field_event_opcode_b1_bc_canm()
     }
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x5);
+
     return 0;
 }
 
@@ -380,6 +389,7 @@ int field_event_opcode_ac_animw()
     }
 
     [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x1);
+
     return 0;
 }
 
@@ -401,6 +411,7 @@ int field_event_opcode_dd_animb()
     }
 
     [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x1);
+
     return 0;
 }
 

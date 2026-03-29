@@ -587,22 +587,20 @@ return 0;
 
 
 
-////////////////////////////////
-// 0x43 MPNAM
-V0 = bu[0x800722C4];          // current entity
-V1 = hu[0x800831FC + V0 * 2]; // script pointer
-V0 = w[0x8009C6DC];           // current field file offset.
-A0 = [V0 + V1 + 1];         // dialog_id
+int field_event_opcode_43_mpnam()
+{
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-copy_dialog_to_map_name;
+    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mpnam", 0x1);
 
-A0 = bu[0x800722C4];
-V1 = hu[0x800831FC + A0 * 2];
-V1 = V1 + 2;
-[0x800831FC + A0 * 2] = h(V1);
+    copy_dialog_to_map_name(bu[events_data + script_cur + 0x1]);
 
-return 0;
-////////////////////////////////
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x2);
+
+    return 0;
+}
 
 
 
