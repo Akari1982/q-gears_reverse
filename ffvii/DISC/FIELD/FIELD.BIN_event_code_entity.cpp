@@ -1753,6 +1753,7 @@ int field_event_opcode_a5_xyzi()
     }
 
     [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0xb);
+
     return 0x1;
 }
 
