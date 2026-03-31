@@ -1423,19 +1423,19 @@
 
 800e48e0 [][][][] store tutorial offset here.
 
-800e48f0 []       stroe actor that called split/join opcode here.
-800e48f4 array of poly for pointer (0x2 items 0x28 size)
-800e4944 texts for windows to diaplay. (size 0x100)
-800e4d44 [][]     movie played. If set we dont load background in advance.
-800e4d48 offsets for getting variable from memory block for windows. 8 for each window. (size 0x10 0x2)
+0x800e48f0 []       stroe actor that called split/join opcode here.
+0x800e48f4 array of poly for pointer (0x2 items 0x28 size)
+0x800e4944 texts for windows to diaplay. (size 0x100)
+0x800e4d44 [][]     movie played. If set we dont load background in advance.
+0x800e4d48 offsets for getting variable from memory block for windows. 8 for each window. (size 0x10 0x2)
 
 // MIM data
-800e4d90 [][][][] pointer to clut data.
-800e4d94 [][][][] pointer to first image block.
-800e4d98 [][]     clut vram x.
-800e4d9a [][]     clut vram y.
-800e4d9c [][]     clut width.
-800e4d9e [][]     clut height.
+0x800e4d90 [][][][] pointer to clut data.
+0x800e4d94 [][][][] pointer to first image block.
+0x800e4d98 [][]     clut vram x.
+0x800e4d9a [][]     clut vram y.
+0x800e4d9c [][]     clut width.
+0x800e4d9e [][]     clut height.
 
 800e4da4 [][][][] pointer to 1st image data.
 800e4da8 [][][][] pointer to second image block.

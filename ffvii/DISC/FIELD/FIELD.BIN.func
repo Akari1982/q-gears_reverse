@@ -243,17 +243,17 @@
 800CAAEC field_event_opcode_a5_xyzi
 800CAC98 field_event_opcode_a7_xyz
 800CADFC field_event_opcode_a6_xyi
-800CAF60 0x40 MESSAGE
+800CAF60 field_event_opcode_40_mes
 800CB01C field_event_opcode_43_mpnam
-800CB0B8 0x48 ASK
-800CB1CC 0x2E WCLS
-800CB28C 0x2F WSIZEW
-800CB354 0x50 WSIZE funccb354
-800CB450 0x55 WROW
-800CB4F8 0x51 WMOVE
-800CB5C0 0x53 WREST
-800CB660 0x54 WCLSE
-800CB718 0x52 WMODE
+800CB0B8 field_event_opcode_48_ask
+800CB1CC field_event_opcode_2e_wcls
+800CB28C field_event_opcode_2f_wsizw
+800CB354 field_event_opcode_50_wsize
+800CB450 field_event_opcode_55_wrow
+800CB4F8 field_event_opcode_51_wmove
+800CB5C0 field_event_opcode_53_wrest
+800CB660 field_event_opcode_54_wclse
+800CB718 field_event_opcode_52_wmode
 800CB7C0 0x8F AND
 800CB858 0x90 AND2
 800CB8F4 0x91 OR
@@ -362,8 +362,8 @@
 800D2C60 0x49 MENU
 800D2E94 0x4A MENU2
 800D2F3C field_event_opcode_74_getpc
-800D3004 0x41 MPARA
-800D3124 0x42 MPRA2
+800D3004 field_event_opcode_41_mpara
+800D3124 field_event_opcode_42_mpra2
 800D3264 0xD4 SIN
 800D3330 0xD5 COS
 800D33FC funcd33fc
@@ -380,8 +380,8 @@
 800D3D40 field_event_opcode_f7_chmph
 800D3DCC field_event_opcode_fe_chmst
 800D3E64 field_event_opcode_38_sttim
-800D3F30 0x36 WSPCL
-800D4038 0x37 WNUMB
+800D3F30 field_event_opcode_36_wspcl
+800D4038 field_event_opcode_37_wnumb
 800D4160 field_event_opcode_72_btlmd
 800D4214 field_event_opcode_22_btmd2
 800D4300 field_event_opcode_23_btrlt
@@ -397,13 +397,13 @@
 800D48C0 field_window_reset_all
 800D493C field_window_reset
 800D4B28 field_window_set_state_to_close
-800D4BC0 set_window_style_cbc
+800D4BC0 field_dialog_set_window_style_cbc
 800D4BFC funcd4bfc
 800D4C68 field_dialog_set_size
-800D4E24 add_x_y_to_window_position
-800D4E88 set_window_height
-800D4EB4 field_dialog_manage_states
-800D5228 manage_ask_window_states
+800D4E24 field_dialog_add_x_y_to_window_position
+800D4E88 field_dialog_set_window_height
+800D4EB4 field_dialog_message_update_states
+800D5228 field_dialog_ask_update_states
 800D5750 play_window_pointer_click_sound
 800D579C field_dialog_window_init
 800D5A60 field_dialog_window_growth
