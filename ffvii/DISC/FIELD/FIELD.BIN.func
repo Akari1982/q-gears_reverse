@@ -126,17 +126,17 @@
 // FIELD.BIN_script_opcodes.cpp
 800C0BE8 field_event_opcode_5f_nop
 800C0C18 field_event_opcode_24_wait
-800C0DE0 0x80 SETBYTE
+800C0DE0 field_event_opcode_80_set
 800C0E5C field_event_opcode_81_set2
-800C0EDC 0x9A LBYTE
-800C0F58 0x9B HBYTE
-800C0FD8 0x9C 2BYTE
+800C0EDC field_event_opcode_9a_lbyte
+800C0F58 field_event_opcode_9b_hbyte
+800C0FD8 field_event_opcode_9c_2byte
 800C107C field_event_opcode_9d_setx
 800C1214 field_event_opcode_9e_getx
 800C13B0 field_event_opcode_9f_srchx
-800C1674 0x82 BITON
-800C1714 0x83 BITOFF
-800C17B8 0x84 BITXOR
+800C1674 field_event_opcode_82_biton
+800C1714 field_event_opcode_83_bitof
+800C17B8 field_event_opcode_84_bitxr
 800C1858 field_event_opcode_d0_line
 800C1AB4 field_event_opcode_d3_sline
 800C1BF4 field_event_opcode_d1_linon
@@ -254,36 +254,36 @@
 800CB5C0 field_event_opcode_53_wrest
 800CB660 field_event_opcode_54_wclse
 800CB718 field_event_opcode_52_wmode
-800CB7C0 0x8F AND
-800CB858 0x90 AND2
-800CB8F4 0x91 OR
-800CB98C 0x92 OR2
-800CBA28 0x93 XOR
-800CBAC0 0x94 XOR2
-800CBB5C 0x85 PLUS
-800CBBF4 0x76 PLUS!
-800CBCA4 0x86 PLUS2
-800CBD40 0x77 PLUS2!
-800CBDFC 0x87 MINUS
-800CBE94 0x78 MINUS!
-800CBF40 0x88 MINUS2
-800CBFDC 0x79 MINUS2!
-800CC098 0x89 MUL
-800CC134 0x8A MUL2
-800CC1D4 0x8B DIV
-800CC284 0x8C DIV2
-800CC358 0x8D MOD
-800CC404 0x8E MOD2
-800CC4D8 0x95 INC
-800CC558 0x7A INC!
-800CC5EC 0x96 INC2
-800CC670 0x7B INC2!
-800CC70C 0x97 DEC
-800CC78C 0x7C DEC!
-800CC824 0x98 DEC2
-800CC8A8 0x7D DEC2!
-800CC944 0x99 RANDOM
-800CC9EC 0x7F RDMSD
+800CB7C0 field_event_opcode_8f_and
+800CB858 field_event_opcode_90_and2
+800CB8F4 field_event_opcode_91_or
+800CB98C field_event_opcode_92_or2
+800CBA28 field_event_opcode_93_xor
+800CBAC0 field_event_opcode_94_xor2
+800CBB5C field_event_opcode_85_plus
+800CBBF4 field_event_opcode_76_plus
+800CBCA4 field_event_opcode_86_plus2
+800CBD40 field_event_opcode_77_pls2
+800CBDFC field_event_opcode_87_minus
+800CBE94 field_event_opcode_78_mins
+800CBF40 field_event_opcode_88_mins2
+800CBFDC field_event_opcode_79_mns2
+800CC098 field_event_opcode_89_mul
+800CC134 field_event_opcode_8a_mul2
+800CC1D4 field_event_opcode_8b_div
+800CC284 field_event_opcode_8c_div2
+800CC358 field_event_opcode_8d_remai
+800CC404 field_event_opcode_8e_rema2
+800CC4D8 field_event_opcode_95_inc
+800CC558 field_event_opcode_7a_inc
+800CC5EC field_event_opcode_96_inc2
+800CC670 field_event_opcode_7b_inc2
+800CC70C field_event_opcode_97_dec
+800CC78C field_event_opcode_7c_dec
+800CC824 field_event_opcode_98_dec2
+800CC8A8 field_event_opcode_7d_dec2
+800CC944 field_event_opcode_99_randm
+800CC9EC field_event_opcode_7f_rdmsd
 800CCA68 field_event_opcode_e0_bgon
 800CCB10 field_event_opcode_e1_bgoff
 800CCBBC field_event_opcode_e4_bgclr
@@ -364,8 +364,8 @@
 800D2F3C field_event_opcode_74_getpc
 800D3004 field_event_opcode_41_mpara
 800D3124 field_event_opcode_42_mpra2
-800D3264 0xD4 SIN
-800D3330 0xD5 COS
+800D3264 field_event_opcode_d4_sin
+800D3330 field_event_opcode_d5_cos
 800D33FC funcd33fc
 800D348C funcd348c
 800D3548 field_event_opcode_e3_mhmmx
