@@ -168,9 +168,9 @@
 800C3FA0 field_event_opcode_10_skip
 800C401C field_event_opcode_11_lskip
 800C40A4 field_event_opcode_60_mjump
-800C42B0 0xD8 PMJMP
-800C4350 0xD9 PMJMP2
-800C43C4 0x20 MINIGAME
+800C42B0 field_event_opcode_d8_pmjmp
+800C4350 field_event_opcode_d9_pmjmp
+800C43C4 field_event_opcode_20_mgame
 800C45AC field_event_opcode_70_batle
 800C46A4 field_event_clear_akao_struct
 800C46D0 field_event_opcode_f2_akao
@@ -185,15 +185,15 @@
 800C4CE8 field_event_opcode_f6_bmusc
 800C4DE8 field_event_opcode_fc_fmusc
 800C4EE8 field_event_opcode_21_tutor
-800C506C 0xF5 MULCK
-800C50EC 0x27 BGMOVIE
+800C506C field_event_opcode_f5_mulck
+800C50EC field_event_opcode_27_bgmovie
 800C5194 field_event_opcode_61_scrlo
 800C523C field_event_opcode_0e_dskcg
 800C532C field_event_opcode_33_uc
 800C5414 field_event_opcode_71_btlon
-800C54BC 0x69 MPDSP
-800C5564 0xFB MVCAM
-800C560C 0xFF GAMEOVER
+800C54BC field_event_opcode_69_mpdsp
+800C5564 field_event_opcode_fb_mvcam
+800C560C field_event_opcode_ff_gmovr
 800C5668 field_event_opcode_bf_cc
 800C5740 field_event_opcode_a1_char
 800C5898 field_event_opcode_a2_dfanm
@@ -292,7 +292,7 @@
 800CCD54 field_event_opcode_f8_pmvie
 800CCE94 field_event_opcode_f9_movie
 800CCFE8 field_event_opcode_fa_mvief
-800CD0C4 0xD2 MPJPO
+800CD0C4 field_event_opcode_d2_mpjpo
 800CD16C field_event_opcode_64_scr2d
 800CD214 field_event_opcode_62_scrlc
 800CD2E8 field_event_opcode_63_scrla
@@ -348,7 +348,7 @@
 800D1A80 field_event_opcode_6d_idlck
 800D1B94 0x56 GWCOL
 800D1C68 0x57 SWCOL
-800D1D3C 0x6E LSTMP
+800D1D3C field_event_opcode_6e_lstmp
 800D1DB8 field_event_opcode_5e_shake
 800D1F20 field_event_opcode_58_stitm
 800D1FDC field_event_opcode_59_dlitm
@@ -359,8 +359,8 @@
 800D298C field_event_opcode_5b_smtra
 800D2A70 field_event_opcode_5c_dmtra
 800D2B60 field_event_opcode_5d_cmtra
-800D2C60 0x49 MENU
-800D2E94 0x4A MENU2
+800D2C60 field_event_opcode_49_menu
+800D2E94 field_event_opcode_4a_menu
 800D2F3C field_event_opcode_74_getpc
 800D3004 field_event_opcode_41_mpara
 800D3124 field_event_opcode_42_mpra2

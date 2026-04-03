@@ -225,7 +225,7 @@
 0x80095de0 array of stored background palletes (0x40 items 0x20 size)(each palette is 0x10 items 0x2 size).
 
 0x800965e0 we store manual visible entity here (pc).
-0x800965e8 [][]     1 - field background already loading, 0 - not loading. Set 2 if background loading and re make some check and it returns 0.
+0x800965e8 [][]     1 - field background already loading, 0 - not loading. Set 2 if background loaded.
 0x800965ec [][]     depending on this value we load field differently. Store 1 here when move from map to map.
                     1 - 
                     2 - after battle?

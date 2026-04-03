@@ -91,10 +91,11 @@ void field_load_mim_dat_files()
 
 void field_stop_load_next_map_in_advance()
 {
-    if (h[0x800965e8] == 1)
+    if (h[0x800965e8] == 0x1)
     {
         system_cdrom_abort_loading(); // stop background loading
     }
+
     [0x80071a5c] = h(0);
     [0x800965e8] = h(0);
 }
@@ -154,7 +155,7 @@ void field_load_next_map_in_advance(pc_data, gateways)
         system_cdrom_start_load_file(w[0x800def80], w[0x800def84], 0x801b0000, 0); // WORLD/WM.PRE
     }
 
-    [0x800965e8] = h(1); // field background already loading
+    [0x800965e8] = h(0x1); // field background already loading
 }
 
 
