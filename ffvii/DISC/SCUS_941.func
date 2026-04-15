@@ -296,7 +296,7 @@
 80025774 system_get_accessory_address_by_id
 80025788 system_get_party_player_structure_address_by_party_id
 800257C4 func257c4
-800257CC system_get_character_name_offset
+800257CC system_menu_get_char_name
 80025800 system_menu_remove_hp_by_party_id
 800258BC system_menu_add_hp_by_party_id
 80025988 system_menu_remove_mp_by_party_id
@@ -583,7 +583,7 @@
 80033A70 system_akao_opcode_null
 
 // 
-80033A90 func33a90
+80033A90 system_savemap_reset
 
 // SCUS_941_cdrom.cpp
 80033B70 system_cdrom_init

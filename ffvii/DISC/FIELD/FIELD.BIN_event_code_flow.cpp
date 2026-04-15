@@ -422,7 +422,7 @@ int field_event_opcode_13_lback()
 
 
 
-int field_event_opcode_14_if ()
+int field_event_opcode_14_if()
 {
     events_data = w[0x8009c6dc];
     actor_id_cur = bu[0x800722c4];
@@ -448,7 +448,7 @@ int field_event_opcode_14_if ()
 
 
 
-int field_event_opcode_15_lif ()
+int field_event_opcode_15_lif()
 {
     events_data = w[0x8009c6dc];
     actor_id_cur = bu[0x800722c4];

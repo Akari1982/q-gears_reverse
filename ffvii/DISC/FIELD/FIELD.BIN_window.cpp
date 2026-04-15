@@ -595,9 +595,9 @@ system_akao_execute();
 window_id = A0;
 message_id = A1;
 
-dialog = w[0x8007e7a8];
+messages = w[0x8007e7a8];
 
-if (dialog == 0) // if there is no dialogs in this field
+if (messages == 0) // if there is no dialogs in this field
 {
     field_event_debug_error("No mes data!");
     return 1;
@@ -605,27 +605,22 @@ if (dialog == 0) // if there is no dialogs in this field
 
 if (b[0x8008326c + window_id] != -1) // parent exist
 {
-    if (bu[0x8009d820] & 3)
-    {
-        A0 = 800a10ec; // "mes busy="
-        A1 = window_id;
-        A2 = 1;
-        field_debug_add_parse_value_to_page2();
-    }
+    if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("mes busy=", window_id, 0x1);
+
     return 0;
 }
 
 [0x8008326c + window_id] = b(bu[0x800722c4]); // set parent entity
 
-[0x80083274 + window_id * 0x30 + c] = h(h[0x80083274 + window_id * 0x30 + 0x8] / 4);
-[0x80083274 + window_id * 0x30 + e] = h(h[0x80083274 + window_id * 0x30 + 0xa] / 4);
+[0x80083274 + window_id * 0x30 + 0xc] = h(h[0x80083274 + window_id * 0x30 + 0x8] / 4);
+[0x80083274 + window_id * 0x30 + 0xe] = h(h[0x80083274 + window_id * 0x30 + 0xa] / 4);
 
-if (h[0x80083274 + window_id * 0x30 + e] < 8)
+if (h[0x80083274 + window_id * 0x30 + 0xe] < 0x8)
 {
-    [0x80083274 + window_id * 0x30 + e] = h(8); // cur h
+    [0x80083274 + window_id * 0x30 + 0xe] = h(0x8); // cur h
 }
 
-if (h[0x80083274 + window_id * 0x30 + c] < 8)
+if (h[0x80083274 + window_id * 0x30 + 0xc] < 0x8)
 {
     [0x80083274 + window_id * 0x30 + c] = h(8); // cur w
 }
@@ -638,16 +633,16 @@ if (h[0x80083274 + window_id * 0x30 + c] < 8)
 [0x80083274 + window_id * 0x30 + 1a] = b(0); // show pointer
 [0x800e4944 + window_id * 100] = b(ff); // start with zero string
 
-[0x800e4234 + window_id * 4] = w(dialog + hu[dialog + 0x2 + message_id * 2]); // reading offsets in dialog
+[0x800e4234 + window_id * 0x4] = w(messages + hu[messages + 0x2 + message_id * 0x2]); // reading offsets in messages
 
-[0x80071e2c] = b(bu[0x80071e2c] + 1); // number of opened windows
-[0x80114480 + window_id * 2] = h(1); // OK button speed modificator
-[0x80114470 + window_id * 2] = h(0); // character add speed
-[0x801142cc + window_id * 2] = h(0); // additional rows during text scrolling
-[0x800e4278 + window_id * 2] = h(0); // name reading offset
-[0x800e4280 + window_id * 2] = h(0); // current variable
-[0x8011451c + window_id * 2] = h(-1); // variable read offset
-[0x80083274 + window_id * 0x30 + 0x2c] = h(1); // state
+[0x80071e2c] = b(bu[0x80071e2c] + 0x1); // number of opened windows
+[0x80114480 + window_id * 0x2] = h(1); // OK button speed modificator
+[0x80114470 + window_id * 0x2] = h(0); // character add speed
+[0x801142cc + window_id * 0x2] = h(0); // additional rows during text scrolling
+[0x800e4278 + window_id * 0x2] = h(0); // name reading offset
+[0x800e4280 + window_id * 0x2] = h(0); // current variable
+[0x8011451c + window_id * 0x2] = h(-0x1); // variable read offset
+[0x80083274 + window_id * 0x30 + 0x2c] = h(0x1); // state
 
 return 0;
 ////////////////////////////////
@@ -874,7 +869,7 @@ for (; S5 < h[0x80114470 + window_id * 2];)
             S0 = bu[V0] - ea;
 
             A0 = S0 & ffff;
-            system_get_character_name_offset();
+            system_menu_get_char_name();
             A1 = V0 + h[0x800e4278 + window_id * 2];
 
             if ((bu[A1] == ff) || (h[0x800e4278 + window_id * 2] >= 9))
@@ -920,7 +915,7 @@ for (; S5 < h[0x80114470 + window_id * 2];)
             else
             {
                 A0 = A0;
-                system_get_character_name_offset();
+                system_menu_get_char_name();
                 V1 = V0 + h[0x800e4278 + window_id * 2];
 
                 if ((bu[V1] == ff) || (h[0x800e4278 + window_id * 2] >= 9))
@@ -1525,13 +1520,13 @@ while(divisor >= 2)
 ////////////////////////////////
 // copy_dialog_to_map_name
 
-V1 = w[0x8007E7A8];
-if (V1 == 0)
+messages = w[0x8007E7A8];
+if (messages == 0)
 {
     return 0;
 }
 
-S1 = V1;
+S1 = messages;
 S2 = 0;
 S0 = 0;
 S3 = 2;
@@ -1586,8 +1581,8 @@ if (V0 != 0)
     // EA EB EC ED EE EF F0 F1 F2
     {
         A1 = bu[S1];
-        A0 = A0 - EA;
-        system_get_character_name_offset;
+        A0 = A0 - 0xea;
+        system_menu_get_char_name;
 
         V1 = S2 << 10;
         A0 = V1 >> 10;
@@ -1657,56 +1652,29 @@ Ld7c78:	; 800D7C78
 
 
 
-////////////////////////////////
-// funcd7c98()
-
-dialog = w[0x8007e7a8];
-
-if (dialog == 0)
+void system_message_set_char_name(s16 char_id, s16 mes_id)
 {
-    field_event_debug_error("No mes data!");
+    messages = w[0x8007e7a8];
+
+    if (messages == 0)
+    {
+        field_event_debug_error("No mes data!");
+    }
+    else
+    {
+        message = messages + hu[messages + mes_id * 0x2 + 0x2];
+
+        dst = system_menu_get_char_name(char_id);
+
+        size = 0;
+        while (bu[message] != 0xff)
+        {
+            [dst] = b(bu[message]);
+            message += 0x1;
+            size += 0x1;
+            dst += 0x1;
+        }
+
+        if (size < 0x9) [A0] = b(0xff);
+    }
 }
-else
-{
-    S0 = dialog;
-    S1 = 0;
-    A0 = A0 << 10;
-    A0 = A0 >> 10;
-    V0 = A1 << 10;
-    V0 = V0 >> 0f;
-    V1 = V0 + S0;
-    V0 = V0 + S0;
-    V1 = bu[V1 + 0002];
-    V0 = bu[V0 + 0003];
-    S0 = S0 + V1;
-    V0 = V0 << 08;
-    800D7CFC	jal    $system_get_character_name_offset
-    S0 = S0 + V0;
-    A0 = V0;
-    V1 = bu[S0 + 0000];
-    V0 = 00ff;
-    800D7D10	beq    v1, v0, Ld7d40 [$800d7d40]
-    V0 = S1 << 10;
-    V1 = 00ff;
-
-    loopd7d1c:	; 800D7D1C
-        V0 = bu[S0 + 0000];
-        S0 = S0 + 0001;
-        S1 = S1 + 0001;
-        [A0 + 0000] = b(V0);
-        V0 = bu[S0 + 0000];
-        A0 = A0 + 0001;
-    800D7D34	bne    v0, v1, loopd7d1c [$800d7d1c]
-
-    V0 = S1 << 10;
-
-    Ld7d40:	; 800D7D40
-    V0 = V0 >> 10;
-    V0 = V0 < 0009;
-    800D7D48	beq    v0, zero, Ld7d54 [$800d7d54]
-
-    [A0 + 0000] = b(ff);
-}
-
-Ld7d54:	; 800D7D54
-////////////////////////////////

@@ -1001,7 +1001,7 @@ while( letter_cost < h[801162a0 + window_id * 2] )
             S0 = bu[V0] - ea;
 
             A0 = S0;
-            system_get_character_name_offset();
+            system_menu_get_char_name();
 
             A0 = h[801162ac + window_id * 2];
             char_data = V0 + A0;
@@ -1050,7 +1050,7 @@ while( letter_cost < h[801162a0 + window_id * 2] )
             }
             else
             {
-                system_get_character_name_offset();
+                system_menu_get_char_name();
 
                 A0 = h[801162ac + window_id * 2];
                 char_data = V0 + A0;
@@ -1971,7 +1971,7 @@ V0 = ff16;
 A0 = A0 + V0;
 A0 = A0 << 10;
 A0 = A0 >> 10;
-system_get_character_name_offset();
+system_menu_get_char_name();
 
 V1 = S2 << 10;
 A0 = V1 >> 10;
@@ -2050,7 +2050,7 @@ if( mes_data == 0 )
 string = mes_data + bu[mes_data + message_id * 2 + 3] * 100 + bu[mes_data + message_id * 2 + 2];
 
 A0 = char_id;
-system_get_character_name_offset();
+system_menu_get_char_name();
 char = V0;
 
 size = 0;

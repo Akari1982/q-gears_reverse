@@ -303,9 +303,9 @@ en_lure = 0;
 [0x8009d302] = b(bu[0x8009d302] & 7f);
 
 // add value from unit struct
-for( int i = 0; i < 3; ++i )
+for (int i = 0; i < 3; ++i)
 {
-    if( bu[0x8009cbdc + i] != ff )
+    if (bu[0x8009cbdc + i] != ff)
     {
         A0 = i;
         system_get_party_player_structure_address_by_party_id();
@@ -318,7 +318,7 @@ for( int i = 0; i < 3; ++i )
         [GP + 1d7] = b(bu[GP + 1d7] + bu[V0 + 43f]);
 
         // if underwater materia equipped add timer to battle ui
-        if( bu[V0 + 23] & 01 )
+        if (bu[V0 + 23] & 01)
         {
             [0x8009d302] = b(bu[0x8009d302] | 80);
         }
@@ -326,13 +326,13 @@ for( int i = 0; i < 3; ++i )
 }
 
 // limit gil plus
-if( bu[GP + 1d4] >= 21 )
+if (bu[GP + 1d4] >= 21)
 {
     [GP + 1d4] = b(20);
 }
 
 // limit enemy lure/away
-if( en_lure + 10 >= en_away )
+if (en_lure + 10 >= en_away)
 {
     [GP + 1d5] = b(en_lure - en_away + 10);
 }
@@ -341,25 +341,25 @@ else
     [GP + 1d5] = b(2);
 }
 
-if( bu[GP + 1d5] >= 21)
+if (bu[GP + 1d5] >= 21)
 {
     [GP + 1d5] = b(20);
 }
 
 // limit chokobo lure
-if( bu[GP + 1d6] >= 21 )
+if (bu[GP + 1d6] >= 21)
 {
     [GP + 1d6] = b(20);
 }
 
 // limit preemptive
-if( bu[GP + 1d7] >= 56 )
+if (bu[GP + 1d7] >= 56)
 {
     [GP + 1d7] = b(55);
 }
 
 // if mastered pre emptive
-if( bu[GP + 118] != 0 )
+if (bu[GP + 118] != 0)
 {
     [GP + 1d7] = b(bu[GP + 1d7] | 80);
 }
@@ -374,7 +374,7 @@ party_id = A0;
 
 char_id = bu[0x8009c6e4 + 4f8 + party_id];
 
-if( char_id != ff )
+if (char_id != ff)
 {
     // convert character id into savemap char block id
     // because some characters share same savemap block
@@ -391,20 +391,20 @@ if( char_id != ff )
     [GP + 2dc] = b(0); // set that we load battle (0 - battle, 1 - menu)
 
     // copy all materia
-    for( int i = 0; i < 10; ++i )
+    for (int i = 0; i < 10; ++i)
     {
         [0x8006966c + i * 4] = w(w[0x8009c738 + save_id * 84 + 40 + i * 4]);
     }
 
     // parse all materia type and equip effect
-    for( int i = 0; i < 10; ++i )
+    for (int i = 0; i < 10; ++i)
     {
         A0 = w[0x8006966c + i * 4];
         system_parse_materia_equip();
     }
 
     // paired weapon materia
-    for( int i = 0; i < 4; ++i )
+    for (int i = 0; i < 4; ++i)
     {
         unit_structure = w[GP + 11c];
         A0 = bu[unit_structure + 408 + 1c + i * 2]; // weapon left slot value
@@ -420,7 +420,7 @@ if( char_id != ff )
     armor_id = bu[0x8009c738 + save_id * 84 + 1d];
 
     // paired armor materia
-    for( int i = 0; i < 4; ++i )
+    for (int i = 0; i < 4; ++i)
     {
         A0 = bu[0x80071e4d + armor_id * 24 + i * 2 + 0];
         A1 = bu[0x80071e4d + armor_id * 24 + i * 2 + 1];
@@ -444,11 +444,11 @@ if( char_id != ff )
 
     // add strength to attack
     attack = hu[0x80069548] + bu[unit_structure + 2];
-    if( attack >= 100 )
+    if (attack >= 100)
     {
         attack = ff;
     }
-    if( attack < 0 )
+    if (attack < 0)
     {
         attack = 0;
     }
@@ -456,11 +456,11 @@ if( char_id != ff )
 
     // add vitality to defense
     defense = hu[0x8006954a] + bu[unit_structure + 3];
-    if( defense >= 100 )
+    if (defense >= 100)
     {
         defense = ff;
     }
-    if( defense < 0 )
+    if (defense < 0)
     {
         defense = 0;
     }
@@ -468,11 +468,11 @@ if( char_id != ff )
 
     // add magic to magic attack
     mattack = hu[0x8006954c] + bu[unit_structure + 4];
-    if( mattack >= 100 )
+    if (mattack >= 100)
     {
         mattack = ff;
     }
-    if( mattack < 0 )
+    if (mattack < 0)
     {
         mattack = 0;
     }
@@ -480,11 +480,11 @@ if( char_id != ff )
 
     // add spirit to magic defense
     mdefense = hu[0x8006954e] + bu[unit_structure + 5];
-    if( mdefense >= 100 )
+    if (mdefense >= 100)
     {
         mdefense = ff;
     }
-    if( mdefense < 0 )
+    if (mdefense < 0)
     {
         mdefense = 0;
     }
@@ -500,7 +500,7 @@ if( char_id != ff )
     func1ae08();
 
     // run through all materia
-    for( int i = 0; i < 10; ++i )
+    for (int i = 0; i < 10; ++i)
     {
         A0 = w[0x8006966c + i * 4];
         system_parse_megaall_materia();
@@ -511,13 +511,13 @@ if( char_id != ff )
     system_sort_magic_in_unit_structure();
 
     // apply mp turbo increase of mana cost
-    for( int i = 0; i < 48; ++i )
+    for (int i = 0; i < 48; ++i)
     {
         mp_turbo_stars = bu[unit_structure + 108 + i * 8 + 7] >> 5;
-        if( mp_turbo_stars != 0 )
+        if (mp_turbo_stars != 0)
         {
             A0 = bu[unit_structure + 108 + i * 8 + 1] + A0 * mp_turbo_stars * a / 64 + 1
-            if( A0 >= 100 )
+            if (A0 >= 100)
             {
                 A0 = ff;
             }
@@ -526,7 +526,7 @@ if( char_id != ff )
     }
 
     // flip hp/mp if hp<>mp materia equipped
-    if( bu[unit_structure + 23] & 08 )
+    if (bu[unit_structure + 23] & 08)
     {
         hp = h[unit_structure + 12];
         [unit_structure + 12] = h(hu[unit_structure + 16]);
@@ -534,26 +534,26 @@ if( char_id != ff )
     }
 
     // hp can't be less than 0xa
-    if( h[unit_structure + 12] < a )
+    if (h[unit_structure + 12] < a)
     {
         [unit_structure + 12] = h(a);
     }
 
     // mp can't be less than 0xa
-    if( h[unit_structure + 16] < a )
+    if (h[unit_structure + 16] < a)
     {
         [unit_structure + 16] = h(a);
     }
 
     // current hp can't be greater than max
-    if( h[unit_structure + 12] < h[unit_structure + 10] )
+    if (h[unit_structure + 12] < h[unit_structure + 10])
     {
         [unit_structure + 10] = h(h[unit_structure + 12]);
         [0x8009c764 + save_id * 84] = h(h[unit_structure + 12]);
     }
 
     // current mp can't be greater than max
-    if( h[unit_structure + 16] < h[unit_structure + 14] )
+    if (h[unit_structure + 16] < h[unit_structure + 14])
     {
         [unit_structure + 14] = h(h[unit_structure + 16]);
         [0x8009c768 + save_id * 84] = h(h[unit_structure + 16]);
@@ -577,7 +577,7 @@ S3 = A4;
 S4 = A5;
 is_armor = A6;
 
-if( ( left_slot == 2 && right_slot == 3 ) || ( left_slot == 6 && right_slot == 7 ) ) // if linked
+if ((left_slot == 2 && right_slot == 3) || (left_slot == 6 && right_slot == 7)) // if linked
 {
     A0 = materia1_data;
     A1 = materia2_data;
@@ -604,11 +604,11 @@ materia2_id = materia2_data & 000000ff;
 materia1_type = bu[0x800730d0 + materia1_id * 14 + d] & 0f;
 materia2_type = bu[0x800730d0 + materia2_id * 14 + d] & 0f;
 
-if( materia1_id != ff && materia2_id != ff )
+if (materia1_id != ff && materia2_id != ff)
 {
-    if( materia1_type != 5 )
+    if (materia1_type != 5)
     {
-        if( materia2_type == 5 )
+        if (materia2_type == 5)
         {
             A0 = materia2_data;
             A1 = materia1_data;
@@ -619,7 +619,7 @@ if( materia1_id != ff && materia2_id != ff )
     }
     else
     {
-        if( materia2_type != 5 )
+        if (materia2_type != 5)
         {
             A0 = materia1_data;
             A1 = materia2_data;
@@ -650,12 +650,12 @@ A1 = materia_5type_exp;
 system_get_materia_activated_stars();
 number_of_5type_stars = V0;
 
-for( int i = 0; i < 5; ++i )
+for (int i = 0; i < 5; ++i)
 {
     [GP + 110 + i] = b(bu[0x800730d0 + materia_5type_id * 14 + f + i]);
 }
 
-switch( bu[0x800730d0 + materia_5type_id * 14 + e] )
+switch(bu[0x800730d0 + materia_5type_id * 14 + e])
 {
     case 51: // all
     {
@@ -784,25 +784,25 @@ is_armor = A2;
 materia_pair_id = materia_pair_data & ff;
 
 element_id = bu[0x800730d0 + materia_pair_id * 14 + c];
-if( element_id < 20 )
+if (element_id < 20)
 {
     unit_structure = w[GP + 11c];
 
-    if( is_armor == 0 ) // weapon
+    if (is_armor == 0) // weapon
     {
         [unit_structure + 3c] = h(hu[unit_structure + 3c] | hu[0x800491b0 + element_id * 2]);
     }
     else // armor
     {
-        if( number_of_5type_stars == 1 )
+        if (number_of_5type_stars == 1)
         {
             [unit_structure + 3e] = h(hu[unit_structure + 3e] | hu[0x800491b0 + element_id * 2]);
         }
-        else if( number_of_5type_stars == 2 )
+        else if (number_of_5type_stars == 2)
         {
             [unit_structure + 40] = h(hu[unit_structure + 40] | hu[0x800491b0 + element_id * 2]);
         }
-        else if( number_of_5type_stars >= 3 )
+        else if (number_of_5type_stars >= 3)
         {
             [unit_structure + 42] = h(hu[unit_structure + 42] | hu[0x800491b0 + element_id * 2]);
         }
@@ -821,7 +821,7 @@ is_armor = A2;
 status_mask = (bu[0x800730d0 + materia_pair_id * 14 + b] << 10) + (bu[0x800730d0 + materia_pair_id * 14 + a] << 8) + bu[0x800730d0 + materia_pair_id * 14 + 9]
 unit_structure = w[GP + 11c];
 
-if( is_armor == 0 ) // weapon
+if (is_armor == 0) // weapon
 {
     [unit_structure + 44] = w(w[unit_structure + 44] | status_mask);
 }
@@ -845,13 +845,13 @@ materia_pair_type = bu[0x800730d0 + materia_pair_id * 14 + 0d] & 0f;
 
 [GP + 144] = h(0);
 
-if( materia_pair_type == 6 ) // command
+if (materia_pair_type == 6) // command
 {
     A0 = number_of_5type_stars;
     A1 = materia_pair_id;
     system_add_pair_command_with_counter();
 }
-if( materia_pair_type == 8 ) // master command
+if (materia_pair_type == 8) // master command
 {
     A0 = number_of_5type_stars;
     A1 = fd;
@@ -874,27 +874,27 @@ materia_pair_exp = materia_pair_data >> 8;
 
 type = bu[0x800730d0 + materia_pair_id * 14 + d] & 0f;
 
-if( type == 9 )
+if (type == 9)
 {
     A0 = number_of_5type_stars;
     A1 = materia_pair_id;
     A2 = materia_pair_exp;
     system_add_pair_magic_with_magic_counter();
 }
-else if( type == a )
+else if (type == a)
 {
     A0 = number_of_5type_stars;
     A1 = fe;
     system_add_pair_master_materia_with_counter();
 }
-else if( type == b )
+else if (type == b)
 {
     A0 = number_of_5type_stars;
     A1 = materia_pair_id;
     A2 = materia_pair_exp;
     system_add_pair_summon_with_magic_counter();
 }
-else if( type == c )
+else if (type == c)
 {
     A0 = number_of_5type_stars;
     A1 = ff;
@@ -916,7 +916,7 @@ materia_pair_exp = A2 >> 8;
 
 type = bu[0x800730d0 + materia_pair_id * 14 + d] & 0f;
 
-switch( type )
+switch(type)
 {
     case 6:
     {
@@ -983,7 +983,7 @@ switch( type )
 number_of_5type_stars = A0;
 
 counter_slot = w[GP + 13c];
-if( counter_slot != 0 )
+if (counter_slot != 0)
 {
     unit_structure = w[GP + 11c];
     [unit_structure + counter_slot * 3 + 24] = b(bu[GP + 140] + bu[GP + 144]);
@@ -1004,15 +1004,15 @@ materia_pair_id = A1;
 unit_structure = w[GP + 11c];
 
 A0 = bu[0x800730d0 + materia_pair_id * 14 + e];
-if( A0 == 5 || A0 == 6 || A0 == 8 || A0 == 9 || A0 == a || A0 == b || A0 == c )
+if (A0 == 5 || A0 == 6 || A0 == 8 || A0 == 9 || A0 == a || A0 == b || A0 == c)
 {
     A0 = A0;
     system_search_existed_command();
 
-    if( V0 != -1 )
+    if (V0 != -1)
     {
         counter_slot = w[GP + 13c];
-        if( counter_slot != 8 )
+        if (counter_slot != 8)
         {
             [unit_structure + 24 + counter_slot * 3 + 0] = b(bu[GP + 140] + bu[GP + 144]);
             [unit_structure + 24 + counter_slot * 3 + 1] = b(bu[0x800730d0 + materia_pair_id * 14 + e]);
@@ -1023,15 +1023,15 @@ if( A0 == 5 || A0 == 6 || A0 == 8 || A0 == 9 || A0 == a || A0 == b || A0 == c )
 }
 
 A0 = bu[0x800730d0 + materia_pair_id * 14 + f]
-if( A0 == 7 || A0 == 11 )
+if (A0 == 7 || A0 == 11)
 {
     A0 = A0;
     system_search_existed_command();
 
-    if( V0 != -1 )
+    if (V0 != -1)
     {
         counter_slot = w[GP + 13c];
-        if( counter_slot != 8 )
+        if (counter_slot != 8)
         {
             [unit_structure + 24 + counter_slot * 3 + 0] = b(bu[GP + 140] + bu[GP + 144]);
             [unit_structure + 24 + counter_slot * 3 + 1] = b(bu[0x800730d0 + materia_pair_id * 14 + f]);
@@ -1056,12 +1056,12 @@ A1 = materia_pair_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-for( int i = stars; i > 0; --i )
+for (int i = stars; i > 0; --i)
 {
-    if( bu[0x800730d0 + materia_pair_id * 14 + d + i] != ff )
+    if (bu[0x800730d0 + materia_pair_id * 14 + d + i] != ff)
     {
         counter_slot = w[GP + 13c];
-        if( counter_slot != 8 )
+        if (counter_slot != 8)
         {
             unit_structure = w[GP + 11c];
             [unit_structure + 24 + counter_slot * 3 + 0] = b(bu[GP + 140] + bu[GP + 144]);
@@ -1083,7 +1083,7 @@ number_of_5type_stars = A0;
 materia_pair_id = A1;
 
 counter_slot = w[GP + 13c];
-if( counter_slot != 8 )
+if (counter_slot != 8)
 {
     unit_structure = w[GP + 11c];
     [unit_structure + 24 + counter_slot * 3 + 0] = b(bu[GP + 140] + bu[GP + 144]);
@@ -1107,13 +1107,13 @@ A1 = materia_pair_exp;
 system_get_materia_activated_stars;
 stars = V0;
 
-for( int i = stars; i > 0; --i )
+for (int i = stars; i > 0; --i)
 {
     V0 = bu[0x800730d0 + materia_pair_id * 14 + d + i];
 
     unit_structure = w[GP + 11c];
     A1 = (bu[unit_structure + 108 + V0 * 8 + 7] >> 5) + number_of_5type_stars;
-    if( A1 >= 6 )
+    if (A1 >= 6)
     {
         A1 = 5;
     }
@@ -1128,11 +1128,11 @@ for( int i = stars; i > 0; --i )
 
 number_of_5type_stars = A0;
 
-for( int i = 0; i < 10; ++i )
+for (int i = 0; i < 10; ++i)
 {
     unit_structure = w[GP + 11c];
     V1 = (bu[unit_structure + 108 + 38 * 8 + i * 8 + 7] >> 5) + number_of_5type_stars;
-    if( V1 >= 6 )
+    if (V1 >= 6)
     {
         V1 = 5;
     }
@@ -1147,14 +1147,14 @@ for( int i = 0; i < 10; ++i )
 
 number_of_5type_stars = A0;
 
-for( int i = 0; i < 38; ++i )
+for (int i = 0; i < 38; ++i)
 {
     A0 = i;
     system_search_existed_magic();
-    if( V0 != -1 )
+    if (V0 != -1)
     {
         A0 = (bu[0x80069554 + V0 * 5 + 4] >> 5) + number_of_5type_stars;
-        if( A0 >= 6 )
+        if (A0 >= 6)
         {
             A0 = 5;
         }
@@ -1177,14 +1177,14 @@ A1 = materia_pair_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-for( int i = stars; i > 0; --i )
+for (int i = stars; i > 0; --i)
 {
     A0 = bu[0x800730d0 + materia_pair_id * 14 + d + i];
     system_search_existed_magic();
-    if( V0 != -1 )
+    if (V0 != -1)
     {
         A0 = (bu[0x80069554 + V0 * 5 + 4] >> 5) + number_of_5type_stars;
-        if( A0 >= 6 )
+        if (A0 >= 6)
         {
             A0 = 5;
         }
@@ -1206,26 +1206,26 @@ materia_pair_exp = materia_pair_data >> 8;
 
 type = bu[0x800730d0 + materia_pair_id * 14 + d] & 0f;
 
-if( type == 9 )
+if (type == 9)
 {
     A0 = number_of_5type_stars;
     A1 = materia_pair_id;
     A2 = materia_pair_exp;
     system_add_pair_magic_with_mp_turbo();
 }
-else if( type == a )
+else if (type == a)
 {
     A0 = number_of_5type_stars;
     system_add_pair_master_magic_with_mp_turbo();
 }
-else if( type == b )
+else if (type == b)
 {
     A0 = number_of_5type_stars;
     A1 = materia_pair_id;
     A2 = materia_pair_exp;
     system_add_pair_summon_with_mp_turbo();
 }
-else if( type == c )
+else if (type == c)
 {
     A0 = number_of_5type_stars;
     system_add_pair_master_summon_with_mp_turbo();
@@ -1241,7 +1241,7 @@ materia_pair_data = A0;
 materia_pair_id = materia_pair_data & ff;
 materia_pair_exp = materia_pair_data >> 8;
 
-switch( bu[0x800730d0 + materia_pair_id * 14 + d] & 0f )
+switch(bu[0x800730d0 + materia_pair_id * 14 + d] & 0f)
 {
     case 6:
     {
@@ -1299,7 +1299,7 @@ A1 = materia_pair_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-for( int i = stars; i > 0; --i )
+for (int i = stars; i > 0; --i)
 {
     V0 = bu[0x800730d0 + S0 * 14 + d + i];
     unit_structure = w[GP + 11c];
@@ -1312,7 +1312,7 @@ for( int i = stars; i > 0; --i )
 ////////////////////////////////
 // system_add_pair_flag_to_all_summons()
 
-for( int i = 0; i < 10; ++i )
+for (int i = 0; i < 10; ++i)
 {
     unit_structure = w[GP + 11c];
     [unit_structure + 108 + 1c0 + i * 8 + 7] = b(bu[unit_structure + 108 + 1c0 + i * 8 + 7] | bu[GP + 134]);
@@ -1328,7 +1328,7 @@ materia_pair_id = A0;
 
 A0 = bu[0x800730d0 + materia_pair_id * 14 + e];
 system_search_existed_command();
-if( V0 != -1 )
+if (V0 != -1)
 {
     [0x80069508 + V0 * 3 + 2] = b(bu[0x80069508 + V0 * 3 + 2] | bu[GP + 134]);
 }
@@ -1337,7 +1337,7 @@ A0 = bu[0x800730d0 + materia_pair_id * 14 + f];
 if (A0 == 7 || A0 == 11)
 {
     system_search_existed_command();
-    if( V0 != -1 )
+    if (V0 != -1)
     {
         [0x80069508 + V0 * 3 + 2] = b(bu[0x80069508 + V0 * 3 + 2] | bu[GP + 134]);
     }
@@ -1349,11 +1349,11 @@ if (A0 == 7 || A0 == 11)
 ////////////////////////////////
 // system_add_pair_flag_to_all_active_commands()
 
-for( int i = 0; i < 10; ++i )
+for (int i = 0; i < 10; ++i)
 {
     A0 = bu[0x80069508 + i * 3 + 0];
     system_search_existed_command();
-    if( V0 != -1 )
+    if (V0 != -1)
     {
         [0x80069508 + V0 * 3 + 2] = b(bu[0x80069508 + V0 * 3 + 2] | bu[GP + 134]);
     }
@@ -1365,11 +1365,11 @@ for( int i = 0; i < 10; ++i )
 ////////////////////////////////
 // system_add_pair_flag_to_all_magics()
 
-for( int i = 0; i < 38; ++i )
+for (int i = 0; i < 38; ++i)
 {
     A0 = i;
     system_search_existed_magic();
-    if( V0 != -1 )
+    if (V0 != -1)
     {
         [0x80069554 + V0 * 5 + 4] = b(bu[0x80069554 + V0 * 5 + 4] | bu[GP + 134]);
     }
@@ -1389,11 +1389,11 @@ A1 = materia_pair_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-for( int i = stars; i > 0; --i )
+for (int i = stars; i > 0; --i)
 {
     A0 = bu[0x800730dd + S1 * 14 + i];
     system_search_existed_magic();
-    if( V0 != -1 )
+    if (V0 != -1)
     {
         [0x80069554 + V0 * 5 + 4] = b(bu[0x80069554 + V0 * 5 + 4] | bu[GP + 134]);
     }
@@ -1413,25 +1413,25 @@ materia_pair_exp = materia_pair_data >> 8;
 
 type = bu[0x800730d0 + A1 * 14 + d] & 0f;
 
-if( type == 9 )
+if (type == 9)
 {
     A0 = number_of_5type_stars;
     A1 = materia_pair_id;
     A2 = materia_pair_exp;
     system_add_pair_magic_with_quadra_magic();
 }
-else if( type == a )
+else if (type == a)
 {
     A0 = number_of_5type_stars;
     system_add_pair_master_magic_with_quadra_magic();
 }
-else if( type == b )
+else if (type == b)
 {
     A0 = number_of_5type_stars;
     A1 = materia_pair_id;
     system_add_pair_summon_with_quadra_magic();
 }
-else if( type == c )
+else if (type == c)
 {
     A0 = number_of_5type_stars;
     system_add_pair_master_summon_with_quadra_magic();
@@ -1452,11 +1452,11 @@ A1 = materia_pair_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-for( int i = 0; i > 0; --i )
+for (int i = 0; i > 0; --i)
 {
     A0 = bu[0x800730d0 + materia_pair_id * 14 + d + i];
     system_search_existed_magic();
-    if( V0 != -1)
+    if (V0 != -1)
     {
         [0x80069554 + V0 * 5 + 2] = b(bu[0x80069554 + V0 * 5 + 2] + 1);
         [0x80069554 + V0 * 5 + 3] = b(bu[0x80069554 + V0 * 5 + 3] + number_of_5type_stars);
@@ -1471,7 +1471,7 @@ for( int i = 0; i > 0; --i )
 
 number_of_5type_stars = A0;
 
-for( int i = 0; i < 38; ++i )
+for (int i = 0; i < 38; ++i)
 {
     [0x80069554 + i * 5 + 2] = b(bu[0x80069554 + i * 5 + 2] + 1);
     [0x80069554 + i * 5 + 3] = b(bu[0x80069554 + i * 5 + 2] + number_of_5type_stars);
@@ -1498,7 +1498,7 @@ V1 = bu[0x800730d0 + materia_pair_id * 14 + e] - 38;
 
 number_of_5type_stars = A0;
 
-for( int i = 0; i < 10; ++i )
+for (int i = 0; i < 10; ++i)
 {
     [0x800694c4 + i] = b(bu[0x800694c4 + i] + 1);
     [0x800694d4 + i] = b(bu[0x800694d4 + i] + number_of_5type_stars);
@@ -1517,14 +1517,14 @@ materia_pair_id = materia_pair_data & 000000ff
 materia_pair_exp = materia_pair_data >> 8;
 materia_pair_type = bu[0x800730d0 + materia_pair_id * 14 + d] & 0f;
 
-if( materia_pair_type == 9 )
+if (materia_pair_type == 9)
 {
     A0 = number_of_5type_stars;
     A1 = materia_pair_id;
     A2 = materia_pair_exp;
     system_add_pair_magic_with_all();
 }
-if( materia_pair_type == a )
+if (materia_pair_type == a)
 {
     A0 = number_of_5type_stars;
     system_add_pair_master_magic_with_all();
@@ -1538,11 +1538,11 @@ if( materia_pair_type == a )
 
 number_of_5type_stars = A0;
 
-for( int i = 0; i < 38; ++i )
+for (int i = 0; i < 38; ++i)
 {
     A0 = i;
     system_search_existed_magic();
-    if( V0 != -1 )
+    if (V0 != -1)
     {
         [0x80069555 + V0 * 5] = b(bu[0x80069555 + V0 * 5] + number_of_5type_stars);
     }
@@ -1563,11 +1563,11 @@ A1 = materia_pair_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-for( int i = stars; i > 0; --i )
+for (int i = stars; i > 0; --i)
 {
     A0 = bu[0x800730d0 + materia_pair_id * 14 + d + i];
     system_search_existed_magic();
-    if( V0 != -1 )
+    if (V0 != -1)
     {
         [0x80069554 + V0 * 5 + 1] = b(bu[0x80069554 + V0 * 5 + 1] + number_of_5type_stars);
     }
@@ -1581,9 +1581,9 @@ for( int i = stars; i > 0; --i )
 
 command_id = A0;
 
-for( int i = 0; i < 10; ++i )
+for (int i = 0; i < 10; ++i)
 {
-    if( bu[0x80069508 + i * 3 + 0] == command_id )
+    if (bu[0x80069508 + i * 3 + 0] == command_id)
     {
         return i;
     }
@@ -1599,9 +1599,9 @@ return -1;
 
 magic_id = A0;
 
-for( int i = 0; i < 38; ++i )
+for (int i = 0; i < 38; ++i)
 {
-    if( bu[0x80069554 + i * 5 + 0] == magic_id )
+    if (bu[0x80069554 + i * 5 + 0] == magic_id)
     {
         return i;
     }
@@ -1620,7 +1620,7 @@ materia_id = materia_data & ff;
 materia_exp = materia_data >> 8;
 
 type = bu[0x800730d0 + A1 * 14 + d] & 0f;
-if( type == 4 )
+if (type == 4)
 {
     A0 = materia_id;
     A1 = materia_exp;
@@ -1630,19 +1630,19 @@ if( type == 4 )
     unit_structure = w[GP + 11c];
 
     // add all to all magic
-    for( int i = 0; i < 38; ++i )
+    for (int i = 0; i < 38; ++i)
     {
-        if( bu[unit_structure + 108 + i * 8 + 0] != ff )
+        if (bu[unit_structure + 108 + i * 8 + 0] != ff)
         {
             [unit_structure + 108 + i * 8 + 2] = b(bu[unit_structure + 108 + i * 8 + 2] + stars);
         }
     }
 
-    for( int i = 0; i < 10; ++i )
+    for (int i = 0; i < 10; ++i)
     {
-        if( bu[unit_structure + 4c + i * 6] != ff )
+        if (bu[unit_structure + 4c + i * 6] != ff)
         {
-            switch( V1 )
+            switch(V1)
             {
                 case 5 6 9 a b 11:
                 {
@@ -1653,7 +1653,7 @@ if( type == 4 )
     }
 
     // if first command not flash - replace it with slash all.
-    if( bu[unit_structure + 4c + 0 * 6 + 0] != 1a )
+    if (bu[unit_structure + 4c + 0 * 6 + 0] != 1a)
     {
         A0 = 18;
         A1 = 0;
@@ -1672,16 +1672,16 @@ materia_exp = A0 >> 8;
 materia_id = A0 & 000000ff;
 
 // for menu
-if( bu[GP + 2dc] != 0 )
+if (bu[GP + 2dc] != 0)
 {
     A3 = w[GP + 238];
-    for( int i = 0; i < 8; ++i )
+    for (int i = 0; i < 8; ++i)
     {
         [A3 + a + i * 2] = h(0);
     }
 }
 
-if( materia_id != ff )
+if (materia_id != ff)
 {
     A0 = materia_id;
     system_add_materia_equip_stat_bonus();
@@ -1690,7 +1690,7 @@ if( materia_id != ff )
     type = V0 & f;
     param = V0 >> 4;
 
-    switch( type )
+    switch(type)
     {
         case 00:
         {
@@ -1807,9 +1807,9 @@ if( materia_id != ff )
 materia_id = A0;
 
 equip_eff_id = bu[0x800730d0 + materia_id * 14 + 8];
-if( equip_eff_id != ff )
+if (equip_eff_id != ff)
 {
-    if( bu[GP + 2dc] == 0 ) // battle
+    if (bu[GP + 2dc] == 0) // battle
     {
         [0x800694fc] = h(hu[0x800694fc] + hu[0x80049060 + equip_eff_id * 10 + 0]); // strength modifier
         [0x800694fe] = h(hu[0x800694fe] + hu[0x80049060 + equip_eff_id * 10 + 2]); // vitality modifier
@@ -1849,7 +1849,7 @@ A1 = materia_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-if( materia_param == 1 )
+if (materia_param == 1)
 {
     A0 = stars;
     A1 = materia_id;
@@ -1867,7 +1867,7 @@ return;
 stars = A0;
 materia_id = A1;
 
-if( materia_id == b )
+if (materia_id == b)
 {
     system_add_materia_long_range();
 }
@@ -1881,10 +1881,10 @@ if( materia_id == b )
 number_of_star = A0;
 materia_id = A1;
 
-if( bu[GP + 2dc] == 0 ) // battle
+if (bu[GP + 2dc] == 0) // battle
 {
     A0 = w[GP + 13c];
-    if( A0 != 8 )
+    if (A0 != 8)
     {
         unit_structure = w[GP + 11c];
         [unit_structure + A0 * 3 + 24] = b(9);
@@ -1904,7 +1904,7 @@ else // menu
 ////////////////////////////////
 // system_add_materia_long_range()
 
-if( bu[GP + 2dc] == 0 ) // battle
+if (bu[GP + 2dc] == 0) // battle
 {
     unit_structure = bu[GP + 11c];
     [unit_structure + 23] = b(bu[unit_structure + 23] | 4);
@@ -1923,12 +1923,12 @@ else // menu
 number_of_star = A0;
 materia_id = A1;
 
-if( bu[GP + 2dc] == 0 ) // battle
+if (bu[GP + 2dc] == 0) // battle
 {
     A2 = number_of_star - 1;
-    for( ; A2 > 0; --A2 )
+    for (; A2 > 0; --A2)
     {
-        if( bu[0x800730d0 + materia_id * 14 + e + A2] != ff )
+        if (bu[0x800730d0 + materia_id * 14 + e + A2] != ff)
         {
             break;
         }
@@ -1939,7 +1939,7 @@ else // menu
 {
     A3 = w[GP + 238];
 
-    for( int i = 0; i < 5; ++i )
+    for (int i = 0; i < 5; ++i)
     {
         A3 = w[GP + 238];
         [A3 + 1b] = b(0);
@@ -1947,7 +1947,7 @@ else // menu
     }
 
     V0 = bu[A3 + 1];
-    if( V0 == number_of_star )
+    if (V0 == number_of_star)
     {
         V0 = number_of_star - 2;
     }
@@ -1974,17 +1974,17 @@ A1 = materia_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-if( bu[GP + 2dc] == 0 ) // battle
+if (bu[GP + 2dc] == 0) // battle
 {
     V1 = bu[0x800730d0 + materia_id * 14 + e];
-    if( V1 == 15 ) // w-magic
+    if (V1 == 15) // w-magic
     {
         [GP + 148] = b(2);
 
         A0 = 2;
         system_search_existed_command();
 
-        if( V0 == -1 )
+        if (V0 == -1)
         {
             A0 = 2;
             system_add_command_to_temp();
@@ -1996,14 +1996,14 @@ if( bu[GP + 2dc] == 0 ) // battle
             [0x80069508 + V0 * 3 + 1] = b(stars);
         }
     }
-    else if( V1 == 16 ) // w-summon
+    else if (V1 == 16) // w-summon
     {
         [GP + 14c] = b(2);
 
         A0 = 3;
         system_search_existed_command();
 
-        if( V0 == -1 )
+        if (V0 == -1)
         {
             A0 = 3;
             system_add_command_to_temp();
@@ -2015,7 +2015,7 @@ if( bu[GP + 2dc] == 0 ) // battle
             [0x80069508 + V1 * 3 + 1] = b(stars);
         }
     }
-    else if( V1 == 17 ) // w-item
+    else if (V1 == 17) // w-item
     {
         A0 = 4;
         system_search_existed_command();
@@ -2043,13 +2043,13 @@ materia_param = A0;
 materia_id = A1;
 materia_exp = A2;
 
-if( materia_param == 2 )
+if (materia_param == 2)
 {
     A0 = materia_id;
     A1 = materia_exp;
     system_add_materia_25();
 }
-else if( materia_param == 3 )
+else if (materia_param == 3)
 {
     A0 = materia_id;
     A1 = materia_exp;
@@ -2070,7 +2070,7 @@ A1 = materia_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-if( bu[GP + 2dc] != 0 ) // menu
+if (bu[GP + 2dc] != 0) // menu
 {
     A0 = w[GP + 238];
 
@@ -2078,15 +2078,15 @@ if( bu[GP + 2dc] != 0 ) // menu
     [A0 + 1b] = b(stars);
 
     V1 = bu[0x800730d0 + materia_id * 14 + e];
-    if( V1 == 51 ) // all
+    if (V1 == 51) // all
     {
         [GP + 2b8] = b(f);
     }
-    else if( V1 == 57 ) // final attack
+    else if (V1 == 57) // final attack
     {
         [GP + 2b8] = b(10);
     }
-    else if( V1 == 63 ) // quadra magic
+    else if (V1 == 63) // quadra magic
     {
         [GP + 2b8] = b(f);
     }
@@ -2106,13 +2106,13 @@ A1 = materia_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-if( bu[GP + 2dc] != 0 ) // menu
+if (bu[GP + 2dc] != 0) // menu
 {
     A0 = w[GP + 238];
     [A0 + 1a] = b(bu[0x800730d0 + materia_id * 14 + e]);
     [A0 + 1b] = b(stars * a);
 
-    switch( bu[0x800730d0 + materia_id * 14 + e] )
+    switch(bu[0x800730d0 + materia_id * 14 + e])
     {
         case 54 55:                      [GP + 2b8] = b(0f); break;
         case 56 58 59 5a 5c 5d 5e 5f 64: [GP + 2b8] = b(10); break;
@@ -2126,7 +2126,7 @@ if( bu[GP + 2dc] != 0 ) // menu
 // system_add_materia_X4()
 // mega all
 
-if( bu[GP + 2dc] != 0 ) // menu
+if (bu[GP + 2dc] != 0) // menu
 {
     [GP + 2b8] = b(b);
 }
@@ -2139,12 +2139,12 @@ if( bu[GP + 2dc] != 0 ) // menu
 
 materia_exp = A2;
 
-if( bu[GP + 2dc] == 0 )
+if (bu[GP + 2dc] == 0)
 {
     S1 = materia_exp & 00ffffff;
-    for( int i = 0; i < 18; ++i )
+    for (int i = 0; i < 18; ++i)
     {
-        if( S1 & 1 )
+        if (S1 & 1)
         {
             A0 = i; // attack_id
             A1 = i + 48; // record id
@@ -2168,7 +2168,7 @@ else // menu
 ////////////////////////////////
 // system_add_materia_X8()
 
-if( bu[GP + 2dc] == 0 )
+if (bu[GP + 2dc] == 0)
 {
     A0 = 5;
     system_add_command_to_temp();
@@ -2202,9 +2202,9 @@ else // menu
 ////////////////////////////////
 // system_add_materia_Xa()
 
-if( bu[GP + 2dc] == 0 ) // battle
+if (bu[GP + 2dc] == 0) // battle
 {
-    for( int i = 0; i < 38; ++i )
+    for (int i = 0; i < 38; ++i)
     {
         A0 = i;
         system_add_magic_to_temp();
@@ -2213,7 +2213,7 @@ if( bu[GP + 2dc] == 0 ) // battle
     A0 = 2;
     system_add_command_to_temp();
 
-    if( bu[GP + 148] == 0 )
+    if (bu[GP + 148] == 0)
     {
         [GP + 148] = b(1);
     }
@@ -2229,14 +2229,14 @@ else // menu
 ////////////////////////////////
 // system_add_materia_Xc()
 
-if( bu[GP + 2dc] == 0 )
+if (bu[GP + 2dc] == 0)
 {
-    for( int i = 0; i < 10; ++i )
+    for (int i = 0; i < 10; ++i)
     {
         [0x800694b4 + i] = b(ff);
     }
 
-    for( int i = 38; i < 48; ++i )
+    for (int i = 38; i < 48; ++i)
     {
         A0 = i - 38;
         A1 = i;
@@ -2247,7 +2247,7 @@ if( bu[GP + 2dc] == 0 )
     A0 = 3;
     system_add_command_to_temp();
 
-    if( bu[GP + 14c] == 0 )
+    if (bu[GP + 14c] == 0)
     {
         [GP + 14c] = b(1);
     }
@@ -2272,25 +2272,25 @@ A1 = materia_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-if( materia_param == 0 )
+if (materia_param == 0)
 {
     A0 = materia_id;
     A1 = materia_exp;
     system_add_materia_00();
 }
-if( materia_param == 2 )
+if (materia_param == 2)
 {
     A0 = materia_id;
     A1 = materia_exp;
     system_add_materia_20();
 }
-if( materia_param == 3 )
+if (materia_param == 3)
 {
     A0 = stars;
     A1 = materia_id;
     system_add_materia_30();
 }
-if( materia_param == 4 )
+if (materia_param == 4)
 {
     A0 = materia_id;
     A1 = materia_exp;
@@ -2306,16 +2306,16 @@ if( materia_param == 4 )
 materia_id = A0;
 materia_exp = A1;
 
-if( bu[GP + 2dc] == 0 ) // battle
+if (bu[GP + 2dc] == 0) // battle
 {
     unit_structure = w[GP + 11c];
 
     V1 = bu[0x800730d0 + materia_id * 14 + e];
-    if( V1 == c ) // underwater
+    if (V1 == c) // underwater
     {
         [unit_structure + 23] = b(bu[unit_structure + 23] | 1);
     }
-    else if( V1 == 62 ) // hp<->mp
+    else if (V1 == 62) // hp<->mp
     {
         [unit_structure + 23] = b(bu[unit_structure + 23] | 8);
     }
@@ -2343,7 +2343,7 @@ A1 = materia_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-if( materia_id == d ) // counter attack
+if (materia_id == d) // counter attack
 {
     A0 = stars;
     A1 = d;
@@ -2351,7 +2351,7 @@ if( materia_id == d ) // counter attack
 }
 else
 {
-    if( bu[GP + 2dc] == 0 ) // battle
+    if (bu[GP + 2dc] == 0) // battle
     {
         modifier = bu[0x800730d0 + materia_id * 14 + e];
         [0x800694e4 + modifier * 2] = h(hu[0x800694e4 + modifier * 2] + bu[0x800730d0 + materia_id * 14 + e + stars]);
@@ -2380,19 +2380,19 @@ A1 = materia_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-if( stars > 0 )
+if (stars > 0)
 {
-    for( int i = stars; i >= 0; --i )
+    for (int i = stars; i >= 0; --i)
     {
         mod_value = bu[0x800730d0 + materia_id * 14 + e + i];
-        if( mod_value != ff )
+        if (mod_value != ff)
         {
             break;
         }
     }
 }
 
-if( bu[GP + 2dc] == 0 ) // battle
+if (bu[GP + 2dc] == 0) // battle
 {
     modifier = bu[0x800730d0 + materia_id * 14 + e];
     [0x800694e4 + modifier * 2] = h(hu[0x800694e4 + modifier * 2] + mod_value);
@@ -2415,14 +2415,14 @@ materia_param = A0;
 materia_id = A1;
 materia_exp = A2;
 
-if( materia_param == 2 )
+if (materia_param == 2)
 {
     A0 = materia_id;
     A1 = materia_exp;
     system_add_materia_21();
 
 }
-else if( materia_param == 4 )
+else if (materia_param == 4)
 {
     A0 = materia_id;
     A1 = materia_exp;
@@ -2443,30 +2443,30 @@ A1 = materia_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-if( stars > 0 )
+if (stars > 0)
 {
-    for( int i = stars; i >= 0; --i )
+    for (int i = stars; i >= 0; --i)
     {
         mod_value = bu[0x800730d0 + materia_id * 14 + e + i];
-        if( mod_value != ff )
+        if (mod_value != ff)
         {
             break;
         }
     }
 }
 
-if( bu[GP + 2dc] == 0 ) // battle
+if (bu[GP + 2dc] == 0) // battle
 {
     type = bu[0x800730d0 + materia_id * 14 + e];
     [GP + 128 + type * 2] = h(hu[GP + 128 + type * 2] + mod_value);
 
-    if( materia_id == a ) // preemptive
+    if (materia_id == a) // preemptive
     {
-        if( h[GP + 12e] >= 56 )
+        if (h[GP + 12e] >= 56)
         {
             [GP + 12e] = h(55);
         }
-        if( stars == 5 )
+        if (stars == 5)
         {
             [GP + 118] = b(1);
         }
@@ -2494,21 +2494,21 @@ A1 = materia_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-if( stars > 0 )
+if (stars > 0)
 {
-    for( int i = stars; i >= 0; --i )
+    for (int i = stars; i >= 0; --i)
     {
         mod_value = bu[0x800730d0 + materia_id * 14 + e + i];
-        if( mod_value != ff )
+        if (mod_value != ff)
         {
             break;
         }
     }
 }
 
-if( bu[GP + 2dc] == 0 ) // battle
+if (bu[GP + 2dc] == 0) // battle
 {
-    if( materia_id == 7 )
+    if (materia_id == 7)
     {
         [GP + 130] = h(hu[GP + 130] + mod_value);
     }
@@ -2539,10 +2539,10 @@ stars = 1;
 // search how much stars activated in this materia
 // start search from max level
 // needed exp stored divided by 100 so we need multiply
-for( int i = 3; i >= 0; --i )
+for (int i = 3; i >= 0; --i)
 {
     need_exp = hu[0x800730d0 + materia_id * 14 + i * 2 + 0];
-    if( need_exp != ffff && materia_exp >= need_exp * 64 )
+    if (need_exp != ffff && materia_exp >= need_exp * 64)
     {
         stars = i + 2;
         break;
@@ -2550,19 +2550,19 @@ for( int i = 3; i >= 0; --i )
 }
 
 [GP + 278] = w(1); // how much stars this materia has
-for( int i = 0; i < 4; ++i )
+for (int i = 0; i < 4; ++i)
 {
-    if( hu[0x800730d0 + materia_id * 14 + i * 2 + 0] != ffff )
+    if (hu[0x800730d0 + materia_id * 14 + i * 2 + 0] != ffff)
     {
         [GP + 278] = w(w[GP + 278] + 1);
     }
 }
 
 // for menu
-if( bu[GP + 2dc] != 0 )
+if (bu[GP + 2dc] != 0)
 {
     V1 = hu[0x800730d0 + (stars - 1) * 2 + materia_id * 14 + 0];
-    if( V1 == ffff || stars == w[GP + 278] )
+    if (V1 == ffff || stars == w[GP + 278])
     {
         [GP + 1cc] = w(0); // AP to next level
     }
@@ -2585,19 +2585,19 @@ return stars;
 ////////////////////////////////
 // func1ae08()
 
-if( h[GP + 128] >= 21 )
+if (h[GP + 128] >= 21)
 {
     [GP + 128] = h(20);
 }
-if( h[GP + 12a] >= 100 )
+if (h[GP + 12a] >= 100)
 {
     [GP + 12a] = h(ff);
 }
-if( h[GP + 12c] >= 21 )
+if (h[GP + 12c] >= 21)
 {
     [GP + 12c] = h(20);
 }
-if( h[GP + 130] >= 100 )
+if (h[GP + 130] >= 100)
 {
     [GP + 130] = h(ff);
 }
@@ -2616,24 +2616,24 @@ unit_structure = w[GP + 11c];
 // system_copy_boosted_stat_to_unit_structure()
 
 // materia boost no greater than 0x64 (from plus type materia)
-for( int i = 0; i < b; ++i )
+for (int i = 0; i < b; ++i)
 {
-    if( h[0x800694e4 + i * 2] >= 65 )
+    if (h[0x800694e4 + i * 2] >= 65)
     {
         [0x800694e4 + i * 2] = h(64);
     }
 }
 
 // limit exp to 0x20
-if( h[0x800694f8] >= 21 )
+if (h[0x800694f8] >= 21)
 {
     [0x800694f8] = h(20);
 }
 
 // limit materia equip modifiers to 0xff if greater than zero
-for( int i = 0; i < 6; ++i )
+for (int i = 0; i < 6; ++i)
 {
-    if( ( h[0x800694fc + i * 2] & 8000 ) == 0 )
+    if ((h[0x800694fc + i * 2] & 8000) == 0)
     {
         [0x800694fc + i * 2] = h(h[0x800694fc + i * 2] & ff);
     }
@@ -2644,11 +2644,11 @@ strength = h[0x8006953c]; // unit strength
 boost = h[0x800694e4]; // materia boost %
 equip = hu[0x800694fc]; // materia equip
 strength = strength + strength * 100 / boost + equip;
-if( strength >= 100 )
+if (strength >= 100)
 {
     strength = ff;
 }
-if( strength < 0 )
+if (strength < 0)
 {
     strength = 0;
 }
@@ -2659,11 +2659,11 @@ vitality = h[0x8006953e];
 boost = h[0x800694e6];
 equip = hu[0x800694fe];
 vitality = vitality + vitality * 100 / boost + equip;
-if( vitality >= 100 )
+if (vitality >= 100)
 {
     vitality = ff;
 }
-if( vitality < 0 )
+if (vitality < 0)
 {
     vitality = 0;
 }
@@ -2674,11 +2674,11 @@ magic = h[0x80069540];
 boost = h[0x800694e8];
 equip = hu[0x80069500];
 magic = magic + magic * 100 / boost + equip;
-if( magic >= 100 )
+if (magic >= 100)
 {
     magic = ff;
 }
-if( magic < 0 )
+if (magic < 0)
 {
     magic = 0;
 }
@@ -2689,11 +2689,11 @@ spirit = h[0x80069542];
 boost = h[0x800694ea];
 equip = hu[0x80069502];
 spirit = spirit + spirit * 100 / boost + equip;
-if( spirit >= 100 )
+if (spirit >= 100)
 {
     spirit = ff;
 }
-if( spirit < 0 )
+if (spirit < 0)
 {
     spirit = 0;
 }
@@ -2704,11 +2704,11 @@ dexterity = h[0x80069544];
 boost = h[0x800694ec];
 equip = hu[0x80069504];
 dexterity = dexterity + dexterity * 100 / boost + equip;
-if( dexterity >= 100 )
+if (dexterity >= 100)
 {
     dexterity = ff;
 }
-if( dexterity < 0 )
+if (dexterity < 0)
 {
     dexterity = 0;
 }
@@ -2719,11 +2719,11 @@ luck = h[0x80069546];
 boost = h[0x800694ee];
 equip = hu[0x80069506];
 luck = luck + luck * 100 / boost + equip;
-if( luck >= 100 )
+if (luck >= 100)
 {
     luck = ff;
 }
-if( luck < 0 )
+if (luck < 0)
 {
     luck = 0;
 }
@@ -2733,11 +2733,11 @@ if( luck < 0 )
 hp = h[0x80069550];
 boost = h[0x800694f4];
 hp = hp + hp * 100 / boost;
-if( hp >= 2710 ) // 10000
+if (hp >= 2710) // 10000
 {
     hp = 270f; // 9999
 }
-if( hp < 0 )
+if (hp < 0)
 {
     hp = 0;
 }
@@ -2759,11 +2759,11 @@ defense = defense + defense * 100 / boost;
 mp = h[0x80069552];
 boost = h[0x800694f6];
 mp = mp + mp * 100 / boost;
-if( mp >= 3e8 ) // 1000
+if (mp >= 3e8) // 1000
 {
     hp = 3e7; // 999
 }
-if( mp < 0 )
+if (mp < 0)
 {
     mp = 0;
 }
@@ -2799,9 +2799,9 @@ stars = V0;
 
 summon_id = bu[0x800730d0 + materia_id * 14 + e];
 
-if( bu[GP + 2dc] == 0 )
+if (bu[GP + 2dc] == 0)
 {
-    if( bu[0x800694b4 + summon_id - 38] != ff )
+    if (bu[0x800694b4 + summon_id - 38] != ff)
     {
         [0x800694b4 + summon_id - 38] = b(bu[0x800694b4 + summon_id - 38] + stars);
     }
@@ -2814,7 +2814,7 @@ if( bu[GP + 2dc] == 0 )
     A0 = 3;
     system_add_command_to_temp();
 
-    if( bu[GP + 14c] == 0 )
+    if (bu[GP + 14c] == 0)
     {
         [GP + 14c] = b(1);
     }
@@ -2835,7 +2835,7 @@ else
 
 unit_structure = w[GP + 11c];
 
-for( int i = 0; i < 10; ++i )
+for (int i = 0; i < 10; ++i)
 {
     [unit_structure + 108 + 38 * 8 + i * 8 + 2] = b(bu[0x800694b4 + i]);
     [unit_structure + 108 + 38 * 8 + i * 8 + 3] = b(bu[0x800694c4 + i]);
@@ -2856,14 +2856,14 @@ A1 = materia_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-if( bu[GP + 2dc] == 0 ) // battle
+if (bu[GP + 2dc] == 0) // battle
 {
     S0 = stars - 1;
-    for( ; S0 >= 0; --S0 )
+    for (; S0 >= 0; --S0)
     {
         magic_id = bu[0x800730d0 + materia_id * 14 + 0e + S0];
 
-        if( magic_id != ff )
+        if (magic_id != ff)
         {
             A0 = magic_id;
             system_add_magic_to_temp();
@@ -2873,7 +2873,7 @@ if( bu[GP + 2dc] == 0 ) // battle
     A0 = 2;
     system_add_command_to_temp();
 
-    if( bu[GP + 148] == 0 )
+    if (bu[GP + 148] == 0)
     {
         [GP + 148] = b(1);
     }
@@ -2921,12 +2921,12 @@ A1 = materia_exp;
 system_get_materia_activated_stars();
 stars = V0;
 
-if( bu[GP + 2dc] == 0 )
+if (bu[GP + 2dc] == 0)
 {
     A0 = stars - 1;
-    for( ; A0 >= 0; --A0 )
+    for (; A0 >= 0; --A0)
     {
-        if( bu[0x800730d0 + materia_id * 14 + e + A0] != ff )
+        if (bu[0x800730d0 + materia_id * 14 + e + A0] != ff)
         {
             break;
         }
@@ -2939,13 +2939,13 @@ else // menu
 {
     A3 = w[GP + 238];
 
-    for( int i = 0; i < 5; ++i )
+    for (int i = 0; i < 5; ++i)
     {
         [A3 + 1a + i * 2] = b(bu[0x800730d0 + materia_id * 14 + e + i]);
         [A3 + 1b + i * 2] = b(0);
     }
 
-    if( bu[A3 + 1] == stars )
+    if (bu[A3 + 1] == stars)
     {
         V0 = stars - 2;
     }
@@ -2967,9 +2967,9 @@ else // menu
 
 command_id = A0;
 
-for( int i = 0; i < 10; ++i )
+for (int i = 0; i < 10; ++i)
 {
-    if( bu[0x80069508 + i * 3] == command_id )
+    if (bu[0x80069508 + i * 3] == command_id)
     {
         return i;
     }
@@ -2990,20 +2990,20 @@ return bu[GP + 120] - 1;
 
 mug_found = 0;
 
-for( int i = 0; i < 10; ++i )
+for (int i = 0; i < 10; ++i)
 {
-    if( bu[0x80069508 + i * 3 + 0] == 11 ) // mug
+    if (bu[0x80069508 + i * 3 + 0] == 11) // mug
     {
         mug_found = 1;
         break;
     }
 }
 
-if( mug_found == 1 )
+if (mug_found == 1)
 {
-    for( int i = 0; i < 10; ++i )
+    for (int i = 0; i < 10; ++i)
     {
-        if( bu[0x80069508 + i * 3] == 5 )
+        if (bu[0x80069508 + i * 3] == 5)
         {
             [0x80069508 + i * 3] = b(ff);
         }
@@ -3021,22 +3021,22 @@ if( mug_found == 1 )
 
 system_remove_steal_if_mug();
 
-for( int i = 0; i < 30; ++i )
+for (int i = 0; i < 30; ++i)
 {
     action_id = bu[0x80069508 + i + 0];
-    if( action_id != ff )
+    if (action_id != ff)
     {
-        if( action_id == 2 ) // replace magic with w-magic
+        if (action_id == 2) // replace magic with w-magic
         {
-            if( bu[GP + 148] == 2 )
+            if (bu[GP + 148] == 2)
             {
                 [0x80069508 + i + 0] = b(15);
             }
         }
 
-        if( action_id == 3 ) // replace summon with w-summon
+        if (action_id == 3) // replace summon with w-summon
         {
-            if( bu[GP + 14c] == 2 )
+            if (bu[GP + 14c] == 2)
             {
                 [0x80069508 + S1] = b(16);
             }
@@ -3062,40 +3062,40 @@ unit_structure = w[GP + 11c];
 ////////////////////////////////
 // system_get_command_order()
 
-if( A0 == 18 || A0 == 19 || A0 == 1a || A0 == 1b || A0 == 1 )
+if (A0 == 18 || A0 == 19 || A0 == 1a || A0 == 1b || A0 == 1)
 {
     return 0;
 }
-if( A0 == 2 || A0 == 15 ) // magic w-magic
+if (A0 == 2 || A0 == 15) // magic w-magic
 {
     return 1;
 }
-if( A0 == 3 || A0 == 16 ) // summon w-summon
+if (A0 == 3 || A0 == 16) // summon w-summon
 {
     return 2;
 }
-if( A0 == 4 || A0 == 17 ) // item w-item
+if (A0 == 4 || A0 == 17) // item w-item
 {
     return 3;
 }
 
-if( bu[GP + 148] == 0 ) // if there is no magic
+if (bu[GP + 148] == 0) // if there is no magic
 {
     [GP + 148] = b(1);
     return 1;
 }
 
-if( bu[GP + 14c] == 0 ) // if there is no summon
+if (bu[GP + 14c] == 0) // if there is no summon
 {
     [GP + 14c] = b(1);
     return 2;
 }
 
 // order for all others
-for( int i = 4; i < 10; ++i )
+for (int i = 4; i < 10; ++i)
 {
     unit_structure = w[GP + 11c];
-    if( bu[unit_structure + 4c + i * 6 + 0] == ff )
+    if (bu[unit_structure + 4c + i * 6 + 0] == ff)
     {
         return i;
     }
@@ -3116,9 +3116,9 @@ unit_structure = w[GP + 11c];
 [unit_structure + 4c + command_slot * 6 + 2] = b(bu[0x800707c4 + command_id * 8 + 1]); // default target type
 [unit_structure + 4c + command_slot * 6 + 3] = b(0);
 
-for( int i = 0; i < 10; ++i )
+for (int i = 0; i < 10; ++i)
 {
-    if( command_id == bu[0x80069508 +  + i * 3 + 0] )
+    if (command_id == bu[0x80069508 +  + i * 3 + 0])
     {
         [unit_structure + 4c + command_slot * 6 + 4] = b(bu[0x80069508 + i * 3 + 1]);
         [unit_structure + 4c + command_slot * 6 + 5] = b(bu[0x80069508 + i * 3 + 2]);
@@ -3132,7 +3132,7 @@ for( int i = 0; i < 10; ++i )
 ////////////////////////////////
 // system_copy_temp_magic_to_unit_structure()
 
-for( int i = 0; i < 38; ++i )
+for (int i = 0; i < 38; ++i)
 {
     A0 = bu[0x80069554 + i * 5 + 0];
     A1 = i;
@@ -3154,9 +3154,9 @@ for( int i = 0; i < 38; ++i )
 
 magic_id = A0;
 
-for( int i = 0; i < 38; ++ i )
+for (int i = 0; i < 38; ++ i)
 {
-    if( bu[0x80069554 + i * 5 + 0] == magic_id )
+    if (bu[0x80069554 + i * 5 + 0] == magic_id)
     {
         return;
     }
@@ -3197,7 +3197,7 @@ unit_structure = A1;
 [GP + 14c] = b(0); // store 1 here if we has summon or master summon materia in battle, 2 in case of W command.
 
 // init temp magic data
-fot( int i = 0; i < 38; ++i )
+fot(int i = 0; i < 38; ++i)
 {
     [0x80069554 + i * 5 + 0] = b(ff);
     [0x80069554 + i * 5 + 1] = b(0);
@@ -3207,7 +3207,7 @@ fot( int i = 0; i < 38; ++i )
 }
 
 // init all attacks in unit structure
-for( int i = 0; i < 60; ++i )
+for (int i = 0; i < 60; ++i)
 {
     [unit_structure + 108 + i * 8 + 0] = b(ff);
     [unit_structure + 108 + i * 8 + 2] = b(0);
@@ -3217,7 +3217,7 @@ for( int i = 0; i < 60; ++i )
 }
 
 // init multiple time magic counters
-for( int i = 0; i < 10; ++i )
+for (int i = 0; i < 10; ++i)
 {
     [0x800694b4 + i] = b(0); // summon
     [0x800694c4 + i] = b(0); // quadra magic
@@ -3225,19 +3225,19 @@ for( int i = 0; i < 10; ++i )
 }
 
 // init stat plus materia modifiers
-for( int i = 0; i < c; ++i )
+for (int i = 0; i < c; ++i)
 {
     [0x800694e4 + i * 2] = h(0);
 }
 
 // init temp stat materia modifiers.
-fof( int i = 0; i < 6; ++i )
+fof(int i = 0; i < 6; ++i)
 {
     [0x800694fc + i * 2] = h(0);
 }
 
 // init temp active commands
-for( int i = 0; i < 10; ++i )
+for (int i = 0; i < 10; ++i)
 {
     [0x80069508 + i * 3 + 0] = b(ff);
     [0x80069508 + i * 3 + 1] = b(0);
@@ -3245,7 +3245,7 @@ for( int i = 0; i < 10; ++i )
 }
 
 // init active unit attack
-for( int i = 0; i < 10; ++i )
+for (int i = 0; i < 10; ++i)
 {
     [unit_structure + 4c + i * 6 + 0] = b(ff);
     [unit_structure + 4c + i * 6 + 3] = b(1);
@@ -3253,7 +3253,7 @@ for( int i = 0; i < 10; ++i )
 }
 
 // init counter attack
-for( int i = 0; i < 8; ++i )
+for (int i = 0; i < 8; ++i)
 {
     [unit_structure + 24 + i * 3 + 0] = b(0);
     [unit_structure + 24 + i * 3 + 1] = b(0);
@@ -3312,7 +3312,7 @@ A0 = 4;
 system_add_command_to_temp();
 
 // init add materia values (lure encounter gil preemptive away)
-for( int i = 0; i < 5; ++i )
+for (int i = 0; i < 5; ++i)
 {
     [GP + 128 + i * 2] = h(0);
 }
@@ -3338,13 +3338,13 @@ order_type = (hu[0x8009c6e4 + 10da] >> a) & 7; // magic order
 // copy all magic from unit structure to [d0]
 // store existed magic struct id to [98]
 // remove magic from unit structure
-for( int i = 0; i < 38; ++i )
+for (int i = 0; i < 38; ++i)
 {
     [SP + d0 + i * 8 + 0] = w(w[0x8009d84c + party_id * 440 + 108 + i * 8 + 0]);
     [SP + d0 + i * 8 + 4] = w(w[0x8009d84c + party_id * 440 + 108 + i * 8 + 4]);
 
     V0 = bu[0x8009d84c + party_id * 440 + 108 + i * 8 + 0];
-    if( V0 != ff )
+    if (V0 != ff)
     {
         [SP + 98 + V0] = b(i);
     }
@@ -3352,16 +3352,16 @@ for( int i = 0; i < 38; ++i )
 }
 
 // clear order list [00] with ff
-for( int i = 0; i < 4; ++i )
+for (int i = 0; i < 4; ++i)
 {
-    for( int j = 0; j < 18; ++j )
+    for (int j = 0; j < 18; ++j)
     {
         [SP + i * 18 + j] = b(ff);
     }
 }
 
 // create order list [00]
-for( int i = 0; i < 36; ++i )
+for (int i = 0; i < 36; ++i)
 {
     // 00 01 02 08 03 04 05 06 07 0-8 restorative
     // 43 44 40 41 42 45 49 4A 4B 51 46 47 48 4C 4D 4E 4F 50 9-1a independent
@@ -3381,16 +3381,16 @@ for( int i = 0; i < 36; ++i )
 }
 
 // clear 38 slots in [60]
-for( int i = 60; i < 98; ++i)
+for (int i = 60; i < 98; ++i)
 {
     [SP + i] = b(ff);
 }
 
 // copy magic id to [60] ordered by magic id
-for( int i = 0; i < 38; ++i )
+for (int i = 0; i < 38; ++i)
 {
     V1 = bu[SP + d0 + i * 8 + i];
-    if( V1 != ff )
+    if (V1 != ff)
     {
         [SP + 60 + V1] = b(V1);
     }
@@ -3398,12 +3398,12 @@ for( int i = 0; i < 38; ++i )
 
 // copy magic id from [60] to [00] ordered
 // this will replace non existed magic with ff
-for( int i = 0; i < 4; ++i )
+for (int i = 0; i < 4; ++i)
 {
-    for( int j = 0; j < 18; ++j )
+    for (int j = 0; j < 18; ++j)
     {
         V0 = bu[SP + i * 18 + j];
-        if( V0 != ff )
+        if (V0 != ff)
         {
             [SP + i * 18 + j] = b(bu[SP + 60 + V0]);
         }
@@ -3414,16 +3414,16 @@ for( int i = 0; i < 4; ++i )
 
 // copy magic from [d0] to unit struct by magic struct id in [98]
 T3 = 0;
-for( int i = 0; i < 4; ++i )
+for (int i = 0; i < 4; ++i)
 {
-    for( int j = 0; j < 18; j += 3 )
+    for (int j = 0; j < 18; j += 3)
     {
-        if( ( bu[SP + i * 18 + j + 0] & bu[SP + i * 18 + j + 1] & bu[SP + i * 18 + j + 2] ) != ff )
+        if ((bu[SP + i * 18 + j + 0] & bu[SP + i * 18 + j + 1] & bu[SP + i * 18 + j + 2]) != ff)
         {
-            for( int k = 0; k < 3; ++k )
+            for (int k = 0; k < 3; ++k)
             {
                 V0 = bu[SP + i * 18 + j + k];
-                if( V0 != ff )
+                if (V0 != ff)
                 {
                     V0 = bu[SP + 98 + V0];
                     [0x8009d84c + party_id * 440 + 108 + T3 * 8 + 0] = w(w[SP + d0 + V0 * 8 + 0]);
@@ -3435,17 +3435,17 @@ for( int i = 0; i < 4; ++i )
     }
 }
 
-for( int i = 0; i < 48; ++i )
+for (int i = 0; i < 48; ++i)
 {
     V1 = bu[0x8009d84c + party_id * 440 + 108 + i * 8 + 0];
-    if( V1 != ff )
+    if (V1 != ff)
     {
-        if( i >= 38 ) // summons
+        if (i >= 38) // summons
         {
             V1 = V1 + 38;
         }
 
-        if( V1 == 19 || V1 == 47 ) // remove quadra for escape and knights of round
+        if (V1 == 19 || V1 == 47) // remove quadra for escape and knights of round
         {
             [0x8009d84c + party_id * 440 + 108 + i * 8 + 4] = b(0);
         }
@@ -3468,7 +3468,7 @@ dst = A0;
 src = A1;
 size = A2;
 
-if( A2 >= 10 )
+if (A2 >= 10)
 {
     loop1c3d8:	; 8001C3D8
         [dst] = w(w[src]);
@@ -3479,7 +3479,7 @@ if( A2 >= 10 )
     8001C404	beq    v0, zero, loop1c3d8 [$8001c3d8]
 }
 
-if( size != 0 )
+if (size != 0)
 {
     loop1c410:	; 8001C410
         [dst] = b(b[src]);
@@ -3492,41 +3492,40 @@ if( size != 0 )
 
 
 
-////////////////////////////////
-// func33a90()
-
-for( int i = 0x4ff; V1 >=0; --i )
+void system_savemap_reset()
 {
-    [0x8009c6e4 + 0xba4 + i] = b(0);// clear memorybanks
+    for (int i = 0x4ff; V1 >=0; --i)
+    {
+        [0x8009c6e4 + 0xba4 + i] = b(0); // clear memorybanks
+    }
+
+    for (int i = 0; i < 9x3; ++i)
+    {
+        [0x8009c6e4 + 0x4f8 + i] = b(0xff); // clear party member slot
+        [0x8009c6e4 + 0xcad + i] = b(0xff); // clear party member slot copy in savemap
+    }
+
+    [0x8009c6e4 + 0x4f8] = b(0); // set first party member to cloud
+    [0x8009c6e4 + 0xcad] = b(0); // set first party member copy in memorybank to cloud
+
+    [0x8009c6e4 + 0x10a6] = h(0x0001); // character availability mask (cloud only)
+
+    [0x8009c6e4 + 0xf0c] = b(0xff); // field map name for menu
+
+    [0x8009c6e4 + 0xbc0] = b(0xff); // menu visibility mask
+    [0x8009c6e4 + 0xbc1] = b(0xff); // menu visibility mask??
+
+    [0x8009c6e4 + 0xb80] = w(0); // total seconds played
+    [0x8009c6e4 + 0xb84] = w(0); // countdown seconds for timer
+
+    [0x8009ac4c] = h(0);
+    [0x8009ac4e] = h(0);
+    [0x8009ac50] = h(0);
+
+    [0x8009ac2d] = b(0);
+
+    [0x800716d4] = b(0); // music lock
+    [0x800716cc] = b(0); // movie lock
+    [0x80071e30] = b(0); // battle lock
+    [0x80071e34] = b(0);
 }
-
-for( int i = 0; i < 9x3; ++i )
-{
-    [0x8009c6e4 + 0x4f8 + i] = b(ff); // clear party member slot
-    [0x8009c6e4 + 0xcad + i] = b(ff); // clear party member slot copy in savemap
-}
-
-[0x8009c6e4 + 0x4f8] = b(0); // set first party member to cloud
-[0x8009c6e4 + 0xcad] = b(0); // set first party member copy in memorybank to cloud
-
-[0x8009c6e4 + 0x10a6] = h(0001); // character availability mask (cloud only)
-
-[0x8009c6e4 + 0xf0c] = b(ff); // field map name for menu
-
-[0x8009c6e4 + 0xbc0] = b(ff); // menu visibility mask
-[0x8009c6e4 + 0xbc1] = b(ff); // menu visibility mask??
-
-[0x8009c6e4 + 0xb80] = w(0); // total seconds played
-[0x8009c6e4 + 0xb84] = w(0); // countdown seconds for timer
-
-[0x8009ac4c] = h(0);
-[0x8009ac4e] = h(0);
-[0x8009ac50] = h(0);
-
-[0x8009ac2d] = b(0);
-
-[0x800716d4] = b(0); // music lock
-[0x800716cc] = b(0); // movie lock
-[0x80071e30] = b(0); // battle lock
-[0x80071e34] = b(0);
-////////////////////////////////

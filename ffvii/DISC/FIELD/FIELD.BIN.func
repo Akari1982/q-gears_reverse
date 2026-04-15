@@ -301,19 +301,19 @@
 800CD5F0 field_event_opcode_66_scr2dc
 800CD6B0 field_event_opcode_68_scr2dl
 800CD770 field_event_opcode_67_scrlw
-800CD834 0xE5 STPAL
-800CD91C 0xEB STPLS
-800CDA24 0xE6 LDPAL
-800CDB0C 0xEC LDPLS
+800CD834 field_event_opcode_e5_stpal
+800CD91C field_event_opcode_eb_stpls
+800CDA24 field_event_opcode_e6_ldpal
+800CDB0C field_event_opcode_ec_ldpls
 800CDC14 funccdc14
-800CDC28 0xE7 CPPAL
-800CDD40 0xED CPPAL2
-800CDE8C 0xE8 RTPAL
-800CE054 0xEE RTPAL2
-800CE214 0xE9 ADPAL
-800CE480 0xEF ADPAL2
-800CE6F4 0xEA MPPAL2
-800CE904 0xDF MPPAL
+800CDC28 field_event_opcode_e7_cppal
+800CDD40 field_event_opcode_ed_cppal
+800CDE8C field_event_opcode_e8_rtpal
+800CE054 field_event_opcode_ee_rtpal
+800CE214 field_event_opcode_e9_adpal
+800CE480 field_event_opcode_ef_adpal
+800CE6F4 field_event_opcode_ea_mppal
+800CE904 field_event_opcode_df_mppal
 800CEB20 field_event_party_set_1st_party_char_as_pc
 800CEB94 field_event_opcode_a0_pc
 800CEE44 field_event_opcode_c8_prtyp
@@ -346,8 +346,8 @@
 800D184C field_event_opcode_25_nfade
 800D195C field_event_opcode_6c_fadew
 800D1A80 field_event_opcode_6d_idlck
-800D1B94 0x56 GWCOL
-800D1C68 0x57 SWCOL
+800D1B94 field_event_opcode_56_gwcol
+800D1C68 field_event_opcode_57_swcol
 800D1D3C field_event_opcode_6e_lstmp
 800D1DB8 field_event_opcode_5e_shake
 800D1F20 field_event_opcode_58_stitm
@@ -417,7 +417,7 @@
 800D785C field_dialog_convert_digit_to_string_with_space
 800D7970 field_dialog_convert_hex_to_string
 800D7A58 copy_dialog_to_map_name
-800D7C98 funcd7c98
+800D7C98 system_message_set_char_name
 
 // FIELD.BIN_debug.cpp
 800D7D6C field_debug_init_buffers

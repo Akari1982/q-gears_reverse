@@ -6053,11 +6053,10 @@ void func257c4()
 
 
 
-////////////////////////////////
-// system_get_character_name_offset()
-
-return 0x8009c748 + w[0x800491d0 + A0 * 0x4] * 0x84;
-////////////////////////////////
+u8* system_menu_get_char_name(u8 char_id)
+{
+    return 0x8009c6e4 + 0x54 + w[0x800491d0 + char_id * 0x4] * 0x84 + 0x10;
+}
 
 
 

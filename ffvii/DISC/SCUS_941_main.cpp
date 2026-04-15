@@ -411,7 +411,7 @@ void system_main()
 
         func11920();
 
-        func33a90(); // init savemap
+        system_savemap_reset();
 
         if (func24e5c() == 0x1) // load newgame menu (1 - start new game)
         {
@@ -419,7 +419,7 @@ void system_main()
 
             func26258();
 
-            func33a90(); // init savemap
+            system_savemap_reset();
 
             system_init_new_game();
         }

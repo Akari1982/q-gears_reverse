@@ -2672,3 +2672,15 @@ void field_event_debug_error(u32 string)
     [0x80095dcc] = b(0x1);
     [0x80099ffc] = b(0x4);
 }
+
+
+
+void funcd4838()
+{
+}
+
+
+
+void funcd4840()
+{
+}
