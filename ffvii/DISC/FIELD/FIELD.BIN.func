@@ -305,7 +305,7 @@
 800CD91C field_event_opcode_eb_stpls
 800CDA24 field_event_opcode_e6_ldpal
 800CDB0C field_event_opcode_ec_ldpls
-800CDC14 funccdc14
+800CDC14 field_event_rect_clear
 800CDC28 field_event_opcode_e7_cppal
 800CDD40 field_event_opcode_ed_cppal
 800CDE8C field_event_opcode_e8_rtpal

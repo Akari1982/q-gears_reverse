@@ -1,232 +1,69 @@
 int field_event_opcode_e5_stpal()
 {
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
     if (bu[0x8009d820] & 0x3) field_debug_event_opcode("stpal", 0x4);
 
-    funccdc14(SP + 0x10);
+    RECT rect;
+    field_event_rect_clear(&rect);
+    rect.x = 0;
+    rect.y = 0x1e0 + field_event_read_memory_u8(0x1, 0x2);
+    rect.w = bu[events_data + script_cur + 0x4] + 0x1;
+    rect.h = 0x1;
 
-    A0 = 0001;
-    A1 = 0002;
-    field_event_read_memory_u8();
+    system_psyq_store_image(&rect, 0x80095de0 + field_event_read_memory_u8(0x2, 0x3) * 0x20);
 
-    V0 = V0 & 00ff;
-    V1 = bu[800722c4];
-    V0 = V0 + 01e0;
-    [SP + 0012] = h(V0);
-    V0 = w[8009c6dc];
-    A0 = 0002;
-    [SP + 0010] = h(0);
-    V1 = V1 << 01;
-    AT = 800831fc;
-    AT = AT + V1;
-    V1 = hu[AT + 0000];
-    A1 = 0003;
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0004];
-    V1 = 0001;
-    [SP + 0016] = h(V1);
-    V0 = V0 + 0001;
-    [SP + 0014] = h(V0);
-    field_event_read_memory_u8();
-
-    A0 = SP + 0010;
-    V0 = V0 & 00ff;
-    V0 = V0 << 05;
-    A1 = 80095de0;
-    A1 = V0 + A1;
-    system_psyq_store_image();
-
-    A0 = bu[800722c4];
-    V0 = 800831fc;
-    A0 = A0 << 01;
-    A0 = A0 + V0;
-    V1 = hu[A0 + 0000];
-    V1 = V1 + 0005;
-    [A0 + 0000] = h(V1);
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x5);
 
     return 0;
-
-
-
-
-
-
-    actor_id_cur = bu[0x800722c4];
-    script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
-
-    A0 = 1;
-    A1 = 2;
-    field_event_read_memory_u8;
-
-    [SP + 10] = h(0);                  // x
-    [SP + 12] = h(V0 + 1e0);           // y
-    [SP + 14] = h(bu[script + 4] + 1); // width
-    [SP + 16] = h(1);                  // height
-
-    A0 = 2;
-    A1 = 3;
-    field_event_read_memory_u8;
-
-    A0 = SP + 10;
-    A1 = 80095de0 + V0 * 20;
-    system_psyq_store_image();
-
-    [0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 5);
 }
 
 
 
 int field_event_opcode_eb_stpls()
 {
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
     if (bu[0x8009d820] & 0x3) field_debug_event_opcode("stpls", 0x4);
 
-    funccdc14(SP + 0x10);
+    RECT rect;
+    field_event_rect_clear(&rect);
+    rect.x = bu[events_data + script_cur + 0x3];
+    rect.y = 0x1e0 + bu[events_data + script_cur + 0x1];
+    rect.w = bu[events_data + script_cur + 0x4] + 0x1;
+    rect.h = 0x1;
 
-    S0 = 800831fc;
-    A0 = bu[800722c4];
-    A1 = w[8009c6dc];
-    A0 = A0 << 01;
-    A0 = A0 + S0;
-    V0 = hu[A0 + 0000];
-    800CD974	nop
-    V0 = A1 + V0;
-    V0 = bu[V0 + 0001];
-    800CD980	nop
-    V0 = V0 + 01e0;
-    [SP + 0012] = h(V0);
-    V0 = hu[A0 + 0000];
-    800CD990	nop
-    V0 = A1 + V0;
-    A2 = bu[V0 + 0003];
-    800CD99C	nop
-    [SP + 0010] = h(A2);
-    V0 = hu[A0 + 0000];
-    V1 = 0001;
-    V0 = A1 + V0;
-    V0 = bu[V0 + 0004];
-    A2 = A2 << 01;
-    [SP + 0016] = h(V1);
-    V0 = V0 + 0001;
-    [SP + 0014] = h(V0);
-    V0 = hu[A0 + 0000];
-    A0 = SP + 0010;
-    A1 = A1 + V0;
-    V0 = 80095de0;
-    A1 = bu[A1 + 0002];
-    A2 = A2 + V0;
-    A1 = A1 << 05;
-    800CD9E4	jal    $system_psyq_store_image
-    A1 = A1 + A2;
-    A0 = bu[800722c4];
-    800CD9F4	nop
-    A0 = A0 << 01;
-    A0 = A0 + S0;
-    V1 = hu[A0 + 0000];
-    V0 = 0;
-    V1 = V1 + 0005;
-    [A0 + 0000] = h(V1);
-    RA = w[SP + 001c];
-    S0 = w[SP + 0018];
-    SP = SP + 0020;
-    800CDA1C	jr     ra 
-    800CDA20	nop
+    system_psyq_store_image(&rect, 0x80095de0 + bu[events_data + script_cur + 0x2] * 0x20 + rect.x * 0x2);
 
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x5);
 
-
-
-
-
-
-    actor_id_cur = bu[0x800722c4];
-    script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
-
-    [SP + 10] = h(bu[script + 3]);
-    [SP + 12] = h(1e0 + bu[script + 1]);
-    [SP + 14] = h(bu[script + 4] + 1);
-    [SP + 16] = h(1);
-
-    A0 = SP + 10;
-    A1 = 80095de0 + bu[script + 2] * 20 + bu[script + 3] * 2;
-    system_psyq_store_image();
-
-    [0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 5);
+    return 0;
 }
 
 
 
 int field_event_opcode_e6_ldpal()
 {
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
     if (bu[0x8009d820] & 0x3) field_debug_event_opcode("ldpal", 0x4);
 
-    funccdc14(SP + 0x10);
+    RECT rect;
+    field_event_rect_clear(&rect);
+    rect.x = 0;
+    rect.y = 0x1e0 + field_event_read_memory_u8(0x2, 0x3);
+    rect.w = bu[events_data + script_cur + 0x4] + 0x1;
+    rect.h = 0x1;
 
-    A0 = 0002;
-    A1 = 0003;
-    field_event_read_memory_u8();
+    system_psyq_load_image(&rect, 0x80095de0 + field_event_read_memory_u8(0x1, 0x2) * 0x20);
 
-    V0 = V0 & 00ff;
-    V1 = bu[800722c4];
-    V0 = V0 + 01e0;
-    [SP + 0012] = h(V0);
-    V0 = w[8009c6dc];
-    A0 = 0001;
-    [SP + 0010] = h(0);
-    V1 = V1 << 01;
-    AT = 800831fc;
-    AT = AT + V1;
-    V1 = hu[AT + 0000];
-    A1 = 0002;
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0004];
-    V1 = 0001;
-    [SP + 0016] = h(V1);
-    V0 = V0 + 0001;
-    [SP + 0014] = h(V0);
-    field_event_read_memory_u8();
-
-    A0 = SP + 0010;
-    V0 = V0 & 00ff;
-    V0 = V0 << 05;
-    A1 = 80095de0;
-    800CDACC	jal    $system_psyq_load_image
-    A1 = V0 + A1;
-    A0 = bu[800722c4];
-    V0 = 800831fc;
-    A0 = A0 << 01;
-    A0 = A0 + V0;
-    V1 = hu[A0 + 0000];
-    V0 = 0;
-    V1 = V1 + 0005;
-    [A0 + 0000] = h(V1);
-    RA = w[SP + 0020];
-    SP = SP + 0028;
-    800CDB04	jr     ra 
-    800CDB08	nop
-
-
-
-
-
-
-    actor_id_cur = bu[0x800722c4];
-    script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
-
-    A0 = 2;
-    A1 = 3;
-    field_event_read_memory_u8;
-    [SP + 10] = h(0);
-    [SP + 12] = h(V0 + 1e0);
-    [SP + 14] = h(bu[script + 4] + 1);
-    [SP + 16] = h(1);
-
-    A0 = 1;
-    A1 = 2;
-    field_event_read_memory_u8();
-
-    A0 = SP + 10;
-    A1 = 80095de0 + V0 * 20;
-    system_psyq_load_image();
-
-    [0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 5);
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x5);
 
     return 0;
 }
@@ -235,431 +72,118 @@ int field_event_opcode_e6_ldpal()
 
 int field_event_opcode_ec_ldpls()
 {
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
     if (bu[0x8009d820] & 0x3) field_debug_event_opcode("ldpls", 0x4);
 
-    funccdc14(SP + 0x10);
+    RECT rect;
+    field_event_rect_clear(&rect);
+    rect.x = bu[events_data + script_cur + 0x3];
+    rect.y = 0x1e0 + bu[events_data + script_cur + 0x2];
+    rect.w = bu[events_data + script_cur + 0x4] + 0x1;
+    rect.h = 0x1;
 
-    S0 = 800831fc;
-    A0 = bu[800722c4];
-    A1 = w[8009c6dc];
-    A0 = A0 << 01;
-    A0 = A0 + S0;
-    V0 = hu[A0 + 0000];
-    800CDB64	nop
-    V0 = A1 + V0;
-    V0 = bu[V0 + 0002];
-    800CDB70	nop
-    V0 = V0 + 01e0;
-    [SP + 0012] = h(V0);
-    V0 = hu[A0 + 0000];
-    800CDB80	nop
-    V0 = A1 + V0;
-    A2 = bu[V0 + 0003];
-    800CDB8C	nop
-    [SP + 0010] = h(A2);
-    V0 = hu[A0 + 0000];
-    V1 = 0001;
-    V0 = A1 + V0;
-    V0 = bu[V0 + 0004];
-    A2 = A2 << 01;
-    [SP + 0016] = h(V1);
-    V0 = V0 + 0001;
-    [SP + 0014] = h(V0);
-    V0 = hu[A0 + 0000];
-    A0 = SP + 0010;
-    A1 = A1 + V0;
-    V0 = 80095de0;
-    A1 = bu[A1 + 0001];
-    A2 = A2 + V0;
-    A1 = A1 << 05;
-    800CDBD4	jal    $system_psyq_load_image
-    A1 = A1 + A2;
-    A0 = bu[800722c4];
-    800CDBE4	nop
-    A0 = A0 << 01;
-    A0 = A0 + S0;
-    V1 = hu[A0 + 0000];
-    V0 = 0;
-    V1 = V1 + 0005;
-    [A0 + 0000] = h(V1);
-    RA = w[SP + 001c];
-    S0 = w[SP + 0018];
-    SP = SP + 0020;
-    800CDC0C	jr     ra 
-    800CDC10	nop
+    system_psyq_load_image(&rect, 0x80095de0 + bu[events_data + script_cur + 0x1] * 0x20 + rect.x * 0x2);
 
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x5);
 
-
-
-
-
-    actor_id_cur = bu[0x800722c4];
-    script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
-
-    A2 = bu[script + 3];
-    [SP + 10] = h(A2);
-    [SP + 12] = h(bu[script + 2] + 1e0);
-    [SP + 14] = h(bu[script + 4] + 1);
-    [SP + 16] = h(1);
-
-    A0 = SP + 10;
-    A1 = 80095de0 + bu[script + 1] * 20 + A2 * 2;
-    system_psyq_load_image;
-
-    [0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 5);
+    return 0;
 }
 
 
 
-void funccdc14()
+void field_event_rect_clear(RECT* rect)
 {
-    [A0 + 0] = h(0);
-    [A0 + 2] = h(0);
-    [A0 + 4] = h(0);
-    [A0 + 6] = h(0);
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = 0;
+    rect.h = 0;
 }
 
 
 
 int field_event_opcode_e7_cppal()
 {
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
     if (bu[0x8009d820] & 0x3) field_debug_event_opcode("cppal", 0x4);
 
-    V0 = bu[800722c4];
-    800CDC60	nop
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    V1 = hu[AT + 0000];
-    V0 = w[8009c6dc];
-    A0 = 0001;
-    V0 = V0 + V1;
-    S0 = bu[V0 + 0004];
-    A1 = 0002;
-    S0 = S0 + 0001;
-    field_event_read_memory_u8();
+    u8 src_id = field_event_read_memory_u8(0x1, 0x2);
+    u8 dst_id = field_event_read_memory_u8(0x2, 0x3);
+    u8 size = bu[events_data + script_cur + 0x4] + 0x1;
 
-    A0 = 0002;
-    A1 = 0003;
-    S1 = V0;
-    field_event_read_memory_u8();
-
-    800CDCA8	beq    s0, zero, Lcdd00 [$800cdd00]
-    A1 = 0;
-    V0 = V0 & 00ff;
-    V1 = 80095de0;
-    V0 = V0 << 05;
-    A3 = V0 + V1;
-    V0 = S1 & 00ff;
-    V0 = V0 << 05;
-    A2 = V0 + V1;
-
-    loopcdcd0:	; 800CDCD0
-    A0 = A1 << 10;
-    V1 = A1 + 0001;
-    A1 = V1;
-    A0 = A0 >> 0f;
-    V0 = A0 + A2;
-    A0 = A0 + A3;
-    V1 = V1 << 10;
-    V1 = V1 >> 10;
-    V0 = hu[V0 + 0000];
-    V1 = V1 < S0;
-    800CDCF8	bne    v1, zero, loopcdcd0 [$800cdcd0]
-    [A0 + 0000] = h(V0);
-
-    Lcdd00:	; 800CDD00
-    V1 = bu[800722c4];
-    V0 = 800831fc;
-    V1 = V1 << 01;
-    V1 = V1 + V0;
-    A0 = hu[V1 + 0000];
-    V0 = 0;
-    A0 = A0 + 0005;
-    [V1 + 0000] = h(A0);
-    RA = w[SP + 0018];
-    S1 = w[SP + 0014];
-    S0 = w[SP + 0010];
-    SP = SP + 0020;
-    800CDD38	jr     ra 
-    800CDD3C	nop
-
-
-
-
-
-
-    actor_id_cur = bu[0x800722c4];
-    script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
-
-    length = bu[script + 4] + 1;
-
-    A0 = 1;
-    A1 = 2;
-    field_event_read_memory_u8;
-    src_id = V0;
-
-    A0 = 2;
-    A1 = 3;
-    field_event_read_memory_u8;
-    dst_id = V0;
-
-    if (length != 0)
+    for (int i = 0; i < size; ++i)
     {
-        A1 = 0;
-        loopcdcd0:	; 800CDCD0
-            [0x80095de0 + dst_id * 20 + A1 * 2] = h(hu[0x80095de0 + src_id * 20 + A1 * 2]);
-            A1 = A1 + 1;
-            V1 = A1 < length;
-        800CDCF8	bne    v1, zero, loopcdcd0 [$800cdcd0]
+        [0x80095de0 + dst_id * 0x20 + i * 0x2] = h(hu[0x80095de0 + src_id * 0x20 + i * 0x2]);
     }
 
-    [0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 5);
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x5);
+
+    return 0;
 }
 
 
 
 int field_event_opcode_ed_cppal()
 {
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
     if (bu[0x8009d820] & 0x3) field_debug_event_opcode("cppal", 0x7);
 
-    A0 = 0004;
-    A1 = 0007;
-    field_event_read_memory_u8();
+    u8 src_id = bu[events_data + script_cur + 0x3];
+    u8 dst_id = bu[events_data + script_cur + 0x4];
+    u8 src = field_event_read_memory_u8(0x1, 0x5);
+    u8 dst = field_event_read_memory_u8(0x2, 0x6);
+    u8 size = field_event_read_memory_u8(0x4, 0x7) + 0x1;
 
-    A0 = 0001;
-    A1 = 0005;
-    S0 = V0 & 00ff;
-    V1 = bu[0x800722c4];
-    V0 = w[0x8009c6dc];
-    V1 = V1 << 01;
-    800CDDA4	lui    at, $8008
-    AT = AT + 31fc;
-    AT = AT + V1;
-    V1 = hu[AT + 0000];
-    800CDDB4	nop
-    V0 = V0 + V1;
-    S3 = bu[V0 + 0003];
-    S2 = bu[V0 + 0004];
-    S0 = S0 + 0001;
-    field_event_read_memory_u8();
+    end = src + size;
 
-    S1 = V0 & 00ff;
-    A0 = 0002;
-    A1 = 0006;
-    field_event_read_memory_u8();
+    for (; src < end; ++src, ++dst)
+    {
+        [0x80095de0 + dst_id * 0x20 + dst * 0x2] = h(hu[0x80095de0 + src_id * 0x20 + src * 0x2]);
+    }
 
-    A1 = V0 & 00ff;
-    A0 = S1 + S0;
-    V0 = S1 < A0;
-    800CDDE8	beq    v0, zero, Lcde44 [$800cde44]
-    V1 = S2 << 05;
-    800CDDF0	lui    v0, $8009
-    V0 = V0 + 5de0;
-    T0 = V1 + V0;
-    V1 = S3 << 05;
-    A3 = V1 + V0;
-    A2 = A0;
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x8);
 
-    loopcde08:	; 800CDE08
-    A0 = S1 << 10;
-    V0 = S1 + 0001;
-    S1 = V0;
-    V1 = A1 << 10;
-    A1 = A1 + 0001;
-    V1 = V1 >> 0f;
-    A0 = A0 >> 0f;
-    A0 = A0 + A3;
-    V1 = V1 + T0;
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    A0 = hu[A0 + 0000];
-    V0 = V0 < A2;
-    800CDE3C	bne    v0, zero, loopcde08 [$800cde08]
-    [V1 + 0000] = h(A0);
-
-    Lcde44:	; 800CDE44
-    V1 = bu[0x800722c4];
-    800CDE4C	lui    v0, $8008
-    V0 = V0 + 31fc;
-    V1 = V1 << 01;
-    V1 = V1 + V0;
-    A0 = hu[V1 + 0000];
-    V0 = 0;
-    A0 = A0 + 0008;
-    [V1 + 0000] = h(A0);
-    RA = w[SP + 0020];
-    S3 = w[SP + 001c];
-    S2 = w[SP + 0018];
-    S1 = w[SP + 0014];
-    S0 = w[SP + 0010];
-    SP = SP + 0028;
-    800CDE84	jr     ra 
-    800CDE88	nop
+    return 0;
 }
 
 
 
 int field_event_opcode_e8_rtpal()
 {
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
     if (bu[0x8009d820] & 0x3) field_debug_event_opcode("rtpal", 0x6);
 
-    V0 = bu[800722c4];
-    800CDECC	nop
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    V1 = hu[AT + 0000];
-    V0 = w[8009c6dc];
-    A0 = 0001;
-    V0 = V0 + V1;
-    S0 = bu[V0 + 0006];
-    A1 = 0003;
-    S0 = S0 + 0001;
-    field_event_read_memory_u8();
+    u8 dst_id = field_event_read_memory_u8(0x1, 0x3);
+    u8 src_id = field_event_read_memory_u8(0x2, 0x4);
+    u8 dst_st = field_event_read_memory_u8(0x4, 0x5);
+    u8 size = bu[events_data + script_cur + 0x6] + 0x1;
 
-    A0 = 0002;
-    A1 = 0004;
-    S3 = V0;
-    field_event_read_memory_u8();
-
-    A0 = 0004;
-    A1 = 0005;
-    S2 = V0;
-    field_event_read_memory_u8();
-
-    A2 = 0;
-    T1 = V0 & 00ff;
-    A1 = T1;
-    V0 = S0 < A1;
-    800CDF34	bne    v0, zero, Lcdf98 [$800cdf98]
-    S1 = S0;
-    V0 = S2 & 00ff;
-    V1 = 80095de0;
-    V0 = V0 << 05;
-    T0 = V0 + V1;
-    V0 = S3 & 00ff;
-    V0 = V0 << 05;
-    A3 = V0 + V1;
-
-    loopcdf5c:	; 800CDF5C
-    V1 = A2 << 10;
-    A2 = A2 + 0001;
-    A0 = A1 << 10;
-    V0 = A1 + 0001;
-    A1 = V0;
-    A0 = A0 >> 0f;
-    V1 = V1 >> 0f;
-    V1 = V1 + A3;
-    A0 = A0 + T0;
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    V1 = hu[V1 + 0000];
-    V0 = S0 < V0;
-    800CDF90	beq    v0, zero, loopcdf5c [$800cdf5c]
-    [A0 + 0000] = h(V1);
-
-    Lcdf98:	; 800CDF98
-    V0 = S1 - T1;
-    A2 = V0;
-    S0 = S1;
-    V0 = S0 < V0;
-    800CDFA8	bne    v0, zero, Lce00c [$800ce00c]
-    A1 = 0;
-    V0 = S2 & 00ff;
-    V1 = 80095de0;
-    V0 = V0 << 05;
-    T0 = V0 + V1;
-    V0 = S3 & 00ff;
-    V0 = V0 << 05;
-    A3 = V0 + V1;
-
-    loopcdfd0:	; 800CDFD0
-    A0 = A2 << 10;
-    V0 = A2 + 0001;
-    A2 = V0;
-    V1 = A1 << 10;
-    A1 = A1 + 0001;
-    V1 = V1 >> 0f;
-    A0 = A0 >> 0f;
-    A0 = A0 + A3;
-    V1 = V1 + T0;
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    A0 = hu[A0 + 0000];
-    V0 = S0 < V0;
-    800CE004	beq    v0, zero, loopcdfd0 [$800cdfd0]
-    [V1 + 0000] = h(A0);
-
-    Lce00c:	; 800CE00C
-    V1 = bu[800722c4];
-    V0 = 800831fc;
-    V1 = V1 << 01;
-    V1 = V1 + V0;
-    A0 = hu[V1 + 0000];
-    V0 = 0;
-    A0 = A0 + 0007;
-    [V1 + 0000] = h(A0);
-    RA = w[SP + 0020];
-    S3 = w[SP + 001c];
-    S2 = w[SP + 0018];
-    S1 = w[SP + 0014];
-    S0 = w[SP + 0010];
-    SP = SP + 0028;
-    800CE04C	jr     ra 
-    800CE050	nop
-
-
-
-
-
-    actor_id_cur = bu[0x800722c4];
-    script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
-
-    size = bu[script + 6] + 1;
-
-    A0 = 1;
-    A1 = 3;
-    field_event_read_memory_u8;
-    src = V0;
-
-    A0 = 2;
-    A1 = 4;
-    field_event_read_memory_u8;
-    dst = V0;
-
-    A0 = 4;
-    A1 = 5;
-    field_event_read_memory_u8;
-    start = V0;
-
-    if (size >= start)
+    u8 src = 0;
+    u8 dst = dst_st;
+    for (; dst <= size; ++dst, ++src)
     {
-        A1 = start;
-        A2 = 0;
-        loopcdf5c:	; 800CDF5C
-            [0x80095de0 + dst * 20 + A1 * 2] = h(hu[0x80095de0 + src * 20 + A2 * 2]);
-
-            A1 = A1 + 1;
-            A2 = A2 + 1;
-            V0 = A2 > size;
-        800CDF90	beq    v0, zero, loopcdf5c [$800cdf5c]
+       [0x80095de0 + src_id * 0x20 + dst * 0x2] = h(hu[0x80095de0 + dst_id * 0x20 + src * 0x2]);
     }
 
-    A2 = size - start;
-    if (size >= A2)
+    u8 src = size - dst_st;
+    u8 dst = 0;
+    for (; src <= size; ++dst, ++src)
     {
-        A1 = 0;
-        loopcdfd0:	; 800CDFD0
-            [0x80095de0 + dst * 20 + A1 * 2] = h(hu[0x80095de0 + src * 20 + A2 * 2]);
-
-            A1 = A1 + 1;
-            A2 = A2 + 1;
-            V0 = A2 > size;
-        800CE004	beq    v0, zero, loopcdfd0 [$800cdfd0]
+        [0x80095de0 + src_id * 0x20 + dst * 0x2] = h(hu[0x80095de0 + dst_id * 0x20 + src * 0x2]);
     }
 
-    [0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 7);
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x7);
 
     return 0;
 }
@@ -668,287 +192,148 @@ int field_event_opcode_e8_rtpal()
 
 int field_event_opcode_ee_rtpal()
 {
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
     if (bu[0x8009d820] & 0x3) field_debug_event_opcode("rtpal", 0x7);
 
-    A0 = 0004;
-    A1 = 0007;
-    field_event_read_memory_u8();
+    u8 dst_id = bu[events_data + script_cur + 0x3];
+    u8 src_id = bu[events_data + script_cur + 0x4];
+    u8 src_st = field_event_read_memory_u8(0x1, 0x5);
+    u8 dst_st = field_event_read_memory_u8(0x2, 0x6);
+    u8 size = field_event_read_memory_u8(0x4, 0x7) + 0x1;
 
-    A0 = 0001;
-    A1 = 0005;
-    S0 = V0 & 00ff;
-    V1 = bu[0x800722c4];
-    V0 = w[0x8009c6dc];
-    V1 = V1 << 01;
-    800CE0B8	lui    at, $8008
-    AT = AT + 31fc;
-    AT = AT + V1;
-    V1 = hu[AT + 0000];
-    800CE0C8	nop
-    V0 = V0 + V1;
-    S3 = bu[V0 + 0003];
-    S2 = bu[V0 + 0004];
-    S0 = S0 + 0001;
-    field_event_read_memory_u8();
+    u8 src = src_st;
+    u8 dst = dst_st;
+    for (; dst <= (size + src_st); ++dst, ++src)
+    {
+        [0x80095de0 + src_id * 0x20 + dst * 0x2] = h(hu[0x80095de0 + dst_id * 0x20 + src * 0x2]);
+    }
 
-    A0 = 0002;
-    A1 = 0006;
-    S1 = V0 & 00ff;
-    field_event_read_memory_u8();
+    src = size + src_st - dst_st;
+    dst = src_st;
+    for (; src <= (size + src_st); ++dst, ++src)
+    {
+        [0x80095de0 + src_id * 0x20 + dst * 0x2] = h(hu[0x80095de0 + dst_id * 0x20 + src * 0x2]);
+    }
 
-    A2 = S1;
-    T2 = V0 & 00ff;
-    A1 = T2;
-    S0 = S0 + S1;
-    V0 = S0 < A1;
-    800CE104	bne    v0, zero, Lce160 [$800ce160]
-    T1 = S0;
-    800CE10C	lui    v0, $8009
-    V0 = V0 + 5de0;
-    V1 = S2 << 05;
-    T0 = V1 + V0;
-    V1 = S3 << 05;
-    A3 = V1 + V0;
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x8);
 
-    loopce124:	; 800CE124
-    V1 = A2 << 10;
-    A2 = A2 + 0001;
-    A0 = A1 << 10;
-    V0 = A1 + 0001;
-    A1 = V0;
-    A0 = A0 >> 0f;
-    V1 = V1 >> 0f;
-    V1 = V1 + A3;
-    A0 = A0 + T0;
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    V1 = hu[V1 + 0000];
-    V0 = S0 < V0;
-    800CE158	beq    v0, zero, loopce124 [$800ce124]
-    [A0 + 0000] = h(V1);
-
-    Lce160:	; 800CE160
-    V0 = T1 - T2;
-    A2 = V0;
-    S0 = T1;
-    V0 = S0 < V0;
-    800CE170	bne    v0, zero, Lce1cc [$800ce1cc]
-    A1 = S1;
-    800CE178	lui    v0, $8009
-    V0 = V0 + 5de0;
-    V1 = S2 << 05;
-    T0 = V1 + V0;
-    V1 = S3 << 05;
-    A3 = V1 + V0;
-
-    loopce190:	; 800CE190
-    A0 = A2 << 10;
-    V0 = A2 + 0001;
-    A2 = V0;
-    V1 = A1 << 10;
-    A1 = A1 + 0001;
-    V1 = V1 >> 0f;
-    A0 = A0 >> 0f;
-    A0 = A0 + A3;
-    V1 = V1 + T0;
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    A0 = hu[A0 + 0000];
-    V0 = S0 < V0;
-    800CE1C4	beq    v0, zero, loopce190 [$800ce190]
-    [V1 + 0000] = h(A0);
-
-    Lce1cc:	; 800CE1CC
-    V1 = bu[0x800722c4];
-    800CE1D4	lui    v0, $8008
-    V0 = V0 + 31fc;
-    V1 = V1 << 01;
-    V1 = V1 + V0;
-    A0 = hu[V1 + 0000];
-    V0 = 0;
-    A0 = A0 + 0008;
-    [V1 + 0000] = h(A0);
-    RA = w[SP + 0020];
-    S3 = w[SP + 001c];
-    S2 = w[SP + 0018];
-    S1 = w[SP + 0014];
-    S0 = w[SP + 0010];
-    SP = SP + 0028;
-    800CE20C	jr     ra 
-    800CE210	nop
+    return 0;
 }
 
 
 
 int field_event_opcode_e9_adpal()
 {
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
     if (bu[0x8009d820] & 0x3) field_debug_event_opcode("adpal", 0x8);
 
-    V0 = bu[800722c4];
-    800CE258	nop
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    V1 = hu[AT + 0000];
-    V0 = w[8009c6dc];
-    A0 = 0001;
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0009];
-    A1 = 0004;
-    S4 = V0 + 0001;
-    field_event_read_memory_u8();
+    S2 = field_event_read_memory_u8(0x1, 0x4);
+    S3 = field_event_read_memory_u8(0x2, 0x5);
+    S1 = field_event_read_memory_u8(0x3, 0x6);
+    S0 = field_event_read_memory_u8(0x4, 0x7);
+    T2 = field_event_read_memory_u8(0x5, 0x8);
+    S4 = bu[events_data + script_cur + 0x9] + 0x1;
 
-    A0 = 0002;
-    A1 = 0005;
-    S2 = V0;
-    field_event_read_memory_u8();
+    if (S1 & 0x80) S1 ^= 0xff00;
+    if (S0 & 0x80) S0 ^= 0xff00;
+    if (T2 & 0x80) T2 ^= 0xff00;
 
-    A0 = 0003;
-    A1 = 0006;
-    S3 = V0;
-    field_event_read_memory_u8();
-
-    S1 = V0 & 00ff;
-    A0 = 0004;
-    A1 = 0007;
-    field_event_read_memory_u8();
-
-    S0 = V0 & 00ff;
-    A0 = 0005;
-    A1 = 0008;
-    field_event_read_memory_u8();
-
-    T2 = V0 & 00ff;
-    V0 = S1 & 0080;
-    800CE2D8	beq    v0, zero, Lce2e4 [$800ce2e4]
-    V0 = S0 & 0080;
-    S1 = S1 ^ ff00;
-
-    Lce2e4:	; 800CE2E4
-    800CE2E4	beq    v0, zero, Lce2f0 [$800ce2f0]
-    V0 = T2 & 0080;
-    S0 = S0 ^ ff00;
-
-    Lce2f0:	; 800CE2F0
-    800CE2F0	beq    v0, zero, Lce2fc [$800ce2fc]
     T1 = 0;
-    T2 = T2 ^ ff00;
-
-    Lce2fc:	; 800CE2FC
     A0 = S4;
-    800CE300	beq    a0, zero, Lce434 [$800ce434]
-    V0 = S2 & 00ff;
-    V1 = 80095de0;
-    V0 = V0 << 05;
-    T5 = V0 + V1;
-    V0 = S3 & 00ff;
-    V0 = V0 << 05;
-    T4 = V0 + V1;
-    T3 = A0;
-    V0 = T1 << 10;
+    if (A0 != 0)
+    {
+        V0 = S2 & 00ff;
+        V1 = 80095de0;
+        V0 = V0 << 05;
+        T5 = V0 + V1;
+        V0 = S3 & 00ff;
+        V0 = V0 << 05;
+        T4 = V0 + V1;
+        T3 = A0;
 
-    loopce32c:	; 800CE32C
-    A1 = V0 >> 0f;
-    V0 = A1 + T5;
-    T0 = hu[V0 + 0000];
-    800CE338	nop
-    V0 = T0 & 001f;
-    V0 = T2 + V0;
-    A2 = V0;
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    V0 = V0 < 0020;
-    800CE354	bne    v0, zero, Lce364 [$800ce364]
-    V0 = A2 << 10;
-    A2 = 001f;
-    V0 = A2 << 10;
+        loopce32c:	; 800CE32C
+            V0 = T1 << 10;
+            A1 = V0 >> 0f;
+            V0 = A1 + T5;
+            T0 = hu[V0 + 0000];
+            800CE338	nop
+            V0 = T0 & 001f;
+            V0 = T2 + V0;
+            A2 = V0;
+            V0 = V0 << 10;
+            V0 = V0 >> 10;
 
-    Lce364:	; 800CE364
-    800CE364	bgez   v0, Lce370 [$800ce370]
-    A3 = T0 & ffff;
-    A2 = 0;
+            if (V0 >= 0x20) A2 = 0x1f;
 
-    Lce370:	; 800CE370
-    V0 = A3 >> 05;
-    V0 = V0 & 001f;
-    V0 = S0 + V0;
-    V1 = V0;
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    V0 = V0 < 0020;
-    800CE38C	bne    v0, zero, Lce39c [$800ce39c]
-    V0 = V1 << 10;
-    V1 = 001f;
-    V0 = V1 << 10;
+            V0 = A2 << 10;
+            800CE364	bgez   v0, Lce370 [$800ce370]
+            A3 = T0 & ffff;
+            A2 = 0;
 
-    Lce39c:	; 800CE39C
-    800CE39C	bgez   v0, Lce3a8 [$800ce3a8]
-    V0 = A3 >> 0a;
-    V1 = 0;
+            Lce370:	; 800CE370
+            V0 = A3 >> 05;
+            V0 = V0 & 001f;
+            V0 = S0 + V0;
+            V1 = V0;
+            V0 = V0 << 10;
+            V0 = V0 >> 10;
 
-    Lce3a8:	; 800CE3A8
-    V0 = V0 & 001f;
-    V0 = S1 + V0;
-    A0 = V0;
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    V0 = V0 < 0020;
-    800CE3C0	bne    v0, zero, Lce3d0 [$800ce3d0]
-    V0 = A0 << 10;
-    A0 = 001f;
-    V0 = A0 << 10;
+            if (V0 >= 0x20) V1 = 0x1f;
 
-    Lce3d0:	; 800CE3D0
-    800CE3D0	bgez   v0, Lce3dc [$800ce3dc]
-    A1 = A1 + T4;
-    A0 = 0;
+            V0 = V1 << 10;
+            800CE39C	bgez   v0, Lce3a8 [$800ce3a8]
+            V0 = A3 >> 0a;
+            V1 = 0;
 
-    Lce3dc:	; 800CE3DC
-    V0 = A0 << 0a;
-    V1 = V1 << 05;
-    V0 = V0 | V1;
-    V0 = A2 | V0;
-    V1 = T0 & 8000;
-    V0 = V0 | V1;
-    [A1 + 0000] = h(V0);
-    V0 = hu[A1 + 0000];
-    800CE3FC	nop
-    800CE400	bne    v0, zero, Lce418 [$800ce418]
-    800CE404	nop
-    800CE408	beq    a3, zero, Lce41c [$800ce41c]
-    V0 = T1 + 0001;
-    V0 = 8000;
-    [A1 + 0000] = h(V0);
+            Lce3a8:	; 800CE3A8
+            V0 = V0 & 001f;
+            V0 = S1 + V0;
+            A0 = V0;
+            V0 = V0 << 10;
+            V0 = V0 >> 10;
 
-    Lce418:	; 800CE418
-    V0 = T1 + 0001;
+            if (V0 >= 0x20) A0 = 0x1f;
 
-    Lce41c:	; 800CE41C
-    T1 = V0;
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    V0 = V0 < T3;
-    800CE42C	bne    v0, zero, loopce32c [$800ce32c]
-    V0 = T1 << 10;
+            V0 = A0 << 10;
+            A1 = A1 + T4;
+            if (V0 < 0) A0 = 0;
 
-    Lce434:	; 800CE434
-    V1 = bu[800722c4];
-    V0 = 800831fc;
-    V1 = V1 << 01;
-    V1 = V1 + V0;
-    A0 = hu[V1 + 0000];
-    V0 = 0;
-    A0 = A0 + 000a;
-    [V1 + 0000] = h(A0);
-    RA = w[SP + 0024];
-    S4 = w[SP + 0020];
-    S3 = w[SP + 001c];
-    S2 = w[SP + 0018];
-    S1 = w[SP + 0014];
-    S0 = w[SP + 0010];
-    SP = SP + 0028;
-    800CE478	jr     ra 
-    800CE47C	nop
+            V0 = A0 << 0a;
+            V1 = V1 << 05;
+            V0 = V0 | V1;
+            V0 = A2 | V0;
+            V1 = T0 & 8000;
+            V0 = V0 | V1;
+            [A1 + 0000] = h(V0);
+            V0 = hu[A1 + 0000];
+            800CE3FC	nop
+            800CE400	bne    v0, zero, Lce418 [$800ce418]
+            800CE404	nop
+            800CE408	beq    a3, zero, Lce41c [$800ce41c]
+            V0 = T1 + 0001;
+            V0 = 8000;
+            [A1 + 0000] = h(V0);
+
+            Lce418:	; 800CE418
+            V0 = T1 + 0001;
+
+            Lce41c:	; 800CE41C
+            T1 = V0;
+            V0 = V0 << 10;
+            V0 = V0 >> 10;
+            V0 = V0 < T3;
+        800CE42C	bne    v0, zero, loopce32c [$800ce32c]
+    }
+
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0xa);
+
+    return 0;
 
 
 
@@ -1219,13 +604,13 @@ int field_event_opcode_ea_mppal()
 {
     if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mppal", 0x8);
 
-    V0 = bu[800722c4];
+    V0 = bu[0x800722c4];
     800CE738	nop
     V0 = V0 << 01;
     AT = 800831fc;
     AT = AT + V0;
     V1 = hu[AT + 0000];
-    V0 = w[8009c6dc];
+    V0 = w[0x8009c6dc];
     A0 = 0001;
     V0 = V0 + V1;
     S0 = bu[V0 + 0009];
@@ -1330,7 +715,7 @@ int field_event_opcode_ea_mppal()
     V0 = T0 << 10;
 
     Lce8b8:	; 800CE8B8
-    V1 = bu[800722c4];
+    V1 = bu[0x800722c4];
     V0 = 800831fc;
     V1 = V1 << 01;
     V1 = V1 + V0;
@@ -1440,8 +825,8 @@ int field_event_opcode_df_mppal()
     A0 = 0001;
     A1 = 0006;
     S0 = V0 & 00ff;
-    V1 = bu[800722c4];
-    V0 = w[8009c6dc];
+    V1 = bu[0x800722c4];
+    V0 = w[0x8009c6dc];
     V1 = V1 << 01;
     AT = 800831fc;
     AT = AT + V1;
@@ -1545,7 +930,7 @@ int field_event_opcode_df_mppal()
     V0 = S1 << 10;
 
     Lcead0:	; 800CEAD0
-    V1 = bu[800722c4];
+    V1 = bu[0x800722c4];
     V0 = 800831fc;
     V1 = V1 << 01;
     V1 = V1 + V0;
@@ -1679,7 +1064,7 @@ int field_event_opcode_56_gwcol()
     A2 = bu[AT + 0000];
     800D1C24	jal    field_event_write_memory_u8 [$800bf3ac]
     A1 = 0006;
-    A0 = bu[800722c4];
+    A0 = bu[0x800722c4];
     V0 = 800831fc;
     A0 = A0 << 01;
     A0 = A0 + V0;
@@ -1764,7 +1149,7 @@ int field_event_opcode_57_swcol()
     800D1CF4	addiu  at, at, $920a (=-$6df6)
     AT = AT + S0;
     [AT + 0000] = b(V0);
-    A0 = bu[800722c4];
+    A0 = bu[0x800722c4];
     V0 = 800831fc;
     A0 = A0 << 01;
     A0 = A0 + V0;
