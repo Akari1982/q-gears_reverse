@@ -319,3 +319,39 @@ int field_event_opcode_37_wnumb()
 
     return 0;
 }
+
+
+
+int field_event_opcode_56_gwcol()
+{
+    actor_id_cur = bu[0x800722c4];
+
+    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("gwcol", 0x6);
+
+    u8 id = field_event_read_memory_u8(0x1, 0x3);
+    field_event_write_memory_u8(0x2, 0x4, bu[0x80049208 + id * 0x3 + 0x0]);
+    field_event_write_memory_u8(0x3, 0x5, bu[0x80049208 + id * 0x3 + 0x1]);
+    field_event_write_memory_u8(0x4, 0x6, bu[0x80049208 + id * 0x3 + 0x2]);
+
+    [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x7);
+
+    return 0;
+}
+
+
+
+int field_event_opcode_57_swcol()
+{
+    actor_id_cur = bu[0x800722c4];
+
+    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("swcol", 0x6);
+
+    u8 id = field_event_read_memory_u8(0x1, 0x3);
+    [0x80049208 + id * 0x3 + 0x0] = b(field_event_read_memory_u8(0x2, 0x4));
+    [0x80049208 + id * 0x3 + 0x1] = b(field_event_read_memory_u8(0x3, 0x5));
+    [0x80049208 + id * 0x3 + 0x2] = b(field_event_read_memory_u8(0x4, 0x6));
+
+    [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x7);
+
+    return 0;
+}
