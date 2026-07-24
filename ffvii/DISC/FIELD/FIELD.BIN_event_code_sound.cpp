@@ -2,7 +2,7 @@ void field_event_clear_akao_struct()
 {
     [0x8009a000 + 0x0] = h(0);
 
-    for( int i = 0x5; i >= 0; --i )
+    for(int i = 0x5; i >= 0; --i)
     {
         [0x8009a004 + i * 0x4] = w(0);
     }
@@ -16,16 +16,16 @@ int field_event_opcode_f2_akao()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "akao", 0x3 );
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("akao", 0x3);
 
     field_event_clear_akao_struct();
 
     [0x8009a000] = h(bu[events_data + script_cur + 0x4]);
-    [0x8009a004] = w(field_event_read_memory_u8( 0x1, 0x5 ));
-    [0x8009a008] = w(field_event_read_memory_s16( 0x2, 0x6 ));
-    [0x8009a00c] = w(field_event_read_memory_s16( 0x3, 0x8 ));
-    [0x8009a010] = w(field_event_read_memory_s16( 0x4, 0xa ));
-    [0x8009a014] = w(field_event_read_memory_s16( 0x6, 0xc ));
+    [0x8009a004] = w(field_event_read_memory_u8(0x1, 0x5));
+    [0x8009a008] = w(field_event_read_memory_s16(0x2, 0x6));
+    [0x8009a00c] = w(field_event_read_memory_s16(0x3, 0x8));
+    [0x8009a010] = w(field_event_read_memory_s16(0x4, 0xa));
+    [0x8009a014] = w(field_event_read_memory_s16(0x6, 0xc));
     system_akao_execute();
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0xe);
@@ -41,16 +41,16 @@ int field_event_opcode_da_akao2()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "akao2", 0x3 );
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("akao2", 0x3);
 
     field_event_clear_akao_struct();
 
     [0x8009a000] = h(bu[events_data + script_cur + 0x4]);
-    [0x8009a004] = w(field_event_read_memory_s16( 0x1, 0x5 ));
-    [0x8009a008] = w(field_event_read_memory_s16( 0x2, 0x7 ));
-    [0x8009a00c] = w(field_event_read_memory_s16( 0x3, 0x9 ));
-    [0x8009a010] = w(field_event_read_memory_s16( 0x4, 0xb ));
-    [0x8009a014] = w(field_event_read_memory_s16( 0x6, 0xd ));
+    [0x8009a004] = w(field_event_read_memory_s16(0x1, 0x5));
+    [0x8009a008] = w(field_event_read_memory_s16(0x2, 0x7));
+    [0x8009a00c] = w(field_event_read_memory_s16(0x3, 0x9));
+    [0x8009a010] = w(field_event_read_memory_s16(0x4, 0xb));
+    [0x8009a014] = w(field_event_read_memory_s16(0x6, 0xd));
 
     system_akao_execute();
 
@@ -66,13 +66,13 @@ int field_event_opcode_f1_se()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "se", 0x3 );
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("se", 0x3);
 
     field_event_clear_akao_struct();
 
     [0x8009a000] = h(0x20);
-    [0x8009a004] = w(field_event_read_memory_u8( 0x2, 0x4 ));
-    [0x8009a008] = w(field_event_read_memory_s16( 0x1, 0x2 ));
+    [0x8009a004] = w(field_event_read_memory_u8(0x2, 0x4));
+    [0x8009a008] = w(field_event_read_memory_s16(0x1, 0x2));
 
     system_akao_execute();
 
@@ -85,7 +85,7 @@ int field_event_opcode_f1_se()
 
 int field_event_opcode_f0_music()
 {
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "music", 0x1 );
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("music", 0x1);
 
     field_event_clear_akao_struct();
 
@@ -98,7 +98,7 @@ int field_event_opcode_f0_music()
 
 int field_event_opcode_f3_musvt()
 {
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "musvt", 0x1 );
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("musvt", 0x1);
 
     field_event_clear_akao_struct();
 
@@ -111,7 +111,7 @@ int field_event_opcode_f3_musvt()
 
 int field_event_opcode_f4_musvm()
 {
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "musvm", 0x1 );
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("musvm", 0x1);
 
     field_event_clear_akao_struct();
 
@@ -128,13 +128,13 @@ int field_event_opcode_fd_cmusc()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "cmusc", 0x5 );
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("cmusc", 0x5);
 
     field_event_clear_akao_struct();
 
     [0x8009a000] = h(bu[events_data + script_cur + 0x3]);
-    [0x8009a008] = w(field_event_read_memory_s16( 0x3, 0x4 ));
-    [0x8009a00c] = w(field_event_read_memory_s16( 0x4, 0x6 ));
+    [0x8009a008] = w(field_event_read_memory_s16(0x3, 0x4));
+    [0x8009a00c] = w(field_event_read_memory_s16(0x4, 0x6));
 
     V0 = field_event_set_and_apply_akao();
 
@@ -152,13 +152,13 @@ int field_event_set_and_apply_akao()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x800716d4] == 0 ) // if music not locked
+    if (bu[0x800716d4] == 0) // if music not locked
     {
         S0 = bu[events_data + script_cur + 0x1];
 
-        if( bu[0x8009d820] & 0x3 ) field_debug_add_parse_value_to_page2( "music=", S0, 0x2 );
+        if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("music=", S0, 0x2);
 
-        V0 = field_event_get_akao_offset_in_field( S0 );
+        V0 = field_event_get_akao_offset_in_field(S0);
 
         [0x8009a004] = w(events_data + V0);
         [field_struct + 0x48] = w(events_data + V0);
@@ -180,15 +180,15 @@ int field_event_opcode_f6_bmusc()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "bmusc", 0x1 );
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("bmusc", 0x1);
 
-    if( bu[0x800716d4] == 0 )
+    if (bu[0x800716d4] == 0)
     {
         S0 = bu[events_data + script_cur + 0x1];
 
-        if( bu[0x8009d820] & 0x3 ) field_debug_add_parse_value_to_page2( "bmusic=", S0, 0x2 );
+        if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("bmusic=", S0, 0x2);
 
-        [field_struct + 0x44] = w(events_data + field_event_get_akao_offset_in_field( S0 ));
+        [field_struct + 0x44] = w(events_data + field_event_get_akao_offset_in_field(S0));
     }
     else
     {
@@ -207,11 +207,11 @@ int field_event_opcode_f7_chmph()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "chmph", 0x3 );
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("chmph", 0x3);
 
-    field_event_write_memory_s16( 0x1, 0x2, h[0x8009a104 + 0x5e] );
+    field_event_write_memory_s16(0x1, 0x2, h[0x8009a104 + 0x5e]);
 
-    field_event_write_memory_u8( 0x2, 0x3, bu[0x8009a104 + 0x58] );
+    field_event_write_memory_u8(0x2, 0x3, bu[0x8009a104 + 0x58]);
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x4);
 
@@ -227,15 +227,15 @@ int field_event_opcode_fc_fmusc()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "fmusc", 0x1 );
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("fmusc", 0x1);
 
-    if( bu[0x800716d4] == 0 )
+    if (bu[0x800716d4] == 0)
     {
         S0 = bu[events_data + script_cur + 0x1];
 
-        if( bu[0x8009d820] & 0x3 ) field_debug_add_parse_value_to_page2( "bmusic=", S0, 0x2 );
+        if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("bmusic=", S0, 0x2);
 
-        [field_struct + 0x48] = w(events_data + field_event_get_akao_offset_in_field( S0 ));
+        [field_struct + 0x48] = w(events_data + field_event_get_akao_offset_in_field(S0));
     }
     else
     {
@@ -254,12 +254,12 @@ int field_event_opcode_fe_chmst()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "chmst", 0x2 );
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("chmst", 0x2);
 
     A2 = (w[0x8009a104 + 0x4] > 0) ? 1 : 0;
-    if( w[0x80099fcc] != 0 ) A2 |= 0x2;
+    if (w[0x80099fcc] != 0) A2 |= 0x2;
 
-    field_event_write_memory_u8( 0x2, 0x2, A2 );
+    field_event_write_memory_u8(0x2, 0x2, A2);
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x3);
 
@@ -268,7 +268,7 @@ int field_event_opcode_fe_chmst()
 
 
 
-u32 field_event_get_akao_offset_in_field( u32 id )
+u32 field_event_get_akao_offset_in_field(u32 id)
 {
     events_data = w[0x8009c6dc];
     number_of_entity = bu[events_data + 0x2];

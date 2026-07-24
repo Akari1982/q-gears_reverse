@@ -4,7 +4,7 @@ int field_event_opcode_9d_setx()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("setx", 0x6);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("setx", 0x6);
 
     bank = bu[events_data + script_cur + 0x1] >> 0x4;
     addr = bu[events_data + script_cur + 0x3] + field_event_read_memory_s16(0x2, 0x3);
@@ -44,7 +44,7 @@ int field_event_opcode_9e_getx()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("getx", 0x6);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("getx", 0x6);
 
     bank = bu[events_data + script_cur + 0x1] >> 0x4;
     addr = bu[events_data + script_cur + 0x3] + field_event_read_memory_s16(0x2, 0x3);
@@ -86,7 +86,7 @@ int field_event_opcode_9f_srchx()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("srchx", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("srchx", 0x8);
 
     bank = bu[events_data + script_cur + 0x1] >> 0x4;
     start = bu[events_data + script_cur + 0x4] + field_event_read_memory_s16(0x2, 0x5);
@@ -155,7 +155,7 @@ int field_event_opcode_60_mjump()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mjump", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("mjump", 0x8);
 
     if (field_struct->cmd == FIELD_CMD_NONE)
     {
@@ -178,7 +178,7 @@ int field_event_opcode_60_mjump()
         }
     }
 
-    if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("evt cmd=", field_struct->cmd, 0x2);
+    if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("evt cmd=", field_struct->cmd, 0x2);
 
     return 0x1;
 }
@@ -191,7 +191,7 @@ int field_event_opcode_d8_pmjmp()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("pmjmp", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("pmjmp", 0x8);
 
     [0x80095dd0] = h(hu[events_data + script_cur + 0x1]);
 
@@ -206,7 +206,7 @@ int field_event_opcode_d9_pmjmp()
 {
     actor_id_cur = bu[0x800722c4];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("pmjmp", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("pmjmp", 0x8);
 
     if (h[0x800965e8] == 0x2)
     {
@@ -227,7 +227,7 @@ int field_event_opcode_20_mgame()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mgame", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("mgame", 0x8);
 
     if (field_struct->cmd == 0)
     {
@@ -264,7 +264,7 @@ int field_event_opcode_21_tutor()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("tutor", 0x1)
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("tutor", 0x1)
 
     if (field_struct->cmd == FIELD_CMD_NONE)
     {
@@ -276,13 +276,13 @@ int field_event_opcode_21_tutor()
 
         tut_id = bu[events_data + script_cur + 1];
 
-        if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("data=", tut_id, 0x2);
+        if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("data=", tut_id, 0x2);
 
         [0x800e48e0] = w(events_data + field_event_get_akao_offset_in_field(tut_id));
     }
     else if (field_struct->cmd == FIELD_CMD_MENU_MAIN)
     {
-        if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("evt result=", h[field_struct + 0x26], 0x2);
+        if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("evt result=", h[field_struct + 0x26], 0x2);
 
         if (h[field_struct + 0x26] == 0x2)
         {
@@ -306,7 +306,7 @@ int field_event_opcode_f5_mulck()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mulck", 0x1);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("mulck", 0x1);
 
     [0x800716d4] = b(bu[events_data + script_cur + 0x1]);
 
@@ -324,7 +324,7 @@ int field_event_opcode_27_bgmovie()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("bgmovie", 0x1);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("bgmovie", 0x1);
 
     field_struct->speed_up = bu[events_data + script_cur + 0x1];
 
@@ -342,7 +342,7 @@ int field_event_opcode_0e_dskcg()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("dskcg", 0x1);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("dskcg", 0x1);
 
     if (field_struct->cmd == FIELD_CMD_NONE)
     {
@@ -373,7 +373,7 @@ int field_event_opcode_69_mpdsp()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mpdsp", 0x1);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("mpdsp", 0x1);
 
     field_struct->disable_render = bu[events_data + script_cur + 0x1];
 
@@ -391,7 +391,7 @@ int field_event_opcode_fb_mvcam()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mvcam", 0x1);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("mvcam", 0x1);
 
     [field_struct + 0x39] = b(bu[events_data + script_cur + 0x1]);
 
@@ -407,7 +407,7 @@ int field_event_opcode_ff_gmovr()
     field_struct = w[0x8009c6e0];
     actor_id_cur = bu[0x800722c4];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("gmovr", 0x0);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("gmovr", 0x0);
 
     field_struct->cmd = 0x1a;
     [field_struct + 0x26] = h(0);
@@ -424,7 +424,7 @@ int field_event_opcode_d2_mpjpo()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mpjpo", 0x0);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("mpjpo", 0x0);
 
     field_struct->gateway_lock = bu[events_data + script_cur + 0x1];
 
@@ -440,7 +440,7 @@ int field_event_opcode_6e_lstmp()
     field_struct = w[0x8009c6e0];
     actor_id_cur = bu[0x800722c4];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("lstmp", 0x2);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("lstmp", 0x2);
 
     field_event_write_memory_s16(0x2, 0x2, h[field_struct + 0x64]);
 
@@ -457,13 +457,13 @@ int field_event_opcode_0f_spcal()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("spcal", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("spcal", 0x8);
 
     switch (bu[events_data + script_cur + 0x1])
     {
         case 0xff:
         {
-            if (bu[0x8009d820] & 0x3) field_debug_event_opcode("clitm", 0x8);
+            if (g_field_debug_flags & 0x3) field_debug_event_opcode("clitm", 0x8);
 
             for (int i = 0; i < 0x200; ++i) system_menu_remove_item(0xc600 | i);
 
@@ -475,7 +475,7 @@ int field_event_opcode_0f_spcal()
 
         case 0xfe:
         {
-            if (bu[0x8009d820] & 0x3) field_debug_event_opcode("rsglb", 0x8);
+            if (g_field_debug_flags & 0x3) field_debug_event_opcode("rsglb", 0x8);
 
             system_savemap_reset();
 
@@ -487,7 +487,7 @@ int field_event_opcode_0f_spcal()
 
         case 0xfd:
         {
-            if (bu[0x8009d820] & 0x3) field_debug_event_opcode("spcnm", 0x8);
+            if (g_field_debug_flags & 0x3) field_debug_event_opcode("spcnm", 0x8);
 
             u8 char_id = bu[events_data + script_cur + 0x2];
             u8 mes_id = bu[events_data + script_cur + 0x3];
@@ -501,7 +501,7 @@ int field_event_opcode_0f_spcal()
 
         case 0xfc:
         {
-            if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mvlck", 0x2);
+            if (g_field_debug_flags & 0x3) field_debug_event_opcode("mvlck", 0x2);
 
             [0x800716cc] = b(bu[events_data + script_cur + 0x2]);
 
@@ -513,7 +513,7 @@ int field_event_opcode_0f_spcal()
 
         case 0xfb: // btlck
         {
-            if (bu[0x8009d820] & 0x3) field_debug_event_opcode("btlck", 0x2);
+            if (g_field_debug_flags & 0x3) field_debug_event_opcode("btlck", 0x2);
 
             [0x80071e30] = b(bu[events_data + script_cur + 0x2]);
 
@@ -525,7 +525,7 @@ int field_event_opcode_0f_spcal()
 
         case 0xfa:
         {
-            if (bu[0x8009d820] & 0x3) field_debug_event_opcode("flitm", 0x8);
+            if (g_field_debug_flags & 0x3) field_debug_event_opcode("flitm", 0x8);
 
             for (int i = 0; i < 0x200; ++i) system_menu_add_item(0xc600 | i);
 
@@ -537,7 +537,7 @@ int field_event_opcode_0f_spcal()
 
         case 0xf9:
         {
-            if (bu[0x8009d820] & 0x3) field_debug_event_opcode("flmat", 0x8);
+            if (g_field_debug_flags & 0x3) field_debug_event_opcode("flmat", 0x8);
 
             for (int i = 0; i < 0x50; ++i) system_menu_add_materia(i);
 
@@ -549,7 +549,7 @@ int field_event_opcode_0f_spcal()
 
         case 0xf8:
         {
-            if (bu[0x8009d820] & 3) field_debug_event_opcode("smspd", 0x3);
+            if (g_field_debug_flags & 3) field_debug_event_opcode("smspd", 0x3);
 
             [0x8009c6e4 + 0x10ec] = b(~field_event_read_memory_u8(0x4, 0x3));
 
@@ -561,7 +561,7 @@ int field_event_opcode_0f_spcal()
 
         case 0xf7:
         {
-            if (bu[0x8009d820] & 0x3) field_debug_event_opcode("gmspd", 0x3);
+            if (g_field_debug_flags & 0x3) field_debug_event_opcode("gmspd", 0x3);
 
             field_event_write_memory_u8(0x4, 0x3, (~bu[0x8009c6e4 + 0x10ec]) & 0xff);
 
@@ -573,7 +573,7 @@ int field_event_opcode_0f_spcal()
 
         case 0xf6:
         {
-            if (bu[0x8009d820] & 0x3) field_debug_event_opcode("pname", 0x8);
+            if (g_field_debug_flags & 0x3) field_debug_event_opcode("pname", 0x8);
 
             name = system_menu_get_char_name(field_event_read_memory_u8(0x3, 0x3));
 
@@ -616,7 +616,7 @@ int field_event_opcode_0f_spcal()
 
         case 0xf5:
         {
-            if (bu[0x8009d820] & 0x3) field_debug_event_opcode("arrow", 0x8);
+            if (g_field_debug_flags & 0x3) field_debug_event_opcode("arrow", 0x8);
 
             [0x80071c1c] = b(bu[events_data + script_cur + 0x2]);
 
@@ -628,7 +628,7 @@ int field_event_opcode_0f_spcal()
 
         default:
         {
-            if (bu[0x8009d820] & 0x3) field_debug_event_opcode("?????", 0x8);
+            if (g_field_debug_flags & 0x3) field_debug_event_opcode("?????", 0x8);
 
             [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x2);
 
@@ -646,9 +646,9 @@ int field_event_opcode_49_menu()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("menu", 0x3);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("menu", 0x3);
 
-    if (bu[0x8009d820] & 0x3)
+    if (g_field_debug_flags & 0x3)
     {
         field_debug_add_parse_value_to_page2("evt cmd=", field_struct->cmd, 0x2);
     }
@@ -682,7 +682,7 @@ int field_event_opcode_49_menu()
         return 0x1;
     }
 
-    if (bu[0x8009d820] & 0x3)
+    if (g_field_debug_flags & 0x3)
     {
         field_debug_add_parse_value_to_page2("evt result=", h[field_struct + 0x26], 0x1);
     }
@@ -708,7 +708,7 @@ int field_event_opcode_4a_menu()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("menu", 0x1);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("menu", 0x1);
 
     [field_struct + 0x34] = b(bu[events_data + script_cur + 0x1]);
 

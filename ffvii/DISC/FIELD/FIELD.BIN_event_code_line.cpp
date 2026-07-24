@@ -8,7 +8,7 @@ int field_event_opcode_d0_line()
 
     u8 line_id = h[0x80095d84];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("line", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("line", 0x8);
 
     if (line_id < 0x20)
     {
@@ -41,7 +41,7 @@ int field_event_opcode_d3_sline()
 {
     actor_id_cur = bu[0x800722c4];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("sline", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("sline", 0x8);
 
     u8 line_id = bu[0x8007078c + actor_id_cur];
 
@@ -65,7 +65,7 @@ int field_event_opcode_d1_linon()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("linon", 0x1);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("linon", 0x1);
 
     u8 line_id = bu[0x8007078c + actor_id_cur];
 
@@ -87,7 +87,7 @@ int field_event_opcode_2b_slip()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("slip", 0x1);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("slip", 0x1);
 
     u8 line_id = bu[0x8007078c + actor_id_cur];
     g_field_lines[line_id].slip = bu[events_data + script_cur + 0x1];

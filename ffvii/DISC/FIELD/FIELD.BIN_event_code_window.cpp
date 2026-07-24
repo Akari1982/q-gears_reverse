@@ -4,7 +4,7 @@ int field_event_opcode_40_mes()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mes", 0x2);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("mes", 0x2);
 
     if (field_dialog_message_update_states(bu[events_data + script_cur + 0x1], bu[events_data + script_cur + 0x2]) == 0)
     {
@@ -24,7 +24,7 @@ int field_event_opcode_43_mpnam()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mpnam", 0x1);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("mpnam", 0x1);
 
     copy_dialog_to_map_name(bu[events_data + script_cur + 0x1]);
 
@@ -42,7 +42,7 @@ int field_event_opcode_48_ask()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("ask", 0x6);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("ask", 0x6);
 
     [SP + 0x18] = h(field_event_read_memory_u8(0x2, 0x6));
 
@@ -77,7 +77,7 @@ int field_event_opcode_2e_wcls()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("wcls!", 0);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("wcls!", 0);
 
     window_id = bu[events_data + script_cur + 0x1];
 
@@ -102,7 +102,7 @@ int field_event_opcode_2f_wsizw()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("wsizw", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("wsizw", 0x8);
 
     window_id = bu[events_data + script_cur + 1];
     actor_id = bu[0x8008326c + window_id];
@@ -128,7 +128,7 @@ int field_event_opcode_50_wsize()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("wsize", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("wsize", 0x8);
 
     u8 window_id = bu[events_data + script_cur + 0x1];
     s16 x = h[events_data + script_cur + 0x2];
@@ -150,7 +150,7 @@ int field_event_opcode_55_wrow()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("wrow", 0x2);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("wrow", 0x2);
 
     u8 window_id = bu[events_data + script_cur + 0x1];
     field_dialog_set_window_height(window_id, (bu[events_data + script_cur + 0x2] << 0x4) | 0x9);
@@ -168,7 +168,7 @@ int field_event_opcode_51_wmove()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("wmove", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("wmove", 0x8);
 
     u8 window_id = bu[events_data + script_cur + 0x1];
     s16 x = h[events_data + script_cur + 0x2];
@@ -188,7 +188,7 @@ int field_event_opcode_53_wrest()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("wrest", 0x1);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("wrest", 0x1);
 
     field_window_reset(bu[events_data + script_cur + 0x1]);
 
@@ -205,7 +205,7 @@ int field_event_opcode_54_wclse()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("wclse", 0x1);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("wclse", 0x1);
 
     if (field_window_set_state_to_close(bu[events_data + script_cur + 0x1]) == 0)
     {
@@ -225,7 +225,7 @@ int field_event_opcode_52_wmode()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("wmode", 0x3);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("wmode", 0x3);
 
     u8 window_id = bu[events_data + script_cur + 0x1];
     u8 style = bu[events_data + script_cur + 0x2];
@@ -245,7 +245,7 @@ int field_event_opcode_41_mpara()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mpara", 0x4);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("mpara", 0x4);
 
     u8 window_id = bu[events_data + script_cur + 0x2];
     V0 = field_event_read_memory_u8(0x1, 0x3);
@@ -266,7 +266,7 @@ int field_event_opcode_42_mpra2()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mpra2", 0x5);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("mpra2", 0x5);
 
     u8 window_id = bu[events_data + script_cur + 0x2];
     V0 = field_event_read_memory_u8(0x1, 0x3);
@@ -287,7 +287,7 @@ int field_event_opcode_36_wspcl()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("wspcl", 0x5);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("wspcl", 0x5);
 
     u8 window_id = bu[events_data + script_cur + 0x1];
 
@@ -308,7 +308,7 @@ int field_event_opcode_37_wnumb()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("wnumb", 0x7);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("wnumb", 0x7);
 
     u8 window_id = bu[events_data + script_cur + 0x2];
 
@@ -326,7 +326,7 @@ int field_event_opcode_56_gwcol()
 {
     actor_id_cur = bu[0x800722c4];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("gwcol", 0x6);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("gwcol", 0x6);
 
     u8 id = field_event_read_memory_u8(0x1, 0x3);
     field_event_write_memory_u8(0x2, 0x4, bu[0x80049208 + id * 0x3 + 0x0]);
@@ -344,7 +344,7 @@ int field_event_opcode_57_swcol()
 {
     actor_id_cur = bu[0x800722c4];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("swcol", 0x6);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("swcol", 0x6);
 
     u8 id = field_event_read_memory_u8(0x1, 0x3);
     [0x80049208 + id * 0x3 + 0x0] = b(field_event_read_memory_u8(0x2, 0x4));

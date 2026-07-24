@@ -18,6 +18,7 @@ struct FieldDebugPage
     u8 state;               // 178 (2 - hide, 1 - not inited, 0 - render)
 }
 
+u8 g_field_debug_event_run;                     // 0x80070788
 u8 g_field_debug_cur_page;                      // 0x80071c08
 
 bool g_field_debug_dirty;                       // 0x8009d824
@@ -40,6 +41,9 @@ u32 g_field_debug_ot[0x2][0x7];                 // 0x800e41c8
 u16 g_field_debug_clut[0x8];                    // 0x800e4200
 u16 g_field_debug_transp;                       // 0x800e4210
 
+u8 g_field_debug_event_type;                    // 0x80099ffc
+
+u8 g_field_debug_flags;                         // 0x8009d820
 
 
 void field_debug_init_buffers()
@@ -123,12 +127,12 @@ void field_debug_page_inits()
     field_debug_page_add_string_to_next_row(0x1, "Actor:");
     field_debug_page_hide(0x1);
 
-    [0x80099ffc] = b(0x3);
+    g_field_debug_event_type = 0x3;
     [0x8007ebcc] = b(0x4);
     [0x8007ebdc] = b(0x8);
     [0x80071e24] = b(0);
-    [0x8009d820] = b(0);
-    [0x80070788] = b(0);
+    g_field_debug_flags = 0;
+    g_field_debug_event_run = 0;
     g_field_debug_cur_page = 0x5;
 
     field_debug_page_set_head_row(0x5, 0x4);

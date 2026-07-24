@@ -241,25 +241,25 @@
                     c - 
                     d - we not load mim to vram (maybe it's already there) (reload field?)
 
-80099ffc [] script related. In script function.
+0x80099ffc [] script related. In script function.
             3 - set when init debug.
             4 - set when there is an error in event script (bad opcode, bad arguments, too many lines, no message data).
             5 - if set then we pause script after each opcode for debug.
 
-8009a048 array of states for KAWAI (0x10 items 0x1 size). Used in 0xd kawai opcode. Init with -1.
+0x8009a048 array of states for KAWAI (0x10 items 0x1 size). Used in 0xd kawai opcode. Init with -1.
 
-8009a058 []       save current opcode here.
-8009a05c field id to load (and current field id).
-8009a060
-8009a064 [][][][] script related. In script function. We increase this every opcode (maybe number of proseed opcodes). We go to next actor after 8 of this.
+0x8009a058 []       save current opcode here.
+0x8009a05c field id to load (and current field id).
+0x8009a060
+0x8009a064 [][][][] script related. In script function. We increase this every opcode (maybe number of proseed opcodes). We go to next actor after 8 of this.
 
-8009a074 structures for fade (size 0x30). Index for using fade structure here 80075dec.
+0x8009a074 structures for fade (size 0x30). Index for using fade structure here 80075dec.
 
-8009a100 manual or auto scroll. If 1 then this is manual scroll. 0 - we auto scroll to PC.
+0x8009a100 manual or auto scroll. If 1 then this is manual scroll. 0 - we auto scroll to PC.
 
 0x8009a1c4 array of current priority slot used by actors (size 0x01).
 
-8009a1f4 array of movie settings. This is "\MINT\MOVIE_ID.BIN;1" file (0x14 size)
+0x8009a1f4 array of movie settings. This is "\MINT\MOVIE_ID.BIN;1" file (0x14 size)
        0        4        8    a    c    e    10   12
     0  E4F80100 D8130400 0000 0000 4001 8000 2C00 0200          fship2.avi 	Clouds rolling
     1  67F90100 84260400 0000 0000 4001 8000 2C00 0200          
@@ -1496,23 +1496,23 @@
 0x80114470 [][] field dialog value which content value how mush characters add at current character copy. (size 0x08 0x2).
 0x80114480 [][] field dialog OK button speed modificator. (size 0x08 0x2).
 
-80114488 [][]     movie played (1 - played).
+0x80114488 [][]     movie played (1 - played).
 
-8011448c [][][][] number of draw mode packets for background prims inited.
+0x8011448c [][][][] number of draw mode packets for background prims inited.
 
-80114490 buffer index for something like array or triangles.
+0x80114490 buffer index for something like array or triangles.
 
-80114498 array of debug actors opcodes and data (1) or not (0) (size 0x1).
+0x80114498 array of debug actors opcodes and data (1) or not (0) (size 0x1).
 
-801144cc [][] store which side we cross here during field_entity_walkmech_cross if we cant cross board (0 - BA, 1 - CB, 2 - AC).
+0x801144cc [][] store which side we cross here during field_entity_walkmech_cross if we cant cross board (0 - BA, 1 - CB, 2 - AC).
 
-801144dc [][] temp variable string. First we write variable here and then copy it to window string. (size 0x10).
+0x801144dc [][] temp variable string. First we write variable here and then copy it to window string. (size 0x10).
 
-8011451c array of current variable read offset. (size 0x2).
+0x8011451c array of current variable read offset. (size 0x2).
 
-80114fe4 temp storage for DAT file after load.
+0x80114fe4 temp storage for DAT file after load.
 
-80128000 address for temp load of different textures.
+0x80128000 address for temp load of different textures.
     MIM files stored here before parse.
     FIELD.TDB (this is global textures for models)
 

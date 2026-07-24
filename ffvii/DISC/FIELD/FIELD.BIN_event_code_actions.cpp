@@ -6,7 +6,7 @@ int field_event_opcode_08_join()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 2];
 
-    if (bu[0x8009d820] & 3) field_debug_event_opcode("join", 0x1);
+    if (g_field_debug_flags & 3) field_debug_event_opcode("join", 0x1);
 
     [0x800e48f0] = b(actor_id_cur);
 
@@ -92,7 +92,7 @@ int field_event_opcode_09_split()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 2];
 
-    if (bu[0x8009d820] & 3) field_debug_event_opcode("split", 0x8);
+    if (g_field_debug_flags & 3) field_debug_event_opcode("split", 0x8);
 
     [0x800e48f0] = b(actor_id_cur);
 
@@ -189,7 +189,7 @@ int field_event_join_set(u8 actor_id, u8 speed)
 
     leader_actor_id = bu[0x8009ad30 + leader_char_id];
 
-    if (bu[0x8009d820] & 0x3)
+    if (g_field_debug_flags & 0x3)
     {
         field_debug_add_parse_value_to_page2("join p0=", leader_actor_id, 0x2);
         field_debug_add_parse_value_to_page2("join p1=", actor_id, 0x2);
@@ -242,7 +242,7 @@ int field_event_join_set(u8 actor_id, u8 speed)
 
             [0x80081d90 + actor_id] = b(0x1);
 
-            if (bu[0x8009d820] & 3) field_debug_add_parse_value_to_page2("end setmove", 0, 0);
+            if (g_field_debug_flags & 3) field_debug_add_parse_value_to_page2("end setmove", 0, 0);
         }
     }
     else if (state == 0x3)
@@ -259,7 +259,7 @@ int field_event_split_set(u8 actor_id, s16 x, s16 y, u8 new_dir, u8 steps)
 {
     entities_data = w[0x8009c544];
 
-    if (bu[0x8009d820] & 3) field_debug_add_parse_value_to_page2("split p1=", actor_id, 0x2);
+    if (g_field_debug_flags & 3) field_debug_add_parse_value_to_page2("split p1=", actor_id, 0x2);
 
     if (actor_id == 0xff) return 1; // finished
 
@@ -313,7 +313,7 @@ int field_event_split_join_set_move(u8 actor_id, s16 x, s16 y, u8 steps, u8 from
     leader_actor_id = bu[0x8009ad30 + leader_char_id];
     if (leader_actor_id == 0xff) return;
 
-    if (bu[0x8009d820] & 3)
+    if (g_field_debug_flags & 3)
     {
         field_debug_add_parse_value_to_page2("set move x=", x, 0x4);
         field_debug_add_parse_value_to_page2("set move y=", y, 0x4);
@@ -405,7 +405,7 @@ int field_event_split_join_end_move(u8 actor_id)
     // if action not finished
     if (h[entities_data + entity_id * 0x84 + 0x6a] != 0x2) return 0;
 
-    if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("end move", 0, 0);
+    if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("end move", 0, 0);
 
     [entities_data + entity_id * 0x84 + 0x5d] = b(0);
     [entities_data + entity_id * 0x84 + 0x6a] = h(0);
@@ -422,7 +422,7 @@ int field_event_split_join_set_turn(u8 actor_id, u8 cur_dir, u8 new_dir)
 {
     entities_data = w[0x8009c544];
 
-    if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("set turn=", new_dir, 0x2);
+    if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("set turn=", new_dir, 0x2);
 
     entity_id = bu[0x8007eb98 + actor_id];
 
@@ -471,7 +471,7 @@ int field_event_split_join_end_turn(u8 actor_id)
     // if action not finished
     if (bu[entities_data + entity_id * 0x84 + 0x3b] != 0x3) return 0;
 
-    if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("end turn", 0, 0);
+    if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("end turn", 0, 0);
 
     [entities_data + entity_id * 0x84 + 0x39] = b(0); // number of steps for turn
     [entities_data + entity_id * 0x84 + 0x3a] = b(0); // current step for turn

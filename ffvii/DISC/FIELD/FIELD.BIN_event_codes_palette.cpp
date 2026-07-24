@@ -4,7 +4,7 @@ int field_event_opcode_e5_stpal()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("stpal", 0x4);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("stpal", 0x4);
 
     RECT rect;
     field_event_rect_clear(&rect);
@@ -28,7 +28,7 @@ int field_event_opcode_eb_stpls()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("stpls", 0x4);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("stpls", 0x4);
 
     RECT rect;
     field_event_rect_clear(&rect);
@@ -52,7 +52,7 @@ int field_event_opcode_e6_ldpal()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("ldpal", 0x4);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("ldpal", 0x4);
 
     RECT rect;
     field_event_rect_clear(&rect);
@@ -76,7 +76,7 @@ int field_event_opcode_ec_ldpls()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("ldpls", 0x4);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("ldpls", 0x4);
 
     RECT rect;
     field_event_rect_clear(&rect);
@@ -110,7 +110,7 @@ int field_event_opcode_e7_cppal()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("cppal", 0x4);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("cppal", 0x4);
 
     u8 src_id = field_event_read_memory_u8(0x1, 0x2);
     u8 dst_id = field_event_read_memory_u8(0x2, 0x3);
@@ -134,7 +134,7 @@ int field_event_opcode_ed_cppal()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("cppal", 0x7);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("cppal", 0x7);
 
     u8 src_id = bu[events_data + script_cur + 0x3];
     u8 dst_id = bu[events_data + script_cur + 0x4];
@@ -162,7 +162,7 @@ int field_event_opcode_e8_rtpal()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("rtpal", 0x6);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("rtpal", 0x6);
 
     u8 dst_id = field_event_read_memory_u8(0x1, 0x3);
     u8 src_id = field_event_read_memory_u8(0x2, 0x4);
@@ -196,7 +196,7 @@ int field_event_opcode_ee_rtpal()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("rtpal", 0x7);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("rtpal", 0x7);
 
     u8 dst_id = bu[events_data + script_cur + 0x3];
     u8 src_id = bu[events_data + script_cur + 0x4];
@@ -231,7 +231,7 @@ int field_event_opcode_e9_adpal()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("adpal", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("adpal", 0x8);
 
     u8 src_id = field_event_read_memory_u8(0x1, 0x4);
     u8 dst_id = field_event_read_memory_u8(0x2, 0x5);
@@ -282,7 +282,7 @@ int field_event_opcode_ef_adpal()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("adpal", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("adpal", 0x8);
 
     u8 src_id = bu[events_data + script_cur + 0x4];
     u8 dst_id = bu[events_data + script_cur + 0x5];
@@ -334,7 +334,7 @@ int field_event_opcode_ea_mppal()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mppal", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("mppal", 0x8);
 
     u8 src_id = field_event_read_memory_u8(0x1, 0x4);
     u8 dst_id = field_event_read_memory_u8(0x2, 0x5);
@@ -380,7 +380,7 @@ int field_event_opcode_df_mppal()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mppal", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("mppal", 0x8);
 
     u8 src_id = bu[events_data + script_cur + 0x4];
     u8 dst_id = bu[events_data + script_cur + 0x5];

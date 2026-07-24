@@ -110,25 +110,25 @@ void field_dialog_set_size(u8 window_id, s16 x, s16 y, s16 w, s16 h)
     if (x < 0x8)
     {
         x = 0x8;
-        if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("win limit x=", 0x2);
+        if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("win limit x=", 0x2);
     }
 
     if ((x + w) >= 0x139)
     {
         x = 0x138 - w;
-        if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("win limit x=", 0x3);
+        if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("win limit x=", 0x3);
     }
 
     if (y < 0x8)
     {
         y = 0x8;
-        if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("win limit y=", 0x2);
+        if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("win limit y=", 0x2);
     }
 
     if ((y + h) >= 0xe1)
     {
         y = 0xe0 - h;
-        if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("win limit y=", 0x3);
+        if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("win limit y=", 0x3);
     }
 
     [0x80083274 + window_id * 0x30 + 0x4] = h(x);
@@ -193,7 +193,7 @@ int field_dialog_message_update_states(window_id, message_id)
         case 0xd:
         {
             V0 = w[0x8009c6e0];
-            if (w[V0 + 0x80] & 0020)
+            if (w[V0 + 0x80] & 0x0020)
             {
                 [0x80083274 + window_id * 0x30 + 0x2c] = h(0x2);
             }
@@ -216,7 +216,7 @@ int field_dialog_message_update_states(window_id, message_id)
         case 0x4:
         {
             V0 = w[0x8009c6e0];
-            if (w[V0 + 0x80] & 0020)
+            if (w[V0 + 0x80] & 0x0020)
             {
                 height = h[0x80083274 + window_id * 0x30 + 0xa];
                 cur_row = h[0x80083274 + window_id * 0x30 + 0x16];
@@ -583,8 +583,7 @@ if (messages == 0) // if there is no dialogs in this field
 
 if (b[0x8008326c + window_id] != -1) // parent exist
 {
-    if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("mes busy=", window_id, 0x1);
-
+    if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("mes busy=", window_id, 0x1);
     return 0;
 }
 
@@ -634,10 +633,7 @@ window_id = A0;
 
 if (bu[0x8008326C + window_id] != bu[0x800722c4])
 {
-    if (bu[0x8009d820] & 0x3)
-    {
-        field_debug_add_parse_value_to_page2("mes busy=", window_id, 0x1);
-    }
+    if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("mes busy=", window_id, 0x1);
     return;
 }
 
@@ -679,8 +675,7 @@ window_id = A0;
 
 if (bu[0x8008326c + window_id] != bu[0x800722c4])
 {
-    if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("mes busy=", window_id, 0x1);
-
+    if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("mes busy=", window_id, 0x1);
     return;
 }
 
@@ -971,7 +966,7 @@ for (; S5 < h[0x80114470 + window_id * 0x2];)
                     {
                         S0 = field_dialog_get_variable_from_bank(window_id);
 
-                        if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("mpara=", S0 & 0xffff, 0x4);
+                        if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("mpara=", S0 & 0xffff, 0x4);
 
                         V0 = w[0x800e4234 + window_id * 0x4];
                         V1 = bu[V0 + 0x1];
@@ -1068,17 +1063,10 @@ for (; S5 < h[0x80114470 + window_id * 0x2];)
                         gstr = hu[A0 + 0x1];
                         glen = hu[A0 + 3];
 
-                        if (bu[0x8009d820] & 0x3)
+                        if (g_field_debug_flags & 0x3)
                         {
-                            A0 = 0x800a1100; // "gstr="
-                            A1 = gstr;
-                            A2 = 0x4;
-                            field_debug_add_parse_value_to_page2();
-
-                            A0 = 0x800a1108; // "glen="
-                            A1 = glen;
-                            A2 = 0x4;
-                            field_debug_add_parse_value_to_page2();
+                            field_debug_add_parse_value_to_page2("gstr=", gstr, 0x4);
+                            field_debug_add_parse_value_to_page2("glen=", glen, 0x4);
                         }
 
                         int i = 0;
@@ -1216,13 +1204,7 @@ window_id = A0;
 
 if (bu[0x8008326c + window_id] != bu[0x800722c4])
 {
-    if (bu[0x8009d820] & 0x3)
-    {
-        A0 = 0x800a10ec; // "mes busy="
-        A1 = window_id
-        A2 = 1;
-        field_debug_add_parse_value_to_page2();
-    }
+    if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("mes busy=", window_id, 0x1);
     return;
 }
 
@@ -1245,13 +1227,7 @@ window_id = A0;
 
 if (bu[0x8008326c + window_id] != bu[0x800722c4])
 {
-    if (bu[0x8009d820] & 0x3)
-    {
-        A0 = 0x800a10ec; // "mes busy="
-        A1 = window_id
-        A2 = 1;
-        field_debug_add_parse_value_to_page2();
-    }
+    if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("mes busy=", window_id, 0x1);
     return;
 }
 

@@ -5,7 +5,7 @@ int field_event_opcode_f8_pmvie()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("pmvie", 0x1);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("pmvie", 0x1);
 
     if (bu[0x800716cc] != 0)
     {
@@ -42,7 +42,7 @@ int field_event_opcode_f9_movie()
     field_struct = w[0x8009c6e0];
     actor_id_cur = bu[0x800722c4];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("movie", 0);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("movie", 0);
 
     [0x80071c1c] = b(0x1);
 
@@ -89,7 +89,7 @@ int field_event_opcode_fa_mvief()
     field_struct = w[0x8009c6e0];
     actor_id_cur = bu[0x800722c4];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mvief", 0x2);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("mvief", 0x2);
 
     if (bu[0x800716cc] == 0)
     {

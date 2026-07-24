@@ -5,7 +5,7 @@ int field_event_opcode_25_nfade()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("nfade", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("nfade", 0x8);
 
     field_struct->fade_type = bu[events_data + script_cur + 0x3];
     field_struct->fade_steps = 0;
@@ -29,7 +29,7 @@ int field_event_opcode_6b_fade()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("fade", 0x8);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("fade", 0x8);
 
     field_struct->fade_type = bu[events_data + script_cur + 0x7];
 
@@ -73,7 +73,7 @@ int field_event_opcode_6c_fadew()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("fadew", 0x0);
+    if (g_field_debug_flags & 0x3) field_debug_event_opcode("fadew", 0x0);
 
     switch (field_struct->fade_type)
     {

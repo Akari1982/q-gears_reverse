@@ -12,7 +12,7 @@ void field_event_init(FieldControl* field_struct, entities_data, events_data)
     if ((field_struct->btn_pressed >> 0x10) & BUTTON_SELECT)
     {
         [0x80095dcc] = b(0x1);
-        [0x80099ffc] = b(0x4); // script related
+        g_field_debug_event_type = 0x4;
     }
 
     // file version check
@@ -77,7 +77,7 @@ void field_event_update(u32 ot)
         }
     }
 
-    if ((bu[0x80099ffc] != 0x4) && ((bu[0x80099ffc] != 0x5) || (bu[0x80070788] != 0)))
+    if ((g_field_debug_event_type != 0x4) && ((g_field_debug_event_type != 0x5) || (g_field_debug_event_run != 0)))
     {
         field_event_opcode_cycle();
     }
@@ -527,9 +527,9 @@ void field_event_opcode_cycle()
             for (int left_o = 0x8; left_o != 0; --left_o)
             {
                 // clean page 3 for opcode debug
-                if (bu[0x80099ffc] == 0x5)
+                if (g_field_debug_event_type == 0x5)
                 {
-                    if (bu[0x8009d820] & 0x1) // debug
+                    if (g_field_debug_flags & 0x1) // debug
                     {
                         actor_id_cur = bu[0x800722c4];
                         if (((bu[0x80071e24] & 0x4) == 0) || (bu[0x80114498 + actor_id_cur] != 0)) // if we want to debug actor data
@@ -552,10 +552,10 @@ void field_event_opcode_cycle()
 
                 if (V0 == 0) // continue exec
                 {
-                    if (bu[0x80099ffc] != 0x5) continue;
+                    if (g_field_debug_event_type != 0x5) continue;
 
                     // not debug
-                    if ((bu[0x8009d820] & 0x1) == 0) continue;
+                    if ((g_field_debug_flags & 0x1) == 0) continue;
 
                     if (bu[0x80071e24] & 0x4)
                     {
@@ -573,10 +573,10 @@ void field_event_opcode_cycle()
                 }
                 else // break flow
                 {
-                    if (bu[0x80099ffc] != 0x5) break;
+                    if (g_field_debug_event_type != 0x5) break;
 
                     // not debug
-                    if ((bu[0x8009d820] & 0x1) == 0) break;
+                    if ((g_field_debug_flags & 0x1) == 0) break;
 
                     if (bu[0x80071e24] & 0x4)
                     {
@@ -587,7 +587,7 @@ void field_event_opcode_cycle()
                     [0x800722c4] = b(bu[0x800722c4] + 0x1);
                 }
 
-                if (bu[0x80099ffc] == 0x5) [0x80070788] = b(0); // stop script update
+                if (g_field_debug_event_type == 0x5) g_field_debug_event_run = 0;
 
                 field_script_update_animation_state();
 
@@ -597,7 +597,7 @@ void field_event_opcode_cycle()
 
         [0x800722c4] = b(bu[0x800722c4] + 0x1);
 
-        if (bu[0x80099ffc] == 0x5)
+        if (g_field_debug_event_type == 0x5)
         {
             if (bu[0x80071e24] & 0x1)
             {
@@ -609,7 +609,7 @@ void field_event_opcode_cycle()
         }
     }
 
-    if (bu[0x80099ffc] == 0x5) [0x80070788] = b(0); // stop script update
+    if (g_field_debug_event_type == 0x5) g_field_debug_event_run = 0;
 
     field_script_update_animation_state();
 }
@@ -749,7 +749,7 @@ int field_event_request_run(s16 actor_id, u8 req_priority, u8 event_id)
     actors_n = bu[events_data + 0x2];
     akao_n = h[events_data + 0x6];
 
-    if (bu[0x8009d820] & 0x3)
+    if (g_field_debug_flags & 0x3)
     {
         string = 0x800e4288;
         switch(event_id)
@@ -767,7 +767,7 @@ int field_event_request_run(s16 actor_id, u8 req_priority, u8 event_id)
 
     if (req_priority >= cur_priority) // if requested priority lower or equal to current then ignore request
     {
-        if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("=ignored", 0, 0);
+        if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("=ignored", 0, 0);
 
         return 0;
     }
@@ -800,11 +800,11 @@ int field_event_request_run(s16 actor_id, u8 req_priority, u8 event_id)
 
         [0x800716dc + actor_id * 0x2] = h(0); // reset wait
 
-        if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("=recieved", 0, 0);
+        if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("=recieved", 0, 0);
     }
     else
     {
-        if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("=ret", 0, 0);
+        if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("=ret", 0, 0);
     }
     return 1;
 }
@@ -1425,7 +1425,7 @@ void field_debug_event_opcode(u8* opcode_name, u8 args_n)
     field_debug_string_copy(string, "Word:");
     field_debug_string_concat(string, opcode_name);
 
-    if (bu[0x8009d820] & 0x1) field_debug_page_set_string_to_row(0x3, 0, string);
+    if (g_field_debug_flags & 0x1) field_debug_page_set_string_to_row(0x3, 0, string);
 
     args_max = args_n + 0x1;
 
@@ -1439,7 +1439,7 @@ void field_debug_event_opcode(u8* opcode_name, u8 args_n)
         field_debug_string_u16hex(bu[events_data + script_cur + args_max - args_n], temp);
         field_debug_string_concat(string, temp);
 
-        if (bu[0x8009d820] & 0x1) field_debug_page_set_string_to_row(0x3, args_max - args_n, string);
+        if (g_field_debug_flags & 0x1) field_debug_page_set_string_to_row(0x3, args_max - args_n, string);
     }
 }
 
@@ -1478,9 +1478,9 @@ void field_debug_add_parse_value_to_page2(param, value, val_size)
 
     field_debug_string_concat(string, temp);
 
-    if (bu[0x8009d820] & 0x1) field_debug_page_add_string_to_next_row(0x2, string);
+    if (g_field_debug_flags & 0x1) field_debug_page_add_string_to_next_row(0x2, string);
 
-    if (bu[0x8009d820] & 0x2) funcd4840(string); // empty. Was used for debug
+    if (g_field_debug_flags & 0x2) funcd4840(string); // empty. Was used for debug
 }
 
 
@@ -1506,7 +1506,7 @@ u8 field_event_read_memory_u8(u8 bank_id, u8 ofs)
         case 0x0:
         {
             u8 value = bu[events_data + script_cur + ofs];
-            if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("G cons=", value, 0x2);
+            if (g_field_debug_flags & 0x3) field_debug_add_parse_value_to_page2("G cons=", value, 0x2);
             return value;
         }
 
@@ -1516,7 +1516,7 @@ u8 field_event_read_memory_u8(u8 bank_id, u8 ofs)
             u8 indx = bu[events_data + script_cur + ofs];
             u8 value = bu[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3) // debug
+            if (g_field_debug_flags & 0x3) // debug
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G glov=", value, 0x2);
@@ -1530,7 +1530,7 @@ u8 field_event_read_memory_u8(u8 bank_id, u8 ofs)
             u8 indx = bu[events_data + script_cur + ofs] | 0x100;
             u8 value = bu[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3) // debug
+            if (g_field_debug_flags & 0x3) // debug
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G glov=", value, 0x2);
@@ -1544,7 +1544,7 @@ u8 field_event_read_memory_u8(u8 bank_id, u8 ofs)
             u8 indx = bu[events_data + script_cur + ofs] | 0x200;
             u8 value = bu[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3) // debug
+            if (g_field_debug_flags & 0x3) // debug
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G glov=", value, 0x2);
@@ -1558,7 +1558,7 @@ u8 field_event_read_memory_u8(u8 bank_id, u8 ofs)
             u8 indx = bu[events_data + script_cur + ofs] | 0x300;
             u8 value = bu[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G glov=", value, 0x2);
@@ -1572,7 +1572,7 @@ u8 field_event_read_memory_u8(u8 bank_id, u8 ofs)
             u8 indx = bu[events_data + script_cur + ofs] | 0x400;
             u8 value = bu[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G glov=", value, 0x2);
@@ -1586,7 +1586,7 @@ u8 field_event_read_memory_u8(u8 bank_id, u8 ofs)
             u8 indx = bu[events_data + script_cur + ofs];
             u8 value = bu[0x80075e24 + indx];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G mapv=", value, 0x2);
@@ -1596,7 +1596,7 @@ u8 field_event_read_memory_u8(u8 bank_id, u8 ofs)
 
         default:
         {
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G data err=", bank, 0x2);
             }
@@ -1637,7 +1637,7 @@ void field_event_write_memory_u8(s16 bank_id, s16 ofs, s8 value)
             u8 indx = bu[events_data + script_cur + ofs];
             [0x8009d288 + indx] = b(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
@@ -1651,7 +1651,7 @@ void field_event_write_memory_u8(s16 bank_id, s16 ofs, s8 value)
             u8 indx = bu[events_data + script_cur + ofs] | 0x100;
             [0x8009d288 + indx] = b(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
@@ -1665,7 +1665,7 @@ void field_event_write_memory_u8(s16 bank_id, s16 ofs, s8 value)
             u8 indx = bu[events_data + script_cur + ofs] | 0x200;
             [0x8009d288 + indx] = b(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
@@ -1679,7 +1679,7 @@ void field_event_write_memory_u8(s16 bank_id, s16 ofs, s8 value)
             u8 indx = bu[events_data + script_cur + ofs] | 0x300;
             [0x8009d288 + indx] = b(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
@@ -1693,7 +1693,7 @@ void field_event_write_memory_u8(s16 bank_id, s16 ofs, s8 value)
             u8 indx = bu[events_data + script_cur + ofs] | 0x400;
             [0x8009d288 + indx] = b(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
@@ -1707,7 +1707,7 @@ void field_event_write_memory_u8(s16 bank_id, s16 ofs, s8 value)
             u8 indx = bu[events_data + script_cur + ofs];
             [0x80075e24 + indx] = b(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S mapv=", value, 0x2);
@@ -1716,7 +1716,7 @@ void field_event_write_memory_u8(s16 bank_id, s16 ofs, s8 value)
 
         default:
         {
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S data err=", bank, 0x2);
             }
@@ -1751,7 +1751,7 @@ s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
         {
             u16 value = hu[events_data + script_cur + ofs];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G cons=", value, 0x4);
             }
@@ -1764,7 +1764,7 @@ s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
             u32 indx = bu[events_data + script_cur + ofs];
             u16 value = bu[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
@@ -1778,7 +1778,7 @@ s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
             u32 indx = bu[events_data + script_cur + ofs];
             u16 value = hu[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
@@ -1792,7 +1792,7 @@ s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
             u32 indx = bu[events_data + script_cur + ofs] | 0x100;
             u16 value = bu[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
@@ -1806,7 +1806,7 @@ s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
             u32 indx = bu[events_data + script_cur + ofs] | 0x100;
             u16 value = h[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
@@ -1820,7 +1820,7 @@ s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
             u32 indx = bu[events_data + script_cur + ofs] | 0x200;
             u16 value = bu[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
@@ -1834,7 +1834,7 @@ s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
             u32 indx = bu[events_data + script_cur + ofs] | 0x200;
             u16 value = hu[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
@@ -1848,7 +1848,7 @@ s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
             u32 indx = bu[events_data + script_cur + ofs] | 0x300;
             u16 value = bu[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
@@ -1862,7 +1862,7 @@ s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
             u32 indx = bu[events_data + script_cur + ofs] | 0x300;
             u16 value = h[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
@@ -1876,7 +1876,7 @@ s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
             u32 indx = bu[events_data + script_cur + ofs] | 0x400;
             u16 value = bu[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
@@ -1890,7 +1890,7 @@ s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
             u32 indx = bu[events_data + script_cur + ofs] | 0x400;
             u16 value = hu[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
@@ -1904,7 +1904,7 @@ s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
             u32 indx = bu[events_data + script_cur + ofs];
             u16 value = bu[0x80075e24 + indx];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G mapv=", value, 0x4);
@@ -1918,7 +1918,7 @@ s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
             u32 indx = bu[events_data + script_cur + ofs];
             u16 value = hu[0x80075e24 + indx];
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("G mapv=", value, 0x4);
@@ -1928,7 +1928,7 @@ s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
 
         default:
         {
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G data err=", bank, 0x2);
             }
@@ -1969,7 +1969,7 @@ void field_event_write_memory_s16(s16 bank_id, s16 ofs, s16 value)
             u8 indx = bu[events_data + script_cur + ofs];
             [0x8009d288 + indx] = b(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
@@ -1982,7 +1982,7 @@ void field_event_write_memory_s16(s16 bank_id, s16 ofs, s16 value)
             u8 indx = bu[events_data + script_cur + ofs];
             [0x8009d288 + indx] = h(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S glov=", value, 0x4);
@@ -1995,7 +1995,7 @@ void field_event_write_memory_s16(s16 bank_id, s16 ofs, s16 value)
             u8 indx = bu[events_data + script_cur + ofs] | 0x100;
             [0x8009d288 + indx] = b(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
@@ -2008,7 +2008,7 @@ void field_event_write_memory_s16(s16 bank_id, s16 ofs, s16 value)
             u8 indx = bu[events_data + script_cur + ofs] | 0x100;
             [0x8009d288 + indx] = h(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S glov=", value, 0x4);
@@ -2021,7 +2021,7 @@ void field_event_write_memory_s16(s16 bank_id, s16 ofs, s16 value)
             u8 indx = bu[events_data + script_cur + ofs] | 0x200;
             [0x8009d288 + indx] = b(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
@@ -2034,7 +2034,7 @@ void field_event_write_memory_s16(s16 bank_id, s16 ofs, s16 value)
             u8 indx = bu[events_data + script_cur + ofs] | 0x200;
             [0x8009d288 + indx] = h(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S glov=", value, 0x4);
@@ -2047,7 +2047,7 @@ void field_event_write_memory_s16(s16 bank_id, s16 ofs, s16 value)
             u8 indx = bu[events_data + script_cur + ofs] | 0x300;
             [0x8009d288 + indx] = b(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
@@ -2060,7 +2060,7 @@ void field_event_write_memory_s16(s16 bank_id, s16 ofs, s16 value)
             u8 indx = bu[events_data + script_cur + ofs] | 0x300;
             [0x8009d288 + indx] = h(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S glov=", value, 0x4);
@@ -2073,7 +2073,7 @@ void field_event_write_memory_s16(s16 bank_id, s16 ofs, s16 value)
             u8 indx = bu[events_data + script_cur + ofs] | 0x400;
             [0x8009d288 + indx] = b(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
@@ -2086,7 +2086,7 @@ void field_event_write_memory_s16(s16 bank_id, s16 ofs, s16 value)
             u8 indx = bu[events_data + script_cur + ofs] | 0x400;
             [0x8009d288 + indx] = h(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S glov=", value, 0x4);
@@ -2099,7 +2099,7 @@ void field_event_write_memory_s16(s16 bank_id, s16 ofs, s16 value)
             u8 indx = bu[events_data + script_cur + ofs];
             [0x80075e24 + indx] = b(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S mapv=", value, 0x2);
@@ -2112,7 +2112,7 @@ void field_event_write_memory_s16(s16 bank_id, s16 ofs, s16 value)
             u8 indx = bu[events_data + script_cur + ofs];
             [0x80075e24 + indx] = h(value);
 
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
                 field_debug_add_parse_value_to_page2("S mapv=", value, 0x4);
@@ -2122,7 +2122,7 @@ void field_event_write_memory_s16(s16 bank_id, s16 ofs, s16 value)
 
         default:
         {
-            if (bu[0x8009d820] & 0x3)
+            if (g_field_debug_flags & 0x3)
             {
                 field_debug_add_parse_value_to_page2("S data err=", bank, 0x2);
             }
@@ -2136,7 +2136,7 @@ void field_event_write_memory_s16(s16 bank_id, s16 ofs, s16 value)
 // called as opcodes 0c 0d 1a 1b 1c 1d 1e 1f 44 46 4c 4e be
 int funcc0b54()
 {
-    if (bu[0x8009d820] & 0x3) // debug
+    if (g_field_debug_flags & 0x3) // debug
     {
         string = 0x800e4288;
 
@@ -2162,7 +2162,7 @@ void field_event_debug_error(u32 string)
     field_debug_page_add_string_to_next_row(0, string);
 
     [0x80095dcc] = b(0x1);
-    [0x80099ffc] = b(0x4);
+    g_field_debug_event_type = 0x4;
 }
 
 
