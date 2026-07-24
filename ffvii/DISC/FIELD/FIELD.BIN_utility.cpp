@@ -6,8 +6,8 @@ end = A1;
 steps_n = A2;
 step = A3;
 delta = end - start;
-V1 = delta + 0007ffff;
-if (V1 <= 000ffffe)
+V1 = delta + 0x7ffff;
+if (V1 <= 0xffffe)
 {
     V0 = (delta * step) / steps_n;
 }
@@ -27,12 +27,12 @@ return start + V0;
 start = A0;
 end = A1;
 steps_n = A2;
-step = A3 << c;
+step = A3 << 0xc;
 
-A0 = (((step / steps_n) >> 5) - 80) & ff;
+A0 = (((step / steps_n) >> 0x5) - 0x80) & 0xff;
 field_entity_get_dir_vector_y();
 
-return start + (((V0 + 1000) * (end - start)) >> c) / 2;
+return start + (((V0 + 0x1000) * (end - start)) >> 0xc) / 0x2;
 ////////////////////////////////
 
 

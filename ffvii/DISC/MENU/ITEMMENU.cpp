@@ -85,7 +85,7 @@ else
 A0 = x;
 A1 = y;
 A2 = 0x60 | ((icon & 1) << 4); // u
-A3 = 0x70 + (icon >> 1) * 10; // v
+A3 = 0x70 + (icon >> 1) * 0x10; // v
 A4 = 0x10; // width
 A5 = 0x10; // height
 A6 = 0x1; // col
@@ -114,7 +114,7 @@ if (A1 < 40)
 {
     for (; A1 < 40; ++A1)
     {
-        [0x801d3d90 + A1] = b(ff); // temp array of owned key items
+        [0x801d3d90 + 0xa1] = b(ff); // temp array of owned key items
     }
 }
 ////////////////////////////////
@@ -495,8 +495,8 @@ return V0;
 // swap two items
 
 items = w[A2];
-A0 = items + A0 * 2;
-A1 = items + A1 * 2;
+A0 = items + 0xa0 * 2;
+A1 = items + 0xa1 * 2;
 func1d0618(); // swap
 ////////////////////////////////
 
@@ -588,7 +588,7 @@ switch (A0)
 [0x801d3e48] = w(0x1); // item list
 
 // upper selection (use arrange keyitems)
-A0 = 0x801d3ddc + 0 * 12;
+A0 = 0x801d3ddc + 0 * 0x12;
 A1 = 0; // x cursor pos
 A2 = 0; // y cursor pos
 A3 = 3; // x pos items
@@ -605,7 +605,7 @@ A13 = 0; // page scroll dir (0 - not scroll, 1 - down, 2 - up)
 system_menu_set_cursor_movement();
 
 // items list
-A0 = 0x801d3ddc + 0x1 * 12;
+A0 = 0x801d3ddc + 0x1 * 0x12;
 A1 = 0; // x cursor pos
 A2 = 0; // y cursor pos
 A3 = 0x1; // x pos items
@@ -622,7 +622,7 @@ A13 = 0; // page scroll dir (0 - not scroll, 1 - down, 2 - up)
 system_menu_set_cursor_movement();
 
 // character selection
-A0 = 0x801d3ddc + 2 * 12;
+A0 = 0x801d3ddc + 2 * 0x12;
 A1 = 0; // x cursor pos
 A2 = 0; // y cursor pos
 A3 = 0x1; // x pos items
@@ -647,7 +647,7 @@ func1d031c(); // unpack key items to temp
 // func1d0cac()
 // is max hp
 
-return (h[0x8009d84c + A0 * 0x440 + 0x12] == h[0x8009d84c + A0 * 0x440 + 0x10]);
+return (h[0x8009d84c + 0xa0 * 0x440 + 0x12] == h[0x8009d84c + 0xa0 * 0x440 + 0x10]);
 ////////////////////////////////
 
 
@@ -656,7 +656,7 @@ return (h[0x8009d84c + A0 * 0x440 + 0x12] == h[0x8009d84c + A0 * 0x440 + 0x10]);
 // func1d0ce8()
 // is max mp
 
-return (h[0x8009d84c + A0 * 0x440 + 0x16] == h[0x8009d84c + A0 * 0x440 + 0x14]);
+return (h[0x8009d84c + 0xa0 * 0x440 + 0x16] == h[0x8009d84c + 0xa0 * 0x440 + 0x14]);
 ////////////////////////////////
 
 
@@ -682,27 +682,23 @@ return hu[0x8009c6e4 + 0x54 + save_char_id * 0x84 + 22] == (limit_mask & fdff);
 
 
 
-////////////////////////////////
-// func1d0dcc()
 // get restriction mask
-
-item_id = A0;
-
-system_menu_get_inventory_restriction_mask();
-mask = V0;
-
-if (item_id == 46) // Tent (Restores ally’s max HP/MP. Use at save Point)
+u32 func1d0dcc(item_id)
 {
-    // if SAVE menu locked
-    if (hu[GP + 20c] & 0200) mask |= 04; // can't be used in field
-}
-else if (item_id == 0x62) // Save Crystal (Used to create a SAVE Point in the ‘North Cave’)
-{
-    if ((bu[0x8009c6e4 + f04] & 02) == 0) mask |= 04; // can't be used in field
-}
+    mask = system_menu_get_inventory_restriction_mask();
 
-return mask;
-////////////////////////////////
+    if (item_id == 0x46) // Tent (Restores ally’s max HP/MP. Use at save Point)
+    {
+        // if SAVE menu locked
+        if (hu[GP + 0x20c] & 0x0200) mask |= 0x04; // can't be used in field
+    }
+    else if (item_id == 0x62) // Save Crystal (Used to create a SAVE Point in the ‘North Cave’)
+    {
+        if ((bu[0x8009c6e4 + 0xf04] & 0x02) == 0) mask |= 0x04; // can't be used in field
+    }
+
+    return mask;
+}
 
 
 
@@ -731,7 +727,7 @@ if (w[0x801d3e48] == 2) // character selection for item use
 {
     if (w[0x801d3e5c] == 0)
     {
-        selection = h[0x801d3ddc + 0x1 * 12 + 2] + b[0x801d3ddc + 0x1 * 12 + b];
+        selection = h[0x801d3ddc + 0x1 * 0x12 + 2] + b[0x801d3ddc + 0x1 * 0x12 + 0xb];
         item_id = hu[0x8009c6e4 + 0x4fc + selection * 2] & 1ff;
 
         // Megalixir (Fully restores all members’ HP/MP)
@@ -739,22 +735,22 @@ if (w[0x801d3e48] == 2) // character selection for item use
         if ((item_id == 0x6) || (item_id == 46))
         {
             // run through all characters
-            V0 = frame - (frame / 3) * 3; // % 3
+            V0 = frame - (frame / 3) * 0x3; // % 3
         }
         else
         {
-            V0 = b[0x801d3ddc + 2 * 12 + b];
+            V0 = b[0x801d3ddc + 2 * 0x12 + 0xb];
         }
 
         A0 = 0;
-        A1 = 4b + V0 * 38;
+        A1 = 4b + V0 * 0x38;
         system_menu_draw_cursor();
     }
 
     if (frame & 2)
     {
         A0 = a9;
-        A1 = 3c + b[0x801d3ddc + 0x1 * 12 + b] * 10;
+        A1 = 3c + b[0x801d3ddc + 0x1 * 0x12 + 0xb] * 0x10;
         system_menu_draw_cursor();
     }
 
@@ -769,29 +765,25 @@ func26b5c(); // empty func
 
 switch (w[0x801d3e48])
 {
-    case 0: // upper selection (use arrange keyitems)
+    case 0x0: // upper selection (use arrange keyitems)
     {
-        A0 = 0x8 + b[0x801d3ddc + 0 * 12 + a] * 38;
-        A1 = c;
-        system_menu_draw_cursor();
+        system_menu_draw_cursor(0x8 + b[0x801d3ddc + 0 * 0x12 + 0xa] * 0x38, 0xc);
     }
     break;
 
-    case 1: // item list
+    case 0x1: // item list
     {
-        if (frame & 2)
+        if (frame & 0x2)
         {
-            A0 = 0x8 + b[0x801d3ddc + 0 * 12 + a] * 38;
-            A1 = c;
-            system_menu_draw_cursor();
+            system_menu_draw_cursor(0x8 + b[0x801d3ddc + 0x0 * 0x12 + 0xa] * 0x38, 0xc);
         }
 
         A0 = a9;
-        A1 = b[0x801d3ddc + 0x1 * 12 + b] * 10 + 3c;
+        A1 = b[0x801d3ddc + 0x1 * 0x12 + 0xb] * 0x10 + 3c;
         system_menu_draw_cursor();
 
-        cur_y = b[0x801d3ddc + 0x1 * 12 + b];
-        cur_scroll = h[0x801d3ddc + 0x1 * 12 + 2];
+        cur_y = b[0x801d3ddc + 0x1 * 0x12 + 0xb];
+        cur_scroll = h[0x801d3ddc + 0x1 * 0x12 + 2];
         item = hu[0x8009c6e4 + 0x4fc + (cur_y + cur_scroll) * 2];
 
         if (item != 0xffff)
@@ -812,15 +804,13 @@ switch (w[0x801d3e48])
 
     case 2: // character selection for item use
     {
-        if (frame & 2)
+        if (frame & 0x2)
         {
-            A0 = 0x8 + b[0x801d3ddc + 0 * 12 + a] * 38;
-            A1 = c;
-            system_menu_draw_cursor();
+            system_menu_draw_cursor(0x8 + b[0x801d3ddc + 0x0 * 0x12 + 0xa] * 0x38, 0xc);
         }
 
-        cur_y = b[0x801d3ddc + 0x1 * 12 + b];
-        cur_scroll = h[0x801d3ddc + 0x1 * 12 + 2];
+        cur_y = b[0x801d3ddc + 0x1 * 0x12 + 0xb];
+        cur_scroll = h[0x801d3ddc + 0x1 * 0x12 + 2];
         item = hu[0x8009c6e4 + 0x4fc + (cur_y + cur_scroll) * 2];
 
         if (item != 0xffff)
@@ -843,17 +833,17 @@ switch (w[0x801d3e48])
     {
         if (frame & 2)
         {
-            A0 = 0x8 + b[0x801d3ddc + 0 * 12 + a] * 38;
+            A0 = 0x8 + b[0x801d3ddc + 0 * 0x12 + 0xa] * 0x38;
             A1 = c;
             system_menu_draw_cursor();
         }
 
-        cur_x = b[0x801d3ddc + 3 * 13 + a];
-        cur_y = b[0x801d3ddc + 3 * 13 + b];
-        cur_scroll = h[0x801d3ddc + 3 * 13 + 2];
+        cur_x = b[0x801d3ddc + 3 * 0x13 + 0xa];
+        cur_y = b[0x801d3ddc + 3 * 0x13 + 0xb];
+        cur_scroll = h[0x801d3ddc + 3 * 0x13 + 2];
 
         A0 = 3 + cur_x * a6;
-        A1 = 3c + cur_y * 10;
+        A1 = 3c + cur_y * 0x10;
         system_menu_draw_cursor();
 
         key_item_id = bu[0x801d3d90 + (cur_scroll + cur_y) * 2 + cur_x]; // temp array of owned key items
@@ -878,13 +868,13 @@ switch (w[0x801d3e48])
     {
         if (frame & 2)
         {
-            A0 = 0x8 + b[0x801d3ddc + 0 * 12 + a] * 38;
+            A0 = 0x8 + b[0x801d3ddc + 0 * 0x12 + 0xa] * 0x38;
             A1 = c;
             system_menu_draw_cursor();
         }
 
         A0 = h[0x801d3d74 + 0] - 12;
-        A1 = 0x8 + h[0x801d3d74 + 2] + b[0x801d3ddc + 0x4 * 12 + b] * c;
+        A1 = 0x8 + h[0x801d3d74 + 2] + b[0x801d3ddc + 0x4 * 0x12 + 0xb] * c;
         system_menu_draw_cursor();
 
         for (int i = 0; i < 0x8; ++i)
@@ -916,13 +906,13 @@ switch (w[0x801d3e48])
     {
         if (frame & 2)
         {
-            A0 = 0x8 + b[0x801d3ddc + 0 * 12 + a] * 38;
+            A0 = 0x8 + b[0x801d3ddc + 0 * 0x12 + 0xa] * 0x38;
             A1 = c;
             system_menu_draw_cursor();
         }
 
-        cur_y = b[0x801d3ddc + 0x5 * 12 + b];
-        cur_scroll = h[0x801d3ddc + 0x5 * 12 + 2];
+        cur_y = b[0x801d3ddc + 0x5 * 0x12 + 0xb];
+        cur_scroll = h[0x801d3ddc + 0x5 * 0x12 + 2];
         item = hu[0x8009c6e4 + 0x4fc + (cur_y + cur_scroll) * 2];
 
         if (item != 0xffff)
@@ -957,23 +947,23 @@ A3 = SP + 0x40;
 system_menu_set_draw_mode();
 
 // do not draw character window if key items selected
-if (b[0x801d3ddc + 0 * 12 + a] != 2)
+if (b[0x801d3ddc + 0 * 0x12 + 0xa] != 2)
 {
     for (int i = 0; i < 0x3; ++i)
     {
         if (bu[0x8009c6e4 + 0x4f8 + i] != 0xff)
         {
             A0 = 50;
-            A1 = 3b + i * 38;
+            A1 = 3b + i * 0x38;
             A2 = i;
             system_menu_draw_char_name_lv_hp_mp_by_party_id();
 
             A0 = 0x16; // x
-            A1 = 36 + i * 38; // y
+            A1 = 36 + i * 0x38; // y
             A2 = 30; // w
             A3 = 30; // h
             A4 = 0; // u
-            A5 = 38 + i * 30; // v
+            A5 = 38 + i * 0x30; // v
             A6 = 30; // tex w
             A7 = 30; // tex h
             A8 = d + i; color
@@ -1006,7 +996,7 @@ if (b[0x801d3ddc + 0 * 12 + a] != 2)
 
 for (int i = 0; i < 0x3; ++i)
 {
-    A0 = 22 + i * 38;
+    A0 = 22 + i * 0x38;
     A1 = d;
     A2 = 0x801d3cd4 + i * c; // "Use", "Arrange", "Key Items"
     A3 = 0x7;
@@ -1022,7 +1012,7 @@ A0 = 0x800706a4 + w[0x80062f58] * 5c;
 A1 = SP + 0x40;
 system_menu_set_drawenv();
 
-if (b[0x801d3ddc + 0 * 12 + a] != 2) // not key items
+if (b[0x801d3ddc + 0 * 0x12 + 0xa] != 2) // not key items
 {
     if (w[0x801d3e48] == 5) // custom items arrangement
     {
@@ -1031,7 +1021,7 @@ if (b[0x801d3ddc + 0 * 12 + a] != 2) // not key items
             if (frame & 2)
             {
                 selected = w[0x801d3d8c];
-                V1 = (selected - h[0x801d3ddc + 0x5 * 12 + 2]) * 10 + (b[0x801d3ddc + 0x5 * 12 + f] * 0x4);
+                V1 = (selected - h[0x801d3ddc + 0x5 * 0x12 + 2]) * 0x10 + (b[0x801d3ddc + 0x5 * 0x12 + f] * 0x4);
 
                 if ((b + V1) < 10f) // if selected onscreen
                 {
@@ -1043,7 +1033,7 @@ if (b[0x801d3ddc + 0 * 12 + a] != 2) // not key items
         }
 
         A0 = a9;
-        A1 = 3c + b[0x801d3ddc + 0x5 * 12 + b] * 10;
+        A1 = 3c + b[0x801d3ddc + 0x5 * 0x12 + 0xb] * 0x10;
         system_menu_draw_cursor();
 
         S5 = 5; // arrange items
@@ -1055,24 +1045,24 @@ if (b[0x801d3ddc + 0 * 12 + a] != 2) // not key items
 
     [0x801d3e4c + 0] = h(a); // items per screen
     [0x801d3e4c + 2] = h(140); // items total
-    [0x801d3e4c + 0x4] = h(hu[0x801d3ddc + S5 * 12 + 2]); // scroll
+    [0x801d3e4c + 0x4] = h(hu[0x801d3ddc + S5 * 0x12 + 2]); // scroll
     [0x801d3e4c + 0x6] = h(160); // x
     [0x801d3e4c + 8] = h(35); // y
-    [0x801d3e4c + a] = h(a); // w
+    [0x801d3e4c + 0xa] = h(a); // w
     [0x801d3e4c + c] = h(a5); // h
 
     A0 = 0x801d3e4c;
     system_menu_draw_scrollbar();
 
     // if we scrolling then additional item is on screen
-    S6 = (h[0x801d3ddc + S5 * 12 + 8] != 0) ? b : a;
+    S6 = (h[0x801d3ddc + S5 * 0x12 + 8] != 0) ? b : a;
 
     A0 = 9;
     func26b5c(); // empty func
 
     for (int i = 0; i < S6; ++i)
     {
-        S1 = h[0x801d3ddc + S5 * 12 + 2] + i;
+        S1 = h[0x801d3ddc + S5 * 0x12 + 2] + i;
         item = hu[0x8009c6e4 + 0x4fc + S1 * 2];
 
         if (item != 0xffff)
@@ -1089,7 +1079,7 @@ if (b[0x801d3ddc + 0 * 12 + a] != 2) // not key items
             system_kernel_get_string();
 
             A0 = d6;
-            A1 = 3a + i * 10 + b[0x801d3ddc + S5 * 12 + f] * 0x4;
+            A1 = 3a + i * 0x10 + b[0x801d3ddc + S5 * 0x12 + f] * 0x4;
             A2 = V0;
             A3 = color;
             system_menu_draw_string();
@@ -1098,7 +1088,7 @@ if (b[0x801d3ddc + 0 * 12 + a] != 2) // not key items
 
     for (int i = 0; i < S6; ++i)
     {
-        S1 = h[0x801d3ddc + S5 * 12 + 2] + i;
+        S1 = h[0x801d3ddc + S5 * 0x12 + 2] + i;
         item = hu[0x8009c6e4 + 0x4fc + S1 * 2];
 
         if (item != 0xffff)
@@ -1111,19 +1101,19 @@ if (b[0x801d3ddc + 0 * 12 + a] != 2) // not key items
             color = (V0 & 4) ? 0 : 7; // grey or white
 
             A0 = c4;
-            A1 = 38 + i * 10 + b[0x801d3ddc + S5 * 12 + f] * 0x4;
+            A1 = 38 + i * 0x10 + b[0x801d3ddc + S5 * 0x12 + f] * 0x4;
             A2 = item_id;
             A3 = 0;
             func1d0228(); // draw item icon
 
             A0 = 0x13f;
-            A1 = 3c + i * 10 + b[0x801d3ddc + S5 * 12 + f] * 0x4;
+            A1 = 3c + i * 0x10 + b[0x801d3ddc + S5 * 0x12 + f] * 0x4;
             A2 = d5; // ":"
             A3 = color;
             system_menu_draw_single_font_letter();
 
             A0 = 0x140;
-            A1 = 3b + i * 10 + b[0x801d3ddc + S5 * 12 + f] * 0x4;
+            A1 = 3b + i * 0x10 + b[0x801d3ddc + S5 * 0x12 + f] * 0x4;
             A2 = item_num;
             A3 = 3;
             A4 = color;
@@ -1133,14 +1123,14 @@ if (b[0x801d3ddc + 0 * 12 + a] != 2) // not key items
 }
 else // key items
 {
-    scroll = h[0x801d3ddc + 3 * 12 + 2];
+    scroll = h[0x801d3ddc + 3 * 0x12 + 2];
 
     [0x801d3e4c + 0] = h(a);
     [0x801d3e4c + 2] = h(20);
     [0x801d3e4c + 0x4] = h(scroll);
     [0x801d3e4c + 0x6] = h(160); // x
     [0x801d3e4c + 8] = h(35); // y
-    [0x801d3e4c + a] = h(a); // w
+    [0x801d3e4c + 0xa] = h(a); // w
     [0x801d3e4c + c] = h(a5); // h
 
     A0 = 0x801d3e4c;
@@ -1163,7 +1153,7 @@ else // key items
                 system_kernel_get_string();
 
                 A0 = 20 + j * a6;
-                A1 = 3a + i * 10 + b[0x801d3ddc + 3 * 12 + f] * 0x4;
+                A1 = 3a + i * 0x10 + b[0x801d3ddc + 3 * 0x12 + f] * 0x4;
                 A2 = V0;
                 A3 = 0x7;
                 system_menu_draw_string();
@@ -1196,7 +1186,7 @@ for (int i = 0; i < 0x3; ++i)
 system_menu_get_menu_list_state();
 if (V0 != 0) return;
 
-A0 = 0x801d3ddc + w[0x801d3e48] * 12;
+A0 = 0x801d3ddc + w[0x801d3e48] * 0x12;
 system_menu_handle_buttons();
 
 switch (w[0x801d3e48])
@@ -1207,7 +1197,7 @@ switch (w[0x801d3e48])
         {
             itemmenu_play_sound(0x1);
 
-            cur_x = b[0x801d3ddc + 0 * 12 + a];
+            cur_x = b[0x801d3ddc + 0 * 0x12 + 0xa];
 
             if (cur_x == 0) // use
             {
@@ -1216,7 +1206,7 @@ switch (w[0x801d3e48])
             else if (cur_x == 0x1)
             {
                 // arrange type list
-                A0 = 0x801d3ddc + 0x4 * 12;
+                A0 = 0x801d3ddc + 0x4 * 0x12;
                 A1 = 0; // x cursor pos
                 A2 = 0; // y cursor pos
                 A3 = 0x1; // x pos items
@@ -1237,7 +1227,7 @@ switch (w[0x801d3e48])
             else if (cur_x == 2)
             {
                 // key item list
-                A0 = 0x801d3ddc + 3 * 12;
+                A0 = 0x801d3ddc + 3 * 0x12;
                 A1 = 0; // x cursor pos
                 A2 = 0; // y cursor pos
                 A3 = 2; // x pos items
@@ -1277,8 +1267,8 @@ switch (w[0x801d3e48])
 
         if (hu[0x80062d7c] & 0020) // circle pressed
         {
-            cur_y = b[0x801d3ddc + 0x1 * 12 + b]
-            cur_scroll = h[0x801d3ddc + 0x1 * 12 + 2]
+            cur_y = b[0x801d3ddc + 0x1 * 0x12 + 0xb]
+            cur_scroll = h[0x801d3ddc + 0x1 * 0x12 + 2]
 
             item = hu[0x8009c6e4 + 0x4fc + (cur_y + cur_scroll) * 2];
 
@@ -1305,13 +1295,8 @@ switch (w[0x801d3e48])
 
                         [0x8009d5e8] = b(bu[0x8009d5e8] | 0x01);
 
-                        A0 = 5;
-                        A1 = 0;
-                        system_menu_set_menu_list_animation();
-
-                        A0 = 0; // close menu
-                        system_menu_load_menu_file_by_id();
-
+                        system_menu_set_menu_list_animation(0x5, 0);
+                        system_menu_load_menu_file_by_id(0);
                         system_menu_close();
                     }
                     else if (item_id == 0x67) // Earth Harp (Calms the hearts of all who hear it)
@@ -1326,11 +1311,11 @@ switch (w[0x801d3e48])
                         [0x8009c6e4 + 0x54 + 0x6 * 0x84 + 3c] = w(00ffffff); // current exp
 
                         // Vincent (or Sephiroth)
-                        [0x8009c6e4 + 0x54 + 7 * 0x84 + 0] = b(7); // Vincent
-                        [0x8009c6e4 + 0x54 + 7 * 0x84 + 0x1] = b(0x1);
-                        [0x8009c6e4 + 0x54 + 7 * 0x84 + e] = b(0x1);
-                        [0x8009c6e4 + 0x54 + 7 * 0x84 + f] = b(ff);
-                        [0x8009c6e4 + 0x54 + 7 * 0x84 + 3c] = w(00ffffff);
+                        [0x8009c6e4 + 0x54 + 0x7 * 0x84 + 0] = b(7); // Vincent
+                        [0x8009c6e4 + 0x54 + 0x7 * 0x84 + 0x1] = b(0x1);
+                        [0x8009c6e4 + 0x54 + 0x7 * 0x84 + e] = b(0x1);
+                        [0x8009c6e4 + 0x54 + 0x7 * 0x84 + f] = b(ff);
+                        [0x8009c6e4 + 0x54 + 0x7 * 0x84 + 3c] = w(00ffffff);
                     }
                     else
                     {
@@ -1367,11 +1352,11 @@ switch (w[0x801d3e48])
             return;
         }
 
-        cur_y = b[0x801d3ddc + 0x1 * 12 + b];
-        cur_scroll = h[0x801d3ddc + 0x1 * 12 + 2];
+        cur_y = b[0x801d3ddc + 0x1 * 0x12 + 0xb];
+        cur_scroll = h[0x801d3ddc + 0x1 * 0x12 + 2];
         item_id = hu[0x8009c6e4 + 0x4fc + (cur_y + cur_scroll) * 2] & 1ff;
 
-        party_id = b[0x801d3ddc + 2 * 12 + b];
+        party_id = b[0x801d3ddc + 2 * 0x12 + 0xb];
         save_char_id = bu[0x8009cbdc + party_id];
 
         if (save_char_id == 0xff)
@@ -1729,7 +1714,7 @@ switch (w[0x801d3e48])
                     itemmenu_play_sound(0x107);
 
                     A0 = party_id;
-                    A1 = h[0x8009d85e + A0 * 0x440] / 4;
+                    A1 = h[0x8009d85e + 0xa0 * 0x440] / 4;
                     system_menu_add_hp_by_party_id();
 
                     system_menu_remove_item(item_id | 0x0200);
@@ -1823,13 +1808,8 @@ switch (w[0x801d3e48])
 
             case 5: // Elixir (Fully Restores HP/MP)
             {
-                A0 = party_id;
-                func1d0cac(); // is max hp
-                is_max_hp = V0;
-
-                A0 = party_id;
-                func1d0ce8(); // is max mp
-                is_max_mp = V0;
+                is_max_hp = func1d0cac(party_id);
+                is_max_mp = func1d0ce8(party_id);
 
                 if (((is_max_hp != 0) && (is_max_mp != 0)) || (h[0x8009d84c + i * 0x440 + 0x10] == 0))
                 {
@@ -1838,21 +1818,11 @@ switch (w[0x801d3e48])
                 else
                 {
                     itemmenu_play_sound(0x107);
-
-                    A0 = party_id;
-                    A1 = 2710;
-                    system_menu_add_hp_by_party_id();
-
-                    A0 = party_id;
-                    A1 = 2710;
-                    system_menu_add_mp_by_party_id();
-
+                    system_menu_add_hp_by_party_id(party_id, 0x2710);
+                    system_menu_add_mp_by_party_id(party_id, 0x2710);
                     system_menu_remove_item(item_id | 0x0200);
 
-                    A0 = item_id;
-                    system_menu_search_item();
-
-                    if (V0 == 0xffff) [0x801d3e48] = w(0x1); // item list
+                    if (system_menu_search_item(item_id) == 0xffff) [0x801d3e48] = w(0x1); // item list
                 }
             }
             break;
@@ -1932,11 +1902,11 @@ switch (w[0x801d3e48])
         {
             itemmenu_play_sound(0x1);
 
-            cur_y = b[0x801d3ddc + 0x4 * 12 + b];
+            cur_y = b[0x801d3ddc + 0x4 * 0x12 + 0xb];
 
             if (cur_y == 0) // "Customize"
             {
-                A0 = 0x801d3ddc + 0x5 * 12;
+                A0 = 0x801d3ddc + 0x5 * 0x12;
                 A1 = 0; // x cursor pos
                 A2 = 0; // y cursor pos
                 A3 = 0x1; // x pos items
@@ -1984,16 +1954,16 @@ switch (w[0x801d3e48])
                 itemmenu_play_sound(0x1);
 
                 [0x801d3d84] = w(w[0x801d3d84] + 0x1); // go to swap
-                [0x801d3d88] = w(b[0x801d3ddc + 0x5 * 12 + a]); // cur_x
-                [0x801d3d8c] = w(h[0x801d3ddc + 0x5 * 12 + 2] + b[0x801d3ddc + 0x5 * 12 + b]); // store selected item
+                [0x801d3d88] = w(b[0x801d3ddc + 0x5 * 0x12 + 0xa]); // cur_x
+                [0x801d3d8c] = w(h[0x801d3ddc + 0x5 * 0x12 + 2] + b[0x801d3ddc + 0x5 * 0x12 + 0xb]); // store selected item
             }
             else if (w[0x801d3d84] == 0x1) // swap item
             {
                 itemmenu_play_sound(0x1);
 
                 selected = w[0x801d3d8c];
-                cur_y = b[0x801d3ddc + 0x5 * 12 + b];
-                cur_scroll = h[0x801d3ddc + 0x5 * 12 + 2];
+                cur_y = b[0x801d3ddc + 0x5 * 0x12 + 0xb];
+                cur_scroll = h[0x801d3ddc + 0x5 * 0x12 + 2];
                 item1 = hu[0x8009c6e4 + 0x4fc + (cur_y + cur_scroll) * 2];
                 item2 = hu[0x8009c6e4 + 0x4fc + selected * 2];
                 [0x8009c6e4 + 0x4fc + selected * 2] = h(item1);
@@ -2190,9 +2160,9 @@ for (char_id = 0; char_id < 9; ++char_id)
 // go through party materia stock
 for (int i = 0; i < c8; ++i)
 {
-    if (w[0x8009c6e4 + 77c + i * 0x4] == materia_data)
+    if (w[0x8009c6e4 + 0x77c + i * 0x4] == materia_data)
     {
-        [0x8009c6e4 + 77c + i * 0x4] = w(-1);
+        [0x8009c6e4 + 0x77c + i * 0x4] = w(-1);
         return;
     }
 }
@@ -2257,7 +2227,7 @@ for (int char_id = 0; char_id < 9; ++char_id)
 // go through party materia stock
 for (int i = 0; i < c8; ++i)
 {
-    A0 = 0x8009c6e4 + 77c + i * 0x4;
+    A0 = 0x8009c6e4 + 0x77c + i * 0x4;
     func1d2a18(); // add materia to stolen temp
 }
 
@@ -2349,8 +2319,8 @@ for (int i = 0; i < 0x3; ++i)
 // store some materia from party stock
 for (int i = 0; i < 0x3; ++i)
 {
-    [store + 0x48 + i * 0x4] = w(w[0x8009c6e4 + 77c + i * 0x4]);
-    [0x8009c6e4 + 77c + i * 0x4] = w(-1);
+    [store + 0x48 + i * 0x4] = w(w[0x8009c6e4 + 0x77c + i * 0x4]);
+    [0x8009c6e4 + 0x77c + i * 0x4] = w(-1);
 }
 
 for (int i = 0; i < 0x8; ++i)
@@ -2390,7 +2360,7 @@ for (int i = 0; i < 0x3; ++i)
 // restore some materia
 for (int i = 0; i < 0x3; ++i)
 {
-    [0x8009c6e4 + 77c + i * 0x4] = w(w[store + 0x48 + i * 0x4]);
+    [0x8009c6e4 + 0x77c + i * 0x4] = w(w[store + 0x48 + i * 0x4]);
 }
 
 for (int i = 0; i < 0x8; ++i)

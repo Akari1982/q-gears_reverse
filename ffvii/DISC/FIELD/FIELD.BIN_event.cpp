@@ -151,7 +151,7 @@ void field_init_default_values()
     {
         for (int j = 0; j < bu[events_data + 0x2]; ++j) // go through all actors
         {
-            [0x80071748 + j * 0x10 + i * 2] = h(0); // priority script offsets
+            [0x80071748 + j * 0x10 + i * 0x2] = h(0); // priority script offsets
             [0x800833f8 + j * 0x8 + i] = b(0); // array of script running state
             [0x80071a88 + j * 0x8 + i] = b(0xff); // array if priority data
             [0x801142d4 + j * 0x8 + i] = b(0); // priority queue script id
@@ -222,8 +222,8 @@ void field_init_default_values()
 
         [0x8008325c + i] = b(0); // model default animation
         [0x800756e8 + i] = b(0); // model animation state
-        [0x8009d828 + i * 2] = h(10); // animation speed
-        [0x80082248 + i * 2] = h(10); // model default animation speed
+        [0x8009d828 + i * 0x2] = h(10); // animation speed
+        [0x80082248 + i * 0x2] = h(10); // model default animation speed
     }
 
     for (int i = 0; i < 0x40; ++i)
@@ -294,7 +294,7 @@ void field_event_run_init()
         if (bu[0x80071e24] & 0x3)
         {
             field_debug_string_copy(string, "Actor:");
-            field_debug_string_concat(string, events_data + 20 + i * 8);
+            field_debug_string_concat(string, events_data + 0x20 + i * 0x8);
 
             if (bu[0x80071e24] & 0x1)
             {
@@ -408,7 +408,7 @@ void field_event_opcode_cycle()
         }
         else
         {
-            [0x8009c6e4 + 0xbb7] = b(bu[0x8009c6e4 + 0xbb7] + 1);
+            [0x8009c6e4 + 0xbb7] = b(bu[0x8009c6e4 + 0xbb7] + 0x1);
         }
     }
 
@@ -433,7 +433,7 @@ void field_event_opcode_cycle()
         }
         else if (bu[0x8009c6e4 + bbb] != 0)
         {
-            [0x8009c6e4 + bbb] = b(bu[0x8009c6e4 + bbb] - 1);
+            [0x8009c6e4 + bbb] = b(bu[0x8009c6e4 + bbb] - 0x1);
         }
     }
 
@@ -543,7 +543,7 @@ void field_event_opcode_cycle()
                 }
 
                 actor_id_cur = bu[0x800722c4];
-                script_cur = hu[0x800831fc + actor_id_cur * 2];
+                script_cur = hu[0x800831fc + actor_id_cur * 0x2];
                 opcode = bu[events_data + script_cur];
                 [0x8009a058] = b(opcode);
 
@@ -616,132 +616,127 @@ void field_event_opcode_cycle()
 
 
 
-////////////////////////////////
-// field_script_update_animation_state()
-
-events_data = w[0x8009c6dc];
-entities_data = w[0x8009c544];
-field_struct = w[0x8009c6e0];
-manual_model = h[field_struct + 0x2a];
-pc = bu[field_struct + 0x32];
-
-number_of_entity = bu[events_data + 2];
-
-if (number_of_entity > 0)
+void field_script_update_animation_state()
 {
-    T2 = 0;
-    Lbbbf0:	; 800BBBF0
-        model = bu[0x8007eb98 + T2];
-        if (model != ff)
+    events_data = w[0x8009c6dc];
+    entities_data = w[0x8009c544];
+    field_struct = w[0x8009c6e0];
+    manual_model = h[field_struct + 0x2a];
+    pc = bu[field_struct + 0x32];
+
+    entity_n = bu[events_data + 0x2];
+
+    for (int i = 0; i < entity_n; ++i)
+    {
+        model = bu[0x8007eb98 + i];
+        if (model != 0xff)
         {
-            if (model != manual_model || pc != 0)
+            if ((model != manual_model) || (pc != 0))
             {
-                switch(bu[0x800756e8 + model])
+                switch (bu[0x800756e8 + model])
                 {
-                    case 0:
+                    case 0x0:
                     {
-                        animation_id = bu[entities_data + model * 0x84 + 5e];
+                        animation_id = bu[entities_data + model * 0x84 + 0x5e];
                         default_animation = bu[0x8008325c + model];
                         if (animation_id != default_animation)
                         {
-                            [entities_data + model * 0x84 + 5e] = b(default_animation);
-                            default_animation_speed = hu[0x80082248 + model * 2];
-                            [entities_data + model * 0x84 + 60] = h(default_animation_speed);
-                            [entities_data + model * 0x84 + 62] = h(0);
+                            [entities_data + model * 0x84 + 0x5e] = b(default_animation);
+                            default_animation_speed = hu[0x80082248 + model * 0x2];
+                            [entities_data + model * 0x84 + 0x60] = h(default_animation_speed);
+                            [entities_data + model * 0x84 + 0x62] = h(0);
 
                             V1 = w[0x8008357c];
-                            A1 = bu[V1 + model * 8 + 4];
+                            A1 = bu[V1 + model * 0x8 + 0x4];
                             V1 = w[g_field_models + 0x4];
-                            A1 = hu[V1 + A1 * 24 + 1a];
-                            A0 = w[V1 + A1 * 24 + 1c];
-                            number_of_frames = hu[A0 + A1 + default_animation * 10];
-                            [entities_data + model * 0x84 + 64] = h(number_of_frames - 1);
+                            A1 = hu[V1 + A1 * 0x24 + 0x1a];
+                            A0 = w[V1 + A1 * 0x24 + 0x1c];
+                            frames_n = hu[A0 + A1 + default_animation * 0x10];
+                            [entities_data + model * 0x84 + 0x64] = h(frames_n - 0x1);
                         }
                         else
                         {
                             V1 = w[0x8008357c];
-                            A1 = bu[V1 + model * 8 + 4];
+                            A1 = bu[V1 + model * 0x8 + 0x4];
                             V1 = w[g_field_models + 0x4];
-                            A0 = hu[V1 + model * 24 + 1a];
-                            V1 = w[V1 + model * 24 + 1c];
-                            animation_id = bu[entities_data + model * 0x84 + 5e];
-                            number_of_frames = hu[A0 + V1 + animation_id * 10];
-                            [entities_data + model * 0x84 + 64] = h(number_of_frames - 1);
+                            A0 = hu[V1 + model * 0x24 + 0x1a];
+                            V1 = w[V1 + model * 0x24 + 0x1c];
+                            animation_id = bu[entities_data + model * 0x84 + 0x5e];
+                            frames_n = hu[A0 + V1 + animation_id * 0x10];
+                            [entities_data + model * 0x84 + 0x64] = h(frames_n - 0x1);
 
-                            current_frame_value = hu[entities_data + model * 0x84 + 62];
-                            number_of_frames = h[entities_data + model * 0x84 + 64];
+                            frame = hu[entities_data + model * 0x84 + 0x62] / 0x10;
+                            frames_n = h[entities_data + model * 0x84 + 0x64];
 
-                            if (current_frame_value / 10 >= number_of_frames)
+                            if (frame >= frames_n)
                             {
-                                [entities_data + model * 0x84 + 62] = h(0);
+                                [entities_data + model * 0x84 + 0x62] = h(0);
                             }
                         }
                     }
                     break;
 
-                    case 1:
+                    case 0x1:
                     {
-                        current_frame_value = hu[entities_data + model * 0x84 + 62];
-                        number_of_frames = h[entities_data + model * 0x84 + 64];
+                        frame = hu[entities_data + model * 0x84 + 0x62] / 0x10;
+                        frames_n = h[entities_data + model * 0x84 + 0x64];
 
-                        if (current_frame_value / 10 >= number_of_frames)
+                        if (frame >= frames_n)
                         {
-                            [entities_data + model * 0x84 + 62] = h(0);
+                            [entities_data + model * 0x84 + 0x62] = h(0);
                         }
                     }
                     break;
 
-                    case 2:
+                    case 0x2:
                     {
-                        current_frame_value = hu[entities_data + model * 0x84 + 62];
-                        number_of_frames = h[entities_data + model * 0x84 + 64];
+                        frame = hu[entities_data + model * 0x84 + 0x62] / 0x10;
+                        frames_n = h[entities_data + model * 0x84 + 0x64];
 
-                        if (current_frame_value / 10 >= number_of_frames)
+                        if (frame >= frames_n)
                         {
-                            [0x800756e8 + model] = b(4);
-                            [entities_data + model * 0x84 + 62] = h(number_of_frames * 10);
+                            [0x800756e8 + model] = b(0x4);
+                            [entities_data + model * 0x84 + 0x62] = h(frames_n * 0x10);
                         }
                     }
                     break;
 
-                    case 3:
-                    case 4:
+                    case 0x3:
+                    case 0x4:
                     {
-                        number_of_frames = hu[entities_data + model * 0x84 + 64];
-                        [entities_data + model * 0x84 + 62] = h(number_of_frames * 10);
+                        frames_n = hu[entities_data + model * 0x84 + 0x64];
+                        [entities_data + model * 0x84 + 0x62] = h(frames_n * 0x10);
                     }
                     break;
 
-                    case 5:
+                    case 0x5:
                     {
-                        current_frame_value = hu[entities_data + model * 0x84 + 62];
-                        number_of_frames = h[entities_data + model * 0x84 + 64];
+                        frame = hu[entities_data + model * 0x84 + 0x62] / 0x10;
+                        frames_n = h[entities_data + model * 0x84 + 0x64];
 
-                        if (current_frame_value / 10 >= number_of_frames)
+                        if (frame >= frames_n)
                         {
                             [0x800756e8 + model] = b(0);
                         }
                     }
                     break;
 
-                    case 6:
+                    case 0x6:
                     {
-                        V0 = hu[entities_data + model * 0x84 + 62];
-                        V0 = V0 / 10;
-                        V1 = h[entities_data + model * 0x84 + 64];
+                        frame = hu[entities_data + model * 0x84 + 0x62] / 0x10;
+                        frames_n = h[entities_data + model * 0x84 + 0x64];
 
-                        if (V0 >= V1) [0x800756e8 + model] = b(3);
+                        if (frame >= frames_n)
+                        {
+                            [0x800756e8 + model] = b(0x3);
+                        }
                     }
                     break;
                 }
             }
         }
-
-        T2 = T2 + 1;
-        V0 = T2 < number_of_entity;
-    800BBF60	bne    v0, zero, Lbbbf0 [$800bbbf0]
+    }
 }
-////////////////////////////////
 
 
 
@@ -750,7 +745,7 @@ int field_event_request_run(s16 actor_id, u8 req_priority, u8 event_id)
     events_data = w[0x8009c6dc];
     entities_data = w[0x8009c544];
     cur_priority = bu[0x8009a1c4 + actor_id];
-    slot_state = bu[0x800833f8 + actor_id * 8 + req_priority];
+    slot_state = bu[0x800833f8 + actor_id * 0x8 + req_priority];
     actors_n = bu[events_data + 0x2];
     akao_n = h[events_data + 0x6];
 
@@ -898,52 +893,52 @@ rb = bu[0x80114490];
 
 if (A2 >= 123)
 {
-    [0x800e48f4 + rb * 28 +  8] = h(A2 - 10);
-    [0x800e48f4 + rb * 28 +  c] = b(8f);
-    [0x800e48f4 + rb * 28 + 10] = h(A2);
-    [0x800e48f4 + rb * 28 + 14] = b(7f);
-    [0x800e48f4 + rb * 28 + 18] = h(A2 - 10);
-    [0x800e48f4 + rb * 28 + 1c] = b(8f);
-    [0x800e48f4 + rb * 28 + 20] = h(A2);
-    [0x800e48f4 + rb * 28 + 24] = b(7f);
+    [0x800e48f4 + rb * 0x28 +  8] = h(A2 - 0x10);
+    [0x800e48f4 + rb * 0x28 +  c] = b(8f);
+    [0x800e48f4 + rb * 0x28 + 0x10] = h(A2);
+    [0x800e48f4 + rb * 0x28 + 0x14] = b(7f);
+    [0x800e48f4 + rb * 0x28 + 0x18] = h(A2 - 0x10);
+    [0x800e48f4 + rb * 0x28 + 0x1c] = b(8f);
+    [0x800e48f4 + rb * 0x28 + 0x20] = h(A2);
+    [0x800e48f4 + rb * 0x28 + 0x24] = b(7f);
 }
 else
 {
-    [0x800e48f4 + rb * 28 +  8] = h(A2);
-    [0x800e48f4 + rb * 28 +  c] = b(80);
-    [0x800e48f4 + rb * 28 + 10] = h(A2 + 10);
-    [0x800e48f4 + rb * 28 + 14] = b(90);
-    [0x800e48f4 + rb * 28 + 18] = h(A2);
-    [0x800e48f4 + rb * 28 + 1c] = b(80);
-    [0x800e48f4 + rb * 28 + 20] = h(A2 + 10);
-    [0x800e48f4 + rb * 28 + 24] = b(90);
+    [0x800e48f4 + rb * 0x28 +  8] = h(A2);
+    [0x800e48f4 + rb * 0x28 +  c] = b(80);
+    [0x800e48f4 + rb * 0x28 + 0x10] = h(A2 + 0x10);
+    [0x800e48f4 + rb * 0x28 + 0x14] = b(90);
+    [0x800e48f4 + rb * 0x28 + 0x18] = h(A2);
+    [0x800e48f4 + rb * 0x28 + 0x1c] = b(80);
+    [0x800e48f4 + rb * 0x28 + 0x20] = h(A2 + 0x10);
+    [0x800e48f4 + rb * 0x28 + 0x24] = b(90);
 }
 
 if (A3 < 11)
 {
-    [0x800e4901 + rb * 28] = b(6f);
-    [0x800e4909 + rb * 28] = b(6f);
-    [0x800e4911 + rb * 28] = b(5f);
-    [0x800e4919 + rb * 28] = b(5f);
-    [0x800e48fe + rb * 28] = h(A3);
-    [0x800e4906 + rb * 28] = h(A3);
-    [0x800e490e + rb * 28] = h(A3 + 10);
-    [0x800e4916 + rb * 28] = h(A3 + 10);
+    [0x800e4901 + rb * 0x28] = b(6f);
+    [0x800e4909 + rb * 0x28] = b(6f);
+    [0x800e4911 + rb * 0x28] = b(5f);
+    [0x800e4919 + rb * 0x28] = b(5f);
+    [0x800e48fe + rb * 0x28] = h(A3);
+    [0x800e4906 + rb * 0x28] = h(A3);
+    [0x800e490e + rb * 0x28] = h(A3 + 0x10);
+    [0x800e4916 + rb * 0x28] = h(A3 + 0x10);
 }
 else
 {
-    [0x800e4901 + rb * 28] = b(60);
-    [0x800e4909 + rb * 28] = b(60);
-    [0x800e4911 + rb * 28] = b(70);
-    [0x800e4919 + rb * 28] = b(70);
-    [0x800e48fe + rb * 28] = h(A3 - 10);
-    [0x800e4906 + rb * 28] = h(A3 - 10);
-    [0x800e490e + rb * 28] = h(A3);
-    [0x800e4916 + rb * 28] = h(A3);
+    [0x800e4901 + rb * 0x28] = b(60);
+    [0x800e4909 + rb * 0x28] = b(60);
+    [0x800e4911 + rb * 0x28] = b(70);
+    [0x800e4919 + rb * 0x28] = b(70);
+    [0x800e48fe + rb * 0x28] = h(A3 - 0x10);
+    [0x800e4906 + rb * 0x28] = h(A3 - 0x10);
+    [0x800e490e + rb * 0x28] = h(A3);
+    [0x800e4916 + rb * 0x28] = h(A3);
 }
 
-[0x800e48f4 + rb * 28] = w((w[0x800e48f4 + rb * 28] & ff000000) | (w[ot] & 00ffffff));
-[ot] = w((w[ot] & ff000000) | ((800e48f4 + rb * 28) & 00ffffff));
+[0x800e48f4 + rb * 0x28] = w((w[0x800e48f4 + rb * 0x28] & ff000000) | (w[ot] & 00ffffff));
+[ot] = w((w[ot] & ff000000) | ((800e48f4 + rb * 0x28) & 00ffffff));
 ////////////////////////////////
 
 
@@ -1432,7 +1427,7 @@ void field_debug_event_opcode(u8* opcode_name, u8 args_n)
 
     if (bu[0x8009d820] & 0x1) field_debug_page_set_string_to_row(0x3, 0, string);
 
-    args_max = args_n + 1;
+    args_max = args_n + 0x1;
 
     // create string "argX=XX"
     for (; args_n != 0; --args_n)
@@ -1490,117 +1485,118 @@ void field_debug_add_parse_value_to_page2(param, value, val_size)
 
 
 
-u8 field_event_read_memory_u8(u8 mb_half, u8 off)
+u8 field_event_read_memory_u8(u8 bank_id, u8 ofs)
 {
     actor_id_cur = bu[0x800722c4];
-    script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
+    events_data = w[0x8009c6dc];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    switch(mb_half)
+    switch (bank_id)
     {
-        case 0x1: bank = bu[script + 0x1] >> 0x4; break;
-        case 0x2: bank = bu[script + 0x1] & 0xf; break;
-        case 0x3: bank = bu[script + 0x2] >> 0x4; break;
-        case 0x4: bank = bu[script + 0x2] & 0xf; break;
-        case 0x5: bank = bu[script + 0x3] >> 0x4; break;
-        case 0x6: bank = bu[script + 0x3] & 0xf; break;
+        case 0x1: bank = bu[events_data + script_cur + 0x1] >> 0x4; break;
+        case 0x2: bank = bu[events_data + script_cur + 0x1] & 0xf; break;
+        case 0x3: bank = bu[events_data + script_cur + 0x2] >> 0x4; break;
+        case 0x4: bank = bu[events_data + script_cur + 0x2] & 0xf; break;
+        case 0x5: bank = bu[events_data + script_cur + 0x3] >> 0x4; break;
+        case 0x6: bank = bu[events_data + script_cur + 0x3] & 0xf; break;
     }
 
-    switch(bank)
+    switch (bank)
     {
-        case 0x0: // memory bank 0
+        case 0x0:
         {
-            val = bu[script + off];
-            if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("G cons=", val, 0x2);
-            return val;
+            u8 value = bu[events_data + script_cur + ofs];
+            if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("G cons=", value, 0x2);
+            return value;
         }
 
-        case 0x1: // memory bank 1
-        case 0x2: // memory bank 2
+        case 0x1:
+        case 0x2:
         {
-            indx = bu[script + off];
-            val = bu[0x8009d288 + indx];
+            u8 indx = bu[events_data + script_cur + ofs];
+            u8 value = bu[0x8009d288 + indx];
 
             if (bu[0x8009d820] & 0x3) // debug
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G glov=", val, 0x2);
+                field_debug_add_parse_value_to_page2("G glov=", value, 0x2);
             }
-            return val;
+            return value;
         }
 
-        case 0x3: // memory bank 3
-        case 0x4: // memory bank 4
+        case 0x3:
+        case 0x4:
         {
-            indx = bu[script + off];
-            val = bu[0x8009d288 + 0x100 + indx];
+            u8 indx = bu[events_data + script_cur + ofs] | 0x100;
+            u8 value = bu[0x8009d288 + indx];
 
             if (bu[0x8009d820] & 0x3) // debug
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G glov=", val, 0x2);
+                field_debug_add_parse_value_to_page2("G glov=", value, 0x2);
             }
-            return val;
+            return value;
         }
 
-        case 0xb: // memory bank B
-        case 0xc: // memory bank C
+        case 0xb:
+        case 0xc:
         {
-            indx = bu[script + off];
-            val = bu[0x8009d288 + 0x200 + indx];
+            u8 indx = bu[events_data + script_cur + ofs] | 0x200;
+            u8 value = bu[0x8009d288 + indx];
 
             if (bu[0x8009d820] & 0x3) // debug
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G glov=", val, 0x2);
+                field_debug_add_parse_value_to_page2("G glov=", value, 0x2);
             }
-            return val;
+            return value;
         }
 
-        case 0xd: // memory bank D
-        case 0xe: // memory bank E
+        case 0xd:
+        case 0xe:
         {
-            indx = bu[script + off];
-            val = bu[0x8009d288 + 0x300 + indx];
+            u8 indx = bu[events_data + script_cur + ofs] | 0x300;
+            u8 value = bu[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3) // debug
+            if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G glov=", val, 0x2);
+                field_debug_add_parse_value_to_page2("G glov=", value, 0x2);
             }
-            return val;
+            return value;
         }
 
-        case 0x7: // memory bank 7
-        case 0xf: // memory bank F
+        case 0x7:
+        case 0xf:
         {
-            indx = bu[script + off];
-            val = bu[0x8009d288 + 0x400 + indx];
+            u8 indx = bu[events_data + script_cur + ofs] | 0x400;
+            u8 value = bu[0x8009d288 + indx];
 
-            if (bu[0x8009d820] & 0x3) // debug
+            if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G glov=", val, 0x2);
+                field_debug_add_parse_value_to_page2("G glov=", value, 0x2);
             }
-            return val;
+            return value;
         }
 
-        case 0x5: // memory bank 5
-        case 0x6: // memory bank 6
+        case 0x5:
+        case 0x6:
         {
-            indx = bu[script + off];
-            val = bu[0x80075e24 + indx];
+            u8 indx = bu[events_data + script_cur + ofs];
+            u8 value = bu[0x80075e24 + indx];
 
-            if (bu[0x8009d820] & 0x3) // debug
+            if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G mapv=", val, 0x2);
+                field_debug_add_parse_value_to_page2("G mapv=", value, 0x2);
             }
-            return val;
+            return value;
         }
 
         default:
         {
-            if (bu[0x8009d820] & 0x3) // debug
+            if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G data err=", bank, 0x2);
             }
@@ -1608,307 +1604,126 @@ u8 field_event_read_memory_u8(u8 mb_half, u8 off)
             return 0;
         }
     }
+
+    return 0;
 }
 
 
 
-////////////////////////////////
-// field_event_write_memory_u8()
+void field_event_write_memory_u8(s16 bank_id, s16 ofs, s8 value)
+{
+    actor_id_cur = bu[0x800722c4];
+    events_data = w[0x8009c6dc];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-S0 = A2;
-800BF3B8	addiu  a0, a0, $ffff (=-$1)
-A0 = A0 << 10;
-A0 = A0 >> 10;
-V0 = A0 < 0006;
-800BF3C8	beq    v0, zero, Lbf558 [$800bf558]
+    u8 bank = -1;
 
-V0 = A0 << 02;
-800BF3D4	lui    at, $800a
-AT = AT + 03bc;
-AT = AT + V0;
-V0 = w[AT + 0000];
-800BF3E4	nop
-800BF3E8	jr     v0 
-800BF3EC	nop
+    switch (bank_id - 0x1)
+    {
+        case 0x0: bank = bu[events_data + script_cur + 0x1] >> 0x4; break;
+        case 0x1: bank = bu[events_data + script_cur + 0x1] & 0xf;  break;
+        case 0x2: bank = bu[events_data + script_cur + 0x2] >> 0x4; break;
+        case 0x3: bank = bu[events_data + script_cur + 0x2] & 0xf;  break;
+        case 0x4: bank = bu[events_data + script_cur + 0x3] >> 0x4; break;
+        case 0x5: bank = bu[events_data + script_cur + 0x3] & 0xf;  break;
+    }
 
-V0 = bu[0x800722c4];
-800BF3F8	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800BF418	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0001];
-800BF424	j      Lbf558 [$800bf558]
-V1 = V0 >> 04;
-V0 = bu[0x800722c4];
-800BF434	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800BF454	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0001];
-800BF460	j      Lbf558 [$800bf558]
-V1 = V0 & 000f;
-V0 = bu[0x800722c4];
-800BF470	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800BF490	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0002];
-800BF49C	j      Lbf558 [$800bf558]
-V1 = V0 >> 04;
-V0 = bu[0x800722c4];
-800BF4AC	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800BF4CC	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0002];
-800BF4D8	j      Lbf558 [$800bf558]
-V1 = V0 & 000f;
-V0 = bu[0x800722c4];
-800BF4E8	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800BF508	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0003];
-800BF514	j      Lbf558 [$800bf558]
-V1 = V0 >> 04;
-V0 = bu[0x800722c4];
-800BF524	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800BF544	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0003];
-800BF550	nop
-V1 = V0 & 000f;
 
-Lbf558:	; 800BF558
-V0 = V1 & 00ff;
-800BF55C	addiu  a0, v0, $ffff (=-$1)
-V0 = A0 < 000f;
-800BF564	beq    v0, zero, Lbf8bc [$800bf8bc]
-V0 = A0 << 02;
-800BF56C	lui    at, $800a
-AT = AT + 03d4;
-AT = AT + V0;
-V0 = w[AT + 0000];
-800BF57C	nop
-800BF580	jr     v0 
-800BF584	nop
+    switch (bank)
+    {
+        case 0x0:
+        case 0x1:
+        {
+            u8 indx = bu[events_data + script_cur + ofs];
+            [0x8009d288 + indx] = b(value);
 
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-A1 = bu[V0 + 0000];
-800BF5C0	nop
-AT = 8009d288;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-V0 = bu[0x8009d820];
-800BF5DC	nop
-V0 = V0 & 0003;
-800BF5E4	beq    v0, zero, Lbf8f4 [$800bf8f4]
-800BF5E8	nop
-A0 = 800a0394; // "S indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
+            }
+        }
+        break;
 
-A0 = 800a039c; // "S glov="
-800BF604	j      Lbf8ac [$800bf8ac]
-A1 = S0 & 00ff;
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BF644	nop
-A1 = V0 | 0100;
-AT = 8009d288;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-V0 = bu[0x8009d820];
-800BF664	nop
-V0 = V0 & 0003;
-800BF66C	beq    v0, zero, Lbf8f4 [$800bf8f4]
-800BF670	nop
-A0 = 800a0394; // "S indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
+        case 0x2:
+        case 0x3:
+        {
+            u8 indx = bu[events_data + script_cur + ofs] | 0x100;
+            [0x8009d288 + indx] = b(value);
 
-A0 = 800a039c; // "S glov="
-800BF68C	j      Lbf8ac [$800bf8ac]
-A1 = S0 & 00ff;
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BF6CC	nop
-A1 = V0 | 0200;
-AT = 8009d288;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-V0 = bu[0x8009d820];
-800BF6EC	nop
-V0 = V0 & 0003;
-800BF6F4	beq    v0, zero, Lbf8f4 [$800bf8f4]
-800BF6F8	nop
-A0 = 800a0394; // "S indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
+            }
+        }
+        break;
 
-A0 = 800a039c; // "S glov="
-800BF714	j      Lbf8ac [$800bf8ac]
-A1 = S0 & 00ff;
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BF754	nop
-A1 = V0 | 0300;
-AT = 8009d288;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-V0 = bu[0x8009d820];
-800BF774	nop
-V0 = V0 & 0003;
-800BF77C	beq    v0, zero, Lbf8f4 [$800bf8f4]
-800BF780	nop
-A0 = 800a0394; // "S indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
+        case 0xa:
+        case 0xb:
+        {
+            u8 indx = bu[events_data + script_cur + ofs] | 0x200;
+            [0x8009d288 + indx] = b(value);
 
-A0 = 800a039c; // "S glov="
-800BF79C	j      Lbf8ac [$800bf8ac]
-A1 = S0 & 00ff;
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
+            }
+        }
+        break;
 
-Lbf7c4:	; 800BF7C4
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BF7DC	nop
-A1 = V0 | 0400;
-AT = 8009d288;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-V0 = bu[0x8009d820];
-800BF7FC	nop
-V0 = V0 & 0003;
-800BF804	beq    v0, zero, Lbf8f4 [$800bf8f4]
-800BF808	nop
-A0 = 800a0394; // "S indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
+        case 0xc:
+        case 0xd:
+        {
+            u8 indx = bu[events_data + script_cur + ofs] | 0x300;
+            [0x8009d288 + indx] = b(value);
 
-A0 = 800a039c; // "S glov="
-800BF824	j      Lbf8ac [$800bf8ac]
-A1 = S0 & 00ff;
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-A1 = bu[V0 + 0000];
-800BF864	nop
-800BF868	lui    at, $8007
-AT = AT + 5e24;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-V0 = bu[0x8009d820];
-800BF880	nop
-V0 = V0 & 0003;
-800BF888	beq    v0, zero, Lbf8f4 [$800bf8f4]
-800BF88C	nop
-A0 = 800a0394; // "S indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
+            }
+        }
+        break;
 
-A0 = 800a03a4; // "S mapv="
-A1 = S0 & 00ff;
+        case 0x6:
+        case 0xe:
+        {
+            u8 indx = bu[events_data + script_cur + ofs] | 0x400;
+            [0x8009d288 + indx] = b(value);
 
-Lbf8ac:	; 800BF8AC
-A2 = 2;
-field_debug_add_parse_value_to_page2();
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
+            }
+        }
+        break;
 
-800BF8B4	j      Lbf8f4 [$800bf8f4]
-800BF8B8	nop
+        case 0x4:
+        case 0x5:
+        {
+            u8 indx = bu[events_data + script_cur + ofs];
+            [0x80075e24 + indx] = b(value);
 
-Lbf8bc:	; 800BF8BC
-V0 = bu[0x8009d820];
-800BF8C4	nop
-V0 = V0 & 0003;
-800BF8CC	beq    v0, zero, Lbf8e4 [$800bf8e4]
-A1 = V1 & 00ff;
-A0 = 800a03ac; // "S data err="
-A2 = 2;
-field_debug_add_parse_value_to_page2();
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S mapv=", value, 0x2);
+            }
+        }
 
-Lbf8e4:	; 800BF8E4
-field_event_debug_error("Bad Event arg!");
-
-Lbf8f4:	; 800BF8F4
-////////////////////////////////
+        default:
+        {
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S data err=", bank, 0x2);
+            }
+            field_event_debug_error("Bad Event arg!");
+        }
+    }
+}
 
 
 
@@ -1932,712 +1747,389 @@ s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
 
     switch (bank)
     {
-        case 0x0: // memory bank 0
+        case 0x0:
         {
-            u16 val = hu[events_data + script_cur + ofs];
+            u16 value = hu[events_data + script_cur + ofs];
 
             if (bu[0x8009d820] & 0x3)
             {
-                field_debug_add_parse_value_to_page2("G cons=", val, 0x4);
+                field_debug_add_parse_value_to_page2("G cons=", value, 0x4);
             }
-
-            return val;
+            return value;
         }
         break;
 
-        case 0x1: // memory bank 1
+        case 0x1:
         {
             u32 indx = bu[events_data + script_cur + ofs];
-            u16 val = bu[0x8009d288 + indx];
+            u16 value = bu[0x8009d288 + indx];
 
             if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
             }
-
-            return val;
+            return value;
         }
         break;
 
-        case 0x2: // memory bank 2
+        case 0x2:
         {
             u32 indx = bu[events_data + script_cur + ofs];
-            u16 val = hu[0x8009d288 + indx];
+            u16 value = hu[0x8009d288 + indx];
 
             if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
             }
-
-            return val;
+            return value;
         }
         break;
 
-        case 0x3: // memory bank 3
+        case 0x3:
         {
-            u32 indx = 0x100 | bu[events_data + script_cur + ofs];
-            u16 val = bu[0x8009d288 + indx];
+            u32 indx = bu[events_data + script_cur + ofs] | 0x100;
+            u16 value = bu[0x8009d288 + indx];
 
             if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
             }
-
-            return val;
+            return value;
         }
         break;
 
-        case 0x4: // memory bank 4
+        case 0x4:
         {
-            u32 indx = 0x100 | bu[events_data + script_cur + ofs];
-            u16 val = h[0x8009d288 + indx];
+            u32 indx = bu[events_data + script_cur + ofs] | 0x100;
+            u16 value = h[0x8009d288 + indx];
 
             if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
             }
-
-            return val;
+            return value;
         }
         break;
 
-        case 0xb: // memory bank B
+        case 0xb:
         {
-            u32 indx = 0x200 | bu[events_data + script_cur + ofs];
-            u16 val = bu[0x8009d288 + indx];
+            u32 indx = bu[events_data + script_cur + ofs] | 0x200;
+            u16 value = bu[0x8009d288 + indx];
 
             if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
             }
-
-            return val;
+            return value;
         }
         break;
 
-        case 0xc: // memory bank C
+        case 0xc:
         {
-            u32 indx = 0x200 | bu[events_data + script_cur + ofs];
-            u16 val = hu[0x8009d288 + indx];
+            u32 indx = bu[events_data + script_cur + ofs] | 0x200;
+            u16 value = hu[0x8009d288 + indx];
 
             if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
             }
-
-            return val;
+            return value;
         }
         break;
 
-        case 0xd: // memory bank D
+        case 0xd:
         {
-            u32 indx = 0x300 | bu[events_data + script_cur + ofs];
-            u16 val = bu[0x8009d288 + indx];
+            u32 indx = bu[events_data + script_cur + ofs] | 0x300;
+            u16 value = bu[0x8009d288 + indx];
 
             if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
             }
-
-            return val;
+            return value;
         }
         break;
 
-        case 0xe: // memory bank E
+        case 0xe:
         {
-            u32 indx = 0x300 | bu[events_data + script_cur + ofs];
-            u16 val = h[0x8009d288 + indx];
+            u32 indx = bu[events_data + script_cur + ofs] | 0x300;
+            u16 value = h[0x8009d288 + indx];
 
             if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
             }
-
-            return val;
+            return value;
         }
         break;
 
-        case 0xf: // memory bank F
+        case 0xf:
         {
-            u32 indx = 0x400 | bu[events_data + script_cur + ofs];
-            u16 val = bu[0x8009d288 + indx];
+            u32 indx = bu[events_data + script_cur + ofs] | 0x400;
+            u16 value = bu[0x8009d288 + indx];
 
             if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
             }
-
-            return val;
+            return value;
         }
         break;
 
-        case 0x7: // memory bank 7
+        case 0x7:
         {
-            u32 indx = 0x400 | bu[events_data + script_cur + ofs];
-            u16 val = hu[0x8009d288 + indx];
+            u32 indx = bu[events_data + script_cur + ofs] | 0x400;
+            u16 value = hu[0x8009d288 + indx];
 
             if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", value, 0x4);
             }
-
-            return val;
+            return value;
         }
         break;
 
-        case 0x5: // memory bank 5
+        case 0x5:
         {
             u32 indx = bu[events_data + script_cur + ofs];
-            u16 val = bu[0x80075e24 + indx];
+            u16 value = bu[0x80075e24 + indx];
 
             if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G mapv=", val, 0x4);
+                field_debug_add_parse_value_to_page2("G mapv=", value, 0x4);
             }
-
-            return val;
+            return value;
         }
         break;
 
-        case 0x6: // memory bank 6
+        case 0x6:
         {
             u32 indx = bu[events_data + script_cur + ofs];
-            u16 val = hu[0x80075e24 + indx];
+            u16 value = hu[0x80075e24 + indx];
 
             if (bu[0x8009d820] & 0x3)
             {
                 field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
-                field_debug_add_parse_value_to_page2("G mapv=", val, 0x4);
+                field_debug_add_parse_value_to_page2("G mapv=", value, 0x4);
+            }
+            return value;
+        }
+
+        default:
+        {
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("G data err=", bank, 0x2);
             }
 
-            return val;
+            field_event_debug_error("Bad Event arg!");
+
+            return 0;
         }
     }
-
-    // memory bank 8, 9, A, >F
-    if (bu[0x8009d820] & 0x3)
-    {
-        field_debug_add_parse_value_to_page2("G data err=", access, 0x2);
-    }
-
-    field_event_debug_error("Bad Event arg!");
 
     return 0;
 }
 
 
 
-////////////////////////////////
-// field_event_write_memory_s16()
-
-S0 = A2;
-800C0254	addiu  a0, a0, $ffff (=-$1)
-A0 = A0 << 10;
-A0 = A0 >> 10;
-V0 = A0 < 0006;
-800C0264	beq    v0, zero, Lc03f4 [$800c03f4]
-
-V0 = A0 << 02;
-V0 = w[0x800a046c + V0];
-800C0280	nop
-800C0284	jr     v0 
-800C0288	nop
-
-V0 = bu[0x800722c4];
-800C0294	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800C02B4	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0001];
-800C02C0	j      Lc03f4 [$800c03f4]
-V1 = V0 >> 04;
-V0 = bu[0x800722c4];
-800C02D0	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800C02F0	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0001];
-800C02FC	j      Lc03f4 [$800c03f4]
-V1 = V0 & 000f;
-V0 = bu[0x800722c4];
-800C030C	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800C032C	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0002];
-800C0338	j      Lc03f4 [$800c03f4]
-V1 = V0 >> 04;
-V0 = bu[0x800722c4];
-800C0348	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800C0368	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0002];
-800C0374	j      Lc03f4 [$800c03f4]
-V1 = V0 & 000f;
-V0 = bu[0x800722c4];
-800C0384	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800C03A4	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0003];
-800C03B0	j      Lc03f4 [$800c03f4]
-V1 = V0 >> 04;
-V0 = bu[0x800722c4];
-800C03C0	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800C03E0	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0003];
-800C03EC	nop
-V1 = V0 & 000f;
-
-Lc03f4:	; 800C03F4
-V0 = V1 & 00ff;
-800C03F8	addiu  a0, v0, $ffff (=-$1)
-V0 = A0 < 000f;
-800C0400	beq    v0, zero, Lc0b08 [$800c0b08]
-V0 = A0 << 02;
-800C0408	lui    at, $800a
-
-Lc040c:	; 800C040C
-AT = AT + 0484;
-AT = AT + V0;
-V0 = w[AT + 0000];
-800C0418	nop
-800C041C	jr     v0 
-800C0420	nop
-
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-A1 = bu[V0 + 0000];
-800C045C	nop
-AT = 8009d288;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-if (bu[0x8009d820] & 3)
+void field_event_write_memory_s16(s16 bank_id, s16 ofs, s16 value)
 {
-    A0 = 800a0394; // "S indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
+    actor_id_cur = bu[0x800722c4];
+    events_data = w[0x8009c6dc];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    A0 = 800a039c; // "S glov="
-    A1 = S0 << 10;
-    A1 = A1 >> 10;
-    A2 = 2;
-    field_debug_add_parse_value_to_page2();
+    u8 bank = -1;
+
+    switch (bank_id - 0x1)
+    {
+        case 0x0: bank = bu[events_data + script_cur + 0x1] >> 0x4; break;
+        case 0x1: bank = bu[events_data + script_cur + 0x1] & 0xf;  break;
+        case 0x2: bank = bu[events_data + script_cur + 0x2] >> 0x4; break;
+        case 0x3: bank = bu[events_data + script_cur + 0x2] & 0xf;  break;
+        case 0x4: bank = bu[events_data + script_cur + 0x3] >> 0x4; break;
+        case 0x5: bank = bu[events_data + script_cur + 0x3] & 0xf;  break;
+    }
+
+    switch (bank)
+    {
+        case 0x1:
+        {
+            u8 indx = bu[events_data + script_cur + ofs];
+            [0x8009d288 + indx] = b(value);
+
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
+            }
+        }
+        break;
+
+        case 0x2:
+        {
+            u8 indx = bu[events_data + script_cur + ofs];
+            [0x8009d288 + indx] = h(value);
+
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S glov=", value, 0x4);
+            }
+        }
+        break;
+
+        case 0x3:
+        {
+            u8 indx = bu[events_data + script_cur + ofs] | 0x100;
+            [0x8009d288 + indx] = b(value);
+
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
+            }
+        }
+        break;
+
+        case 0x4:
+        {
+            u8 indx = bu[events_data + script_cur + ofs] | 0x100;
+            [0x8009d288 + indx] = h(value);
+
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S glov=", value, 0x4);
+            }
+        }
+        break;
+
+        case 0xb:
+        {
+            u8 indx = bu[events_data + script_cur + ofs] | 0x200;
+            [0x8009d288 + indx] = b(value);
+
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
+            }
+        }
+        break;
+
+        case 0xc:
+        {
+            u8 indx = bu[events_data + script_cur + ofs] | 0x200;
+            [0x8009d288 + indx] = h(value);
+
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S glov=", value, 0x4);
+            }
+        }
+        break;
+
+        case 0xd:
+        {
+            u8 indx = bu[events_data + script_cur + ofs] | 0x300;
+            [0x8009d288 + indx] = b(value);
+
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
+            }
+        }
+        break;
+
+        case 0xe:
+        {
+            u8 indx = bu[events_data + script_cur + ofs] | 0x300;
+            [0x8009d288 + indx] = h(value);
+
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S glov=", value, 0x4);
+            }
+        }
+        break;
+
+        case 0xf:
+        {
+            u8 indx = bu[events_data + script_cur + ofs] | 0x400;
+            [0x8009d288 + indx] = b(value);
+
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S glov=", value, 0x2);
+            }
+        }
+        break;
+
+        case 0x7:
+        {
+            u8 indx = bu[events_data + script_cur + ofs] | 0x400;
+            [0x8009d288 + indx] = h(value);
+
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S glov=", value, 0x4);
+            }
+        }
+        break;
+
+        case 0x5:
+        {
+            u8 indx = bu[events_data + script_cur + ofs];
+            [0x80075e24 + indx] = b(value);
+
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S mapv=", value, 0x2);
+            }
+        }
+        break;
+
+        case 0x6:
+        {
+            u8 indx = bu[events_data + script_cur + ofs];
+            [0x80075e24 + indx] = h(value);
+
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("S mapv=", value, 0x4);
+            }
+        }
+        break
+
+        default:
+        {
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("S data err=", bank, 0x2);
+            }
+            field_event_debug_error("Bad Event arg!");
+        }
+    }
 }
-800C0A5C	j      Lc0b40 [$800c0b40]
-
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V1 = S0 << 10;
-A1 = bu[V0 + 0000];
-V0 = V1 >> 18;
-AT = 8009d288;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-AT = 8009d289;
-AT = AT + A1;
-[AT + 0000] = b(V0);
-if (bu[0x8009d820] & 3)
-{
-    S0 = V1 >> 10;
-    A0 = 800a0394; // "S indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-
-    A0 = 800a039c; // "S glov="
-    A1 = S0;
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-}
-800C0B00	j      Lc0b40 [$800c0b40]
-
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800C0578	nop
-A1 = V0 | 0100;
-AT = 8009d288;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-if (bu[0x8009d820] & 3)
-{
-    A0 = 800a0394; // "S indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-
-    A0 = 800a039c; // "S glov="
-    A1 = S0 << 10;
-    A1 = A1 >> 10;
-    A2 = 2;
-    field_debug_add_parse_value_to_page2();
-}
-800C0A5C	j      Lc0b40 [$800c0b40]
-
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-A0 = S0 << 10;
-V0 = bu[V0 + 0000];
-V1 = A0 >> 18;
-A1 = V0 | 0100;
-AT = 8009d288;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-AT = 8009d289;
-AT = AT + A1;
-[AT + 0000] = b(V1);
-if (bu[0x8009d820] & 3)
-{
-    S0 = A0 >> 10;
-    A0 = 800a0394; // "S indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-
-    A0 = 800a039c; // "S glov="
-    A1 = S0;
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-}
-800C0B00	j      Lc0b40 [$800c0b40]
-
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800C069C	nop
-A1 = V0 | 0200;
-AT = 8009d288;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-if (bu[0x8009d820] & 3)
-{
-    A0 = 800a0394; // "S indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-
-    A0 = 800a039c; // "S glov="
-    A1 = S0 << 10;
-    A1 = A1 >> 10;
-    A2 = 2;
-    field_debug_add_parse_value_to_page2();
-}
-800C0A5C	j      Lc0b40 [$800c0b40]
-
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-A0 = S0 << 10;
-V0 = bu[V0 + 0000];
-V1 = A0 >> 18;
-A1 = V0 | 0200;
-AT = 8009d288;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-AT = 8009d289;
-AT = AT + A1;
-[AT + 0000] = b(V1);
-if (bu[0x8009d820] & 3)
-{
-    S0 = A0 >> 10;
-    A0 = 800a0394; // "S indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-
-    A0 = 800a039c; // "S glov="
-    A1 = S0;
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-}
-800C0B00	j      Lc0b40 [$800c0b40]
-
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800C07C0	nop
-A1 = V0 | 0300;
-AT = 8009d288;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-if (bu[0x8009d820] & 3)
-{
-    A0 = 800a0394; // "S indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-
-    A0 = 800a039c; // "S glov="
-    A1 = S0 << 10;
-    A1 = A1 >> 10;
-    A2 = 2;
-    field_debug_add_parse_value_to_page2();
-}
-800C0A5C	j      Lc0b40 [$800c0b40]
-
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-A0 = S0 << 10;
-V0 = bu[V0 + 0000];
-V1 = A0 >> 18;
-
-Lc0850:	; 800C0850
-A1 = V0 | 0300;
-AT = 8009d288;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-AT = 8009d289;
-AT = AT + A1;
-[AT + 0000] = b(V1);
-if (bu[0x8009d820] & 3)
-{
-    S0 = A0 >> 10;
-    A0 = 800a0394; // "S indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-
-    A0 = 800a039c; // "S glov="
-    A1 = S0;
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-}
-800C0B00	j      Lc0b40 [$800c0b40]
-
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800C08E4	nop
-A1 = V0 | 0400;
-AT = 8009d288;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-if (bu[0x8009d820] & 3)
-{
-    A0 = 800a0394; // "S indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-
-    A0 = 800a039c; // "S glov="
-    A1 = S0 << 10;
-    A1 = A1 >> 10;
-    A2 = 2;
-    field_debug_add_parse_value_to_page2();
-}
-800C0A5C	j      Lc0b40 [$800c0b40]
-
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-A0 = S0 << 10;
-V0 = bu[V0 + 0000];
-V1 = A0 >> 18;
-A1 = V0 | 0400;
-AT = 8009d288;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-AT = 8009d289;
-AT = AT + A1;
-[AT + 0000] = b(V1);
-
-if (bu[0x8009d820] & 3)
-{
-    S0 = A0 >> 10;
-    A0 = 800a0394; // "S indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-
-    A0 = 800a039c; // "S glov="
-    A1 = S0;
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-}
-800C0B00	j      Lc0b40 [$800c0b40]
-
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-A0 = hu[0x800731fc + V0];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-A1 = bu[V0 + 0000];
-[0x80075e24 + A1] = b(S0);
-
-if (bu[0x8009d820] & 3)
-{
-    A0 = 800a0394; // "S indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-
-    A0 = 800a03a4; // "S mapv="
-    A1 = S0 << 10;
-    A1 = A1 >> 10;
-    A2 = 2;
-    field_debug_add_parse_value_to_page2();
-}
-800C0A5C	j      Lc0b40 [$800c0b40]
-
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V1 = S0 << 10;
-A1 = bu[V0 + 0000];
-V0 = V1 >> 18;
-800C0AA4	lui    at, $8007
-AT = AT + 5e24;
-AT = AT + A1;
-[AT + 0000] = b(S0);
-800C0AB4	lui    at, $8007
-AT = AT + 5e25;
-AT = AT + A1;
-[AT + 0000] = b(V0);
-S0 = V1 >> 10;
-
-if (bu[0x8009d820] & 3)
-{
-    A0 = 800a0394; // "S indx="
-    A1 = A1;
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-
-    A0 = 800a03a4; // "S mapv="
-    A1 = S0;
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-}
-800C0B00	j      Lc0b40 [$800c0b40]
-
-Lc0b08:	; 800C0B08
-if (bu[0x8009d820] & 3)
-{
-    A0 = 800a03ac; // "S data err="
-    A1 = V1 & ff;
-    A2 = 2;
-    field_debug_add_parse_value_to_page2();
-}
-
-field_event_debug_error("Bad Event arg!");
-
-Lc0b40:	; 800C0B40
-////////////////////////////////
 
 
 

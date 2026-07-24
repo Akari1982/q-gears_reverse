@@ -2,7 +2,7 @@ void field_window_reset_all()
 {
     [0x80071e2c] = b(0); // number of opened windows.
 
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < 0x4; ++i)
     {
         field_window_reset(i);
     }
